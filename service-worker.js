@@ -1,4 +1,4 @@
-const CACHE = 'de-mayo-bible-v22-smart-study-tools';
+const CACHE = 'de-mayo-bible-v30-phase2-complete';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./bible-data.js',
   './manifest.webmanifest','./icon-192.png','./icon-512.png',
@@ -23,7 +23,8 @@ const ASSETS = [
   './images/samaritan.svg',
   './images/samuel.svg',
   './images/sheep.svg',
-  './images/storm.svg'
+  './images/storm.svg',
+  './images/lesson-placeholder.svg'
 ];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));
