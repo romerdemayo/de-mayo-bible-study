@@ -1,19 +1,9 @@
-DE MAYO BIBLE STUDY VERSION 4
+DE MAYO BIBLE STUDY VERSION 6
 
-1. Open your GitHub repository: de-mayo-bible-study
-2. Click Add file > Upload files.
-3. Drag ALL files from this folder into GitHub.
-4. Commit directly to the main branch.
-5. Wait for Actions > pages build and deployment to show a green tick.
-6. Open:
-   https://romerdemayo.github.io/de-mayo-bible-study/
-
-IMPORTANT:
-Upload the files themselves, not the enclosing folder and not only the ZIP.
-The existing files will be replaced by the Version 4 files.
-
-If the old design remains on iPhone:
-- Close the Home Screen app and Safari.
-- Open the site in Safari and refresh.
-- If necessary, Settings > Safari > Advanced > Website Data,
-  locate github.io and remove that website data, then open the site again.
+1. Unzip this file.
+2. Open your GitHub repository.
+3. Choose Add file > Upload files.
+4. Upload EVERYTHING inside this folder, including data and images.
+5. Commit directly to main.
+6. Wait for the Pages deployment green tick.
+7. Force-refresh the live site. If the installed app still shows Version 5, remove it from the Home Screen, clear the site cache, reopen the GitHub Pages address, and add it again.

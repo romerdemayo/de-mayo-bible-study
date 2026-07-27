@@ -1,22 +1,14 @@
-# De Mayo Bible Study – Version 4
+# De Mayo Bible Study – Version 6
 
-A mobile-friendly offline KJV Bible study app for GitHub Pages.
+GitHub Pages-ready offline Bible and ministry app.
 
-## Included
-- Complete 31,102-verse KJV
-- Mobile bottom navigation
-- Redesigned home dashboard
-- Bible reading by book and chapter
-- Search with filters and recent searches
-- Favourites, highlights and verse notes
-- Prayer journal, study notes, sermon builder and kids ministry
-- Reading progress
-- Backup and restore
-- Offline PWA support
+## New in Version 6
+- Clear buttons for library searches
+- Fully clickable devotionals, exhortations, Bible studies, kids lessons, and prayers
+- Original illustrated kids lesson artwork
+- Offline guided creator for devotionals, exhortations, prayers, Bible studies, and kids lessons
+- ChatGPT prompt builder requiring no API key
+- Personal My Resources library stored locally
+- Private per-browser backup and restore
 
-## Upload
-Upload every file in this folder to the root of the existing GitHub repository.
-Commit directly to the `main` branch. GitHub Pages will redeploy automatically.
-
-After deployment, refresh the website. On iPhone, Safari may keep the older cached app.
-Close the app, clear Safari website data for the GitHub Pages site if needed, and reopen it.
+Upload every file and folder to the root of the existing GitHub repository.
