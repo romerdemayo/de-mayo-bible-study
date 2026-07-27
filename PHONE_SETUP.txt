@@ -1,23 +1,26 @@
-DE MAYO BIBLE MINISTRY — PHONE INSTALLATION (NKJV ONLINE)
+DE MAYO BIBLE STUDY — PHONE INSTALLATION
 
-This Progressive Web App must be hosted on an HTTPS website such as GitHub Pages. Internet access is required whenever Bible passages or Bible searches are opened in the New King James Version (NKJV).
+This folder is a Progressive Web App (PWA). It must first be placed on a secure HTTPS website. Opening index.html directly from an iPhone/Android Files app will not install the offline app correctly.
+
+EASIEST FREE PUBLISHING METHOD
+1. On a computer, unzip this package.
+2. Upload the entire unzipped folder to a static website host such as Netlify Drop, Cloudflare Pages, GitHub Pages, or your own website.
+3. Open the HTTPS address on your phone.
 
 IPHONE / IPAD
-1. Open the live GitHub Pages address in Safari.
-2. Tap Share (the square with the upward arrow).
-3. Tap Add to Home Screen, then Add.
-4. If an older version appears, delete the old Home Screen app, clear the website data for github.io, and add it again.
+1. Open the HTTPS address in Safari.
+2. Tap Share (square with upward arrow).
+3. Tap Add to Home Screen.
+4. Tap Add.
+5. Open De Mayo Bible from the Home Screen once while online. After the Bible files finish loading, it works offline.
 
 ANDROID
-1. Open the live address in Chrome.
-2. Tap the browser menu.
-3. Choose Install app or Add to Home screen.
-
-WINDOWS / MAC
-Open the live address in a modern browser. Chrome or Edge may show an Install icon in the address bar.
+1. Open the HTTPS address in Chrome.
+2. Tap the three-dot menu.
+3. Tap Install app or Add to Home screen.
+4. Open it once while online so all Bible files are cached for offline use.
 
 IMPORTANT
-- Every Bible reading link and Bible search uses NKJV online.
-- The full NKJV text is not stored in the GitHub files.
-- Notes, prayers, sermons, created resources, and reading progress stay in that browser profile.
-- Use Backup & Restore before clearing browser data or changing devices.
+- Notes, favourites, prayers, sermons and reading progress are stored only in that browser on that device.
+- Use Backup inside the app before clearing browser data or changing phones.
+- The Bible database is large, so the first opening may take a little longer.

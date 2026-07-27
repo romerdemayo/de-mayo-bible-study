@@ -1,10 +1,11 @@
-DE MAYO BIBLE MINISTRY — VERSION 11 ALL NKJV ONLINE
+DE MAYO BIBLE MINISTRY — VERSION 12
 
-1. Open your GitHub repository: de-mayo-bible-study
-2. Upload every file and folder INSIDE this folder to the repository root.
-3. Replace the older app.js, index.html, styles.css, service-worker.js, manifest and data files.
-4. Delete bible-data.js from GitHub because Version 11 does not include an offline KJV Bible.
-5. Wait for GitHub Pages deployment to finish.
-6. On iPhone, remove the old Home Screen app and add the website again from Safari.
+1. Extract this ZIP.
+2. Open your GitHub repository: de-mayo-bible-study
+3. Upload ALL files and folders inside this folder to the repository root.
+4. Replace the existing versions when prompted.
+5. Confirm GitHub Pages deployment is complete.
+6. Open: https://romerdemayo.github.io/de-mayo-bible-study/
+7. Refresh the browser. On iPhone, remove the old Home Screen app and add it again if required.
 
-All Bible reading and searching now opens NKJV online. Internet is required.
+Do not delete bible-data.js. It contains the built-in KJV Bible used by the app.

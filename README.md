@@ -1,17 +1,20 @@
-# De Mayo Bible Ministry — Version 11 (All NKJV Online)
+# De Mayo Bible Ministry — Version 12
 
-This GitHub Pages app uses the **New King James Version (NKJV)** for every Bible-reading action.
+A responsive GitHub Pages Bible ministry app with the complete offline King James Version (KJV).
 
-## Important
+## Version 12 improvements
 
-- Scripture references, Bible reading, and Bible search open the NKJV through an authorised online Bible service.
-- Internet access is required for Bible content.
-- The full copyrighted NKJV text is not bundled, copied, or stored in this repository.
-- Devotionals, exhortations, Bible studies, kids lessons, prayers, journals, plans, and ministry tools remain in the app.
-- Personal notes and journals are stored locally in the browser and can be backed up from the app.
+- Clickable Scripture references throughout devotionals, exhortations, Bible studies, kids lessons, and prayer resources
+- Direct opening to the correct KJV book, chapter, and verse
+- Selected verse highlighting and Back to resource navigation
+- Full Help & User Guide
+- Responsive navigation for iPhone, Android, iPad, Windows, and Mac
+- Bible search, favourites, highlights, verse notes, prayer journal, sermon builder, kids planner, reading plan, creator, and private backup
 
-## GitHub Pages upload
+## Deploy to GitHub Pages
 
-Upload **the contents of this folder** to the root of your repository, replacing the older files. Ensure GitHub Pages deploys from the `main` branch root or through the included workflow.
+Upload all files and folders from this package to the root of the `de-mayo-bible-study` repository. Replace the older files. In GitHub Settings → Pages, deploy from the `main` branch and `/root`, or use the included GitHub Actions workflow.
 
-After deployment, iPhone users should remove the old Home Screen app, clear the site data if necessary, reopen the live URL in Safari, and add it to the Home Screen again.
+Live address: `https://romerdemayo.github.io/de-mayo-bible-study/`
+
+After deployment, refresh the website. On iPhone, remove an older Home Screen installation and add the site again if the old cached version remains.
