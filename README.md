@@ -1,11 +1,11 @@
-# De Mayo Bible Ministry — Version 13 — Repaired
+# De Mayo Bible Ministry — Version 12
 
-A responsive GitHub Pages Bible ministry app with the complete offline King James Version (KJV).
+A responsive GitHub Pages Bible ministry app with the complete offline World English Bible (WEB).
 
-## Version 13 — Repaired improvements
+## Version 12 improvements
 
 - Clickable Scripture references throughout devotionals, exhortations, Bible studies, kids lessons, and prayer resources
-- Direct opening to the correct KJV book, chapter, and verse
+- Direct opening to the correct WEB book, chapter, and verse
 - Selected verse highlighting and Back to resource navigation
 - Full Help & User Guide
 - Responsive navigation for iPhone, Android, iPad, Windows, and Mac
@@ -20,8 +20,6 @@ Live address: `https://romerdemayo.github.io/de-mayo-bible-study/`
 After deployment, refresh the website. On iPhone, remove an older Home Screen installation and add the site again if the old cached version remains.
 
 
-## Version 13 repair
-- Added cache-busted assets to prevent stale iPhone and browser files.
-- Changed the service worker to prefer the latest GitHub files while retaining offline fallback.
-- Added visible startup error messages when a required file fails to load.
-- Kept the complete offline KJV Bible and clickable Scripture references.
+## Bible translation
+
+This build uses the World English Bible (WEB), a public-domain modern-English translation. The Bible remains available offline after the app has loaded.

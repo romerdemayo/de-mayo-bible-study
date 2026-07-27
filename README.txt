@@ -1,4 +1,4 @@
-DE MAYO BIBLE STUDY APP — OFFLINE KJV
+DE MAYO BIBLE STUDY APP — OFFLINE WEB
 
 HOW TO OPEN ON MAC OR WINDOWS
 1. Unzip the downloaded file.
@@ -13,7 +13,7 @@ IMPORTANT
 - The included Bible text is the public-domain King James Version, sourced from Project Gutenberg eBook #10.
 
 VERSION 1 FEATURES
-- Complete 31,102-verse KJV
+- Complete 31,102-verse WEB
 - Book/chapter reading
 - Full-text and reference search
 - Favourites

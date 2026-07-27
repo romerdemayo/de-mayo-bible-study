@@ -1,8 +1,3 @@
-if (!window.BIBLE_DATA || !Array.isArray(window.BIBLE_DATA.verses) || !Array.isArray(window.BIBLE_DATA.books)) {
-  const target = document.getElementById('view');
-  if (target) target.innerHTML = '<div class="card startup-error"><h2>Bible data did not load</h2><p>Refresh this page once. On iPhone, remove the old Home Screen app and add it again from Safari.</p></div>';
-  throw new Error('BIBLE_DATA is missing or incomplete.');
-}
 const D=window.BIBLE_DATA,V=D.verses,B=D.books,$=s=>document.querySelector(s),view=$('#view');
 const store={get:(k,d=[])=>{try{return JSON.parse(localStorage.getItem('dm_'+k)||JSON.stringify(d))}catch{return d}},set:(k,v)=>localStorage.setItem('dm_'+k,JSON.stringify(v))};
 const navGroups=[
@@ -65,7 +60,7 @@ function todayVerse(){const d=new Date(),i=Math.abs(Math.floor((d-new Date(d.get
 function home(){
  title('Home','Read, study, pray, and prepare.');
  const f=favs().length,n=store.get('notes').length,p=store.get('prayers').length,h=Object.keys(highlights()).length,d=store.get('reading',{}),done=Object.keys(d).length,tv=todayVerse();
- view.innerHTML=`<div class="hero"><div><span class="badge light">VERSION 13</span><h2>Read Scripture. Grow in faith. Prepare to serve.</h2><p>Your complete offline KJV Bible with reading, search, highlights, notes, prayer, reading plans, sermon preparation, and children’s ministry tools.</p><div class="hero-actions"><button class="primary" id="continue">Continue ${esc(state.book)} ${state.chapter}</button><button class="ghost light-btn" onclick="route('search')">Search Bible</button></div></div><div class="verse-card"><span class="small-light">VERSE OF THE DAY</span><br>“${esc(tv.x)}”<br><small>${ref(tv)}</small></div></div>
+ view.innerHTML=`<div class="hero"><div><span class="badge light">VERSION 14</span><h2>Read Scripture. Grow in faith. Prepare to serve.</h2><p>Your complete offline World English Bible with reading, search, highlights, notes, prayer, reading plans, sermon preparation, and children’s ministry tools.</p><div class="hero-actions"><button class="primary" id="continue">Continue ${esc(state.book)} ${state.chapter}</button><button class="ghost light-btn" onclick="route('search')">Search Bible</button></div></div><div class="verse-card"><span class="small-light">VERSE OF THE DAY</span><br>“${esc(tv.x)}”<br><small>${ref(tv)}</small></div></div>
  <div class="grid"><div class="card"><div class="metric">${done}</div><div>Chapters completed</div></div><div class="card"><div class="metric">${f}</div><div>Favourite verses</div></div><div class="card"><div class="metric">${h}</div><div>Highlighted verses</div></div><div class="card"><div class="metric">${n+p}</div><div>Notes and prayers</div></div></div>`;
  $('#continue').onclick=()=>route('read');
 }
@@ -144,7 +139,7 @@ function creator(){let type=store.get('creatorType','Devotional');title('Create 
  function fields(){type=$('#ctype').value;store.set('creatorType',type);$('#creatorInputs').innerHTML=creatorFields[type].map((x,i)=>`<label><span>${x}</span><input data-cf="${i}" placeholder="${x}"></label>`).join('')};fields();$('#ctype').onchange=fields;
  const vals=()=>[...document.querySelectorAll('[data-cf]')].map(x=>x.value.trim());
  $('#offlineCreate').onclick=()=>{$('#draft').value=makeOfflineDraft(type,vals());toast('Offline draft created')};
- $('#aiPrompt').onclick=()=>{let v=vals(),prompt=`Create a ${v[4]||'medium-length'} biblical ${type.toLowerCase()} about “${v[0]||'faith'}” based primarily on ${v[1]||'an appropriate KJV passage'}. Audience: ${v[2]||'adults'}. Tone/style: ${v[3]||'encouraging and pastoral'}. Include a clear title, main Scripture, faithful explanation of the passage in context, supporting KJV references, practical application, reflection or discussion questions, and a closing prayer. For a kids lesson, also include an opening prayer, simple Bible story, memory verse, activity, craft, and age-appropriate questions. Clearly distinguish Scripture from commentary. Do not invent quotations or claim that commentary is Scripture. Produce an editable ministry draft that should be reviewed before use.`;$('#draft').value=prompt;navigator.clipboard?.writeText(prompt);toast('ChatGPT prompt prepared and copied')};
+ $('#aiPrompt').onclick=()=>{let v=vals(),prompt=`Create a ${v[4]||'medium-length'} biblical ${type.toLowerCase()} about “${v[0]||'faith'}” based primarily on ${v[1]||'an appropriate WEB passage'}. Audience: ${v[2]||'adults'}. Tone/style: ${v[3]||'encouraging and pastoral'}. Include a clear title, main Scripture, faithful explanation of the passage in context, supporting WEB references, practical application, reflection or discussion questions, and a closing prayer. For a kids lesson, also include an opening prayer, simple Bible story, memory verse, activity, craft, and age-appropriate questions. Clearly distinguish Scripture from commentary. Do not invent quotations or claim that commentary is Scripture. Produce an editable ministry draft that should be reviewed before use.`;$('#draft').value=prompt;navigator.clipboard?.writeText(prompt);toast('ChatGPT prompt prepared and copied')};
  $('#clearCreator').onclick=()=>{document.querySelectorAll('[data-cf]').forEach(x=>x.value='');$('#draft').value=''};
  $('#copyDraft').onclick=async()=>{await navigator.clipboard.writeText($('#draft').value);toast('Draft copied')};$('#openChat').onclick=()=>window.open('https://chatgpt.com/','_blank','noopener');
  $('#saveDraft').onclick=()=>{let text=$('#draft').value.trim();if(!text)return toast('Create or paste a draft first');let a=store.get('createdResources');a.unshift({id:Date.now(),type,title:(text.match(/^Title:\s*(.+)/mi)||[])[1]||`${type} Draft`,text,created:new Date().toLocaleString()});store.set('createdResources',a);toast('Saved to My Resources')}
@@ -156,7 +151,7 @@ function help(){
  view.innerHTML=`
  <section class="help-hero card">
    <div class="help-seal">📖</div>
-   <div><span class="pill">WELCOME</span><h2>How to use De Mayo Bible Ministry</h2><p>The complete King James Version (KJV) is built into the app, so Bible reading and searching can continue even without internet after the app has loaded.</p></div>
+   <div><span class="pill">WELCOME</span><h2>How to use De Mayo Bible Ministry</h2><p>The complete World English Bible (WEB) is built into the app, so Bible reading and searching can continue even without internet after the app has loaded.</p></div>
  </section>
  <div class="help-quick-grid">
    <button class="help-jump card" data-go="read"><span>📖</span><b>Read the Bible</b><small>Choose a book and chapter, adjust text size, highlight verses, add notes, and save favourites.</small></button>
@@ -166,7 +161,7 @@ function help(){
  </div>
  <section class="help-sections">
    <details open><summary>Getting around the app</summary><div class="help-body"><p><b>On iPhone, Android, or tablet:</b> use the bottom navigation for Home, Read, Search, and Prayer. Tap <b>More</b> or the ☰ menu button to see every section.</p><p><b>On Windows or Mac:</b> use the menu on the left side.</p></div></details>
-   <details open><summary>Opening a Scripture reference</summary><div class="help-body"><p>Scripture references inside devotionals, exhortations, Bible studies, kids lessons, and prayers are clickable. Tap a reference such as <b>Galatians 5:13</b> to open the built-in KJV Bible at that chapter. The selected verse is highlighted, and a <b>Back to resource</b> button returns you to the lesson.</p></div></details>
+   <details open><summary>Opening a Scripture reference</summary><div class="help-body"><p>Scripture references inside devotionals, exhortations, Bible studies, kids lessons, and prayers are clickable. Tap a reference such as <b>Galatians 5:13</b> to open the built-in World English Bible at that chapter. The selected verse is highlighted, and a <b>Back to resource</b> button returns you to the lesson.</p></div></details>
    <details><summary>Reading, highlighting, notes, and favourites</summary><div class="help-body"><ol><li>Open <b>Read Bible</b>.</li><li>Select a book and chapter.</li><li>Tap a verse to open its options.</li><li>Choose a highlight colour, add a note, or save it as a favourite.</li></ol><p>These personal items stay private in the browser on that device.</p></div></details>
    <details><summary>Using the public ministry library</summary><div class="help-body"><p>Choose Devotionals, Exhortations, Bible Studies, Kids Lessons, or Prayer Library. Search by title, topic, Scripture, or keyword. Tap a card to open the complete resource, then copy or print it when needed.</p></div></details>
    <details><summary>Prayer Journal and personal resources</summary><div class="help-body"><p>Your prayer journal, study notes, sermons, kids plans, highlights, favourites, and created resources are stored locally on your device. They are not visible to other visitors.</p></div></details>

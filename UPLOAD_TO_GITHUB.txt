@@ -8,4 +8,4 @@ DE MAYO BIBLE MINISTRY — VERSION 12
 6. Open: https://romerdemayo.github.io/de-mayo-bible-study/
 7. Refresh the browser. On iPhone, remove the old Home Screen app and add it again if required.
 
-Do not delete bible-data.js. It contains the built-in KJV Bible used by the app.
+Do not delete bible-data.js. It contains the built-in World English Bible used by the app.
