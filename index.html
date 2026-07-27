@@ -1,4 +1,54 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#193c31"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="De Mayo Bible"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><title>De Mayo Bible Study Suite</title><link rel="stylesheet" href="styles.css"></head><body>
-<div class="app"><aside><div class="brand"><span class="cross">✝</span><div><b>De Mayo</b><small>Bible Study Suite</small></div></div><nav id="nav"></nav><div class="aside-note">Offline • KJV • Your notes stay on this device</div></aside>
-<main><header><button id="menu">☰</button><div><h1 id="pageTitle">Home</h1><p id="pageSub">Study Scripture, prepare lessons, and keep prayer notes.</p></div><button class="ghost" id="theme">◐ Theme</button></header><section id="view"></section></main></div>
-<script src="bible-data.js"></script><script src="app.js"></script><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js"));}</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#173f35">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="De Mayo Bible">
+  <meta name="description" content="Offline KJV Bible reader, study notes, prayer journal, reading plan and ministry tools.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <title>De Mayo Bible Study</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">✝</div>
+      <div><b>De Mayo</b><small>Bible Study</small></div>
+    </div>
+    <nav id="nav"></nav>
+    <div class="sidebar-footer">
+      <strong>Offline KJV</strong>
+      <span>Your notes stay on this device.</span>
+    </div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <button id="menu" class="icon-btn" aria-label="Open menu">☰</button>
+      <div class="title-wrap">
+        <h1 id="pageTitle">Home</h1>
+        <p id="pageSub">Read, study, pray, and prepare.</p>
+      </div>
+      <button class="icon-btn theme-btn" id="theme" aria-label="Change theme">◐</button>
+    </header>
+    <section id="view"></section>
+  </main>
+</div>
+
+<nav id="mobileNav" class="mobile-nav"></nav>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="bible-data.js"></script>
+<script src="app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js'));
+}
+</script>
+</body>
+</html>
