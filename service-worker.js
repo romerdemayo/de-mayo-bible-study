@@ -1,4 +1,4 @@
-const CACHE = 'de-mayo-bible-v18-bilingual-foundation';
+const CACHE = 'de-mayo-bible-v19-bilingual-content';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./bible-data.js',
   './manifest.webmanifest','./icon-192.png','./icon-512.png',

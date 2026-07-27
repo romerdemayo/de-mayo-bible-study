@@ -8,7 +8,7 @@ Included now:
 - Bilingual main navigation and mobile navigation
 - Language choice is remembered on the device
 - Updated Help language selector
-- Updated cache to Version 18
+- Updated cache to Version 19
 - All available kids illustrations included in offline cache
 
 Planned next:
