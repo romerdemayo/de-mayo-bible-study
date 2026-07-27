@@ -1,3 +1,8 @@
+if (!window.BIBLE_DATA || !Array.isArray(window.BIBLE_DATA.verses) || !Array.isArray(window.BIBLE_DATA.books)) {
+  const target = document.getElementById('view');
+  if (target) target.innerHTML = '<div class="card startup-error"><h2>Bible data did not load</h2><p>Refresh this page once. On iPhone, remove the old Home Screen app and add it again from Safari.</p></div>';
+  throw new Error('BIBLE_DATA is missing or incomplete.');
+}
 const D=window.BIBLE_DATA,V=D.verses,B=D.books,$=s=>document.querySelector(s),view=$('#view');
 const store={get:(k,d=[])=>{try{return JSON.parse(localStorage.getItem('dm_'+k)||JSON.stringify(d))}catch{return d}},set:(k,v)=>localStorage.setItem('dm_'+k,JSON.stringify(v))};
 const navGroups=[
@@ -5,7 +10,7 @@ const navGroups=[
  ['Public Library',[['devotionals','🌅 Devotionals'],['exhortations','🎤 Exhortations'],['studies','📚 Bible Studies'],['kidslibrary','👧 Kids Lessons'],['prayerlibrary','🙏 Prayer Library']]],
  ['My Resources',[['favourites','★ Favourites'],['highlights','🖍 Highlights'],['verseNotes','🗒 Verse Notes'],['notes','📝 Study Notes'],['prayer','🙏 Prayer Journal'],['myresources','📁 Created Resources']]],
  ['Ministry Tools',[['sermon','🎤 Sermon Builder'],['kids','🧒 Kids Planner'],['reading','📅 Reading Plan'],['creator','✨ Create Resource']]],
- ['Settings',[['backup','🔒 Backup & Restore']]]
+ ['Settings',[['help','❓ Help & User Guide'],['backup','🔒 Backup & Restore']]]
 ];
 const pages=navGroups.flatMap(g=>g[1]);
 const internalPages=['resource'];
@@ -60,7 +65,7 @@ function todayVerse(){const d=new Date(),i=Math.abs(Math.floor((d-new Date(d.get
 function home(){
  title('Home','Read, study, pray, and prepare.');
  const f=favs().length,n=store.get('notes').length,p=store.get('prayers').length,h=Object.keys(highlights()).length,d=store.get('reading',{}),done=Object.keys(d).length,tv=todayVerse();
- view.innerHTML=`<div class="hero"><div><span class="badge light">VERSION 7</span><h2>Read Scripture. Grow in faith. Prepare to serve.</h2><p>Your complete offline KJV Bible with reading, search, highlights, notes, prayer, reading plans, sermon preparation, and children’s ministry tools.</p><div class="hero-actions"><button class="primary" id="continue">Continue ${esc(state.book)} ${state.chapter}</button><button class="ghost light-btn" onclick="route('search')">Search Bible</button></div></div><div class="verse-card"><span class="small-light">VERSE OF THE DAY</span><br>“${esc(tv.x)}”<br><small>${ref(tv)}</small></div></div>
+ view.innerHTML=`<div class="hero"><div><span class="badge light">VERSION 13</span><h2>Read Scripture. Grow in faith. Prepare to serve.</h2><p>Your complete offline KJV Bible with reading, search, highlights, notes, prayer, reading plans, sermon preparation, and children’s ministry tools.</p><div class="hero-actions"><button class="primary" id="continue">Continue ${esc(state.book)} ${state.chapter}</button><button class="ghost light-btn" onclick="route('search')">Search Bible</button></div></div><div class="verse-card"><span class="small-light">VERSE OF THE DAY</span><br>“${esc(tv.x)}”<br><small>${ref(tv)}</small></div></div>
  <div class="grid"><div class="card"><div class="metric">${done}</div><div>Chapters completed</div></div><div class="card"><div class="metric">${f}</div><div>Favourite verses</div></div><div class="card"><div class="metric">${h}</div><div>Highlighted verses</div></div><div class="card"><div class="metric">${n+p}</div><div>Notes and prayers</div></div></div>`;
  $('#continue').onclick=()=>route('read');
 }
@@ -145,5 +150,32 @@ function creator(){let type=store.get('creatorType','Devotional');title('Create 
  $('#saveDraft').onclick=()=>{let text=$('#draft').value.trim();if(!text)return toast('Create or paste a draft first');let a=store.get('createdResources');a.unshift({id:Date.now(),type,title:(text.match(/^Title:\s*(.+)/mi)||[])[1]||`${type} Draft`,text,created:new Date().toLocaleString()});store.set('createdResources',a);toast('Saved to My Resources')}
 }
 function myresources(){title('My Resources','Personal drafts saved only in this browser.');let a=store.get('createdResources');view.innerHTML=`<div class="privacy-card"><div class="privacy-icon">📁</div><div><h3>Private to this browser profile</h3><p>These drafts are not added to the public GitHub library. Use My Backup to move them to another device.</p></div></div><div class="entries">${a.length?a.map(x=>`<article class="entry"><span class="pill">${esc(x.type)}</span><h3>${esc(x.title)}</h3><div class="meta">${esc(x.created)}</div><pre class="saved-resource">${esc(x.text)}</pre><button class="ghost" data-copy="${x.id}">Copy</button> <button class="danger" data-del="${x.id}">Delete</button></article>`).join(''):'<div class="empty">You have not saved any created resources yet.</div>'}</div>`;document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=async()=>{let x=a.find(y=>y.id==b.dataset.copy);await navigator.clipboard.writeText(x.text);toast('Copied')});document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{if(confirm('Delete this personal resource?')){a=a.filter(x=>x.id!=b.dataset.del);store.set('createdResources',a);myresources()}})}
-function render(){({home,read,search,devotionals,exhortations,studies,kidslibrary,prayerlibrary,resource,creator,myresources,favourites,highlights:highlightsPage,verseNotes,notes,prayer,sermon,kids,reading,backup}[state.page]||home)()}
+
+function help(){
+ title('Help & User Guide','A simple guide to using De Mayo Bible Ministry on any device.');
+ view.innerHTML=`
+ <section class="help-hero card">
+   <div class="help-seal">📖</div>
+   <div><span class="pill">WELCOME</span><h2>How to use De Mayo Bible Ministry</h2><p>The complete King James Version (KJV) is built into the app, so Bible reading and searching can continue even without internet after the app has loaded.</p></div>
+ </section>
+ <div class="help-quick-grid">
+   <button class="help-jump card" data-go="read"><span>📖</span><b>Read the Bible</b><small>Choose a book and chapter, adjust text size, highlight verses, add notes, and save favourites.</small></button>
+   <button class="help-jump card" data-go="search"><span>🔎</span><b>Search Scripture</b><small>Search a word, phrase, book, or exact reference such as John 3:16.</small></button>
+   <button class="help-jump card" data-go="devotionals"><span>📚</span><b>Use the Library</b><small>Open devotionals, exhortations, Bible studies, kids lessons, and prayers.</small></button>
+   <button class="help-jump card" data-go="prayer"><span>🙏</span><b>Prayer Journal</b><small>Save private prayer requests, updates, Scriptures, and answered prayers on your device.</small></button>
+ </div>
+ <section class="help-sections">
+   <details open><summary>Getting around the app</summary><div class="help-body"><p><b>On iPhone, Android, or tablet:</b> use the bottom navigation for Home, Read, Search, and Prayer. Tap <b>More</b> or the ☰ menu button to see every section.</p><p><b>On Windows or Mac:</b> use the menu on the left side.</p></div></details>
+   <details open><summary>Opening a Scripture reference</summary><div class="help-body"><p>Scripture references inside devotionals, exhortations, Bible studies, kids lessons, and prayers are clickable. Tap a reference such as <b>Galatians 5:13</b> to open the built-in KJV Bible at that chapter. The selected verse is highlighted, and a <b>Back to resource</b> button returns you to the lesson.</p></div></details>
+   <details><summary>Reading, highlighting, notes, and favourites</summary><div class="help-body"><ol><li>Open <b>Read Bible</b>.</li><li>Select a book and chapter.</li><li>Tap a verse to open its options.</li><li>Choose a highlight colour, add a note, or save it as a favourite.</li></ol><p>These personal items stay private in the browser on that device.</p></div></details>
+   <details><summary>Using the public ministry library</summary><div class="help-body"><p>Choose Devotionals, Exhortations, Bible Studies, Kids Lessons, or Prayer Library. Search by title, topic, Scripture, or keyword. Tap a card to open the complete resource, then copy or print it when needed.</p></div></details>
+   <details><summary>Prayer Journal and personal resources</summary><div class="help-body"><p>Your prayer journal, study notes, sermons, kids plans, highlights, favourites, and created resources are stored locally on your device. They are not visible to other visitors.</p></div></details>
+   <details><summary>Backup and moving to another device</summary><div class="help-body"><p>Open <b>Backup & Restore</b>, then download your private backup. On another device, open the same page and restore that backup file.</p></div></details>
+   <details><summary>Installing on a phone or computer</summary><div class="help-body"><p><b>iPhone/iPad:</b> open the site in Safari, tap Share, then <b>Add to Home Screen</b>.</p><p><b>Android:</b> open the site in Chrome, open the menu, then choose <b>Install app</b> or <b>Add to Home screen</b>.</p><p><b>Windows/Mac:</b> use the browser install icon when available, or bookmark the site.</p></div></details>
+   <details><summary>When an older version appears</summary><div class="help-body"><p>Refresh the page. On an installed phone app, remove the old Home Screen copy, reopen the live website in Safari or Chrome, and install it again.</p></div></details>
+ </section>`;
+ document.querySelectorAll('.help-jump').forEach(b=>b.onclick=()=>route(b.dataset.go));
+}
+
+function render(){({home,read,search,devotionals,exhortations,studies,kidslibrary,prayerlibrary,resource,creator,myresources,favourites,highlights:highlightsPage,verseNotes,notes,prayer,sermon,kids,reading,help,backup}[state.page]||home)()}
 route(location.hash.slice(1)||'home',false);
