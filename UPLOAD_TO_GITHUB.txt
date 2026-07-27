@@ -1,15 +1,10 @@
-UPLOAD TO GITHUB
-================
+DE MAYO BIBLE MINISTRY — GITHUB UPLOAD
 
 1. Unzip this package.
-2. Open your GitHub repository: de-mayo-bible-study
-3. Upload ALL files and folders from inside this project folder.
-4. Commit directly to the main branch.
+2. Open your GitHub repository.
+3. Upload EVERYTHING INSIDE the folder, including .github.
+4. Replace the older files and commit to main.
 5. Go to Settings > Pages.
 6. Choose GitHub Actions as the source.
-7. The included workflow will deploy the app.
-
-Your website should remain at:
-https://romerdemayo.github.io/de-mayo-bible-study/
-
-After deployment, refresh twice or clear the old site cache if Version 6 still appears.
+7. Wait for the Pages workflow to finish.
+8. On iPhone, close and reopen the installed app. If the old version remains, clear Safari website data or remove and reinstall the Home Screen app.

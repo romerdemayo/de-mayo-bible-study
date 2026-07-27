@@ -1,15 +1,29 @@
 const D=window.BIBLE_DATA,V=D.verses,B=D.books,$=s=>document.querySelector(s),view=$('#view');
 const store={get:(k,d=[])=>{try{return JSON.parse(localStorage.getItem('dm_'+k)||JSON.stringify(d))}catch{return d}},set:(k,v)=>localStorage.setItem('dm_'+k,JSON.stringify(v))};
-const pages=[['home','⌂ Home'],['read','📖 Read Bible'],['search','🔎 Search'],['devotionals','🌅 Devotionals'],['exhortations','🎤 Exhortations'],['studies','📚 Bible Studies'],['kidslibrary','👧 Kids Lessons'],['prayerlibrary','🙏 Prayer Library'],['favourites','★ Favourites'],['highlights','🖍 Highlights'],['verseNotes','🗒 Verse Notes'],['notes','📝 Study Notes'],['prayer','🙏 Prayer Journal'],['sermon','🎤 Sermon Builder'],['kids','🧒 Kids Planner'],['reading','📅 Reading Plan'],['creator','✨ Create Resource'],['myresources','📁 My Resources'],['backup','🔒 My Backup']];
-$('#nav').innerHTML=pages.map(p=>`<button data-page="${p[0]}">${p[1]}</button>`).join('');
-const mobilePages=[['home','⌂','Home'],['read','📖','Read'],['search','🔎','Search'],['prayer','🙏','Prayer'],['backup','⚙️','More']];
-$('#mobileNav').innerHTML=mobilePages.map(p=>`<button data-page="${p[0]}"><span>${p[1]}</span>${p[2]}</button>`).join('');
+const navGroups=[
+ ['Bible',[['home','⌂ Home'],['read','📖 Read Bible'],['search','🔎 Search']]],
+ ['Public Library',[['devotionals','🌅 Devotionals'],['exhortations','🎤 Exhortations'],['studies','📚 Bible Studies'],['kidslibrary','👧 Kids Lessons'],['prayerlibrary','🙏 Prayer Library']]],
+ ['My Resources',[['favourites','★ Favourites'],['highlights','🖍 Highlights'],['verseNotes','🗒 Verse Notes'],['notes','📝 Study Notes'],['prayer','🙏 Prayer Journal'],['myresources','📁 Created Resources']]],
+ ['Ministry Tools',[['sermon','🎤 Sermon Builder'],['kids','🧒 Kids Planner'],['reading','📅 Reading Plan'],['creator','✨ Create Resource']]],
+ ['Settings',[['backup','🔒 Backup & Restore']]]
+];
+const pages=navGroups.flatMap(g=>g[1]);
+$('#nav').innerHTML=navGroups.map(g=>`<div class="nav-section">${g[0]}</div>${g[1].map(p=>`<button data-page="${p[0]}">${p[1]}</button>`).join('')}`).join('');
+const mobilePages=[['home','⌂','Home'],['read','📖','Read'],['search','🔎','Search'],['prayer','🙏','Prayer']];
+$('#mobileNav').innerHTML=mobilePages.map(p=>`<button data-page="${p[0]}"><span>${p[1]}</span>${p[2]}</button>`).join('')+`<button data-action="menu"><span>☰</span>More</button>`;
 let state={page:'home',book:store.get('lastBook','John'),chapter:store.get('lastChapter',3),font:store.get('fontSize',19)};
 function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(window._toast);window._toast=setTimeout(()=>t.classList.remove('show'),1800)}
-function route(p){state.page=p;document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===p));document.querySelector('aside').classList.remove('open');render();window.scrollTo({top:0,behavior:'smooth'})}
+function closeMenu(){const side=$('#sidebar'),overlay=$('#sidebarOverlay'),menu=$('#menu');side.classList.remove('open');overlay.classList.remove('open');document.body.classList.remove('menu-open');menu.setAttribute('aria-expanded','false')}
+function openMenu(){const side=$('#sidebar'),overlay=$('#sidebarOverlay'),menu=$('#menu');side.classList.add('open');overlay.classList.add('open');document.body.classList.add('menu-open');menu.setAttribute('aria-expanded','true')}
+function toggleMenu(){const open=$('#sidebar').classList.contains('open');open?closeMenu():openMenu()}
+function route(p,updateHash=true){if(!pages.some(x=>x[0]===p))p='home';state.page=p;document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===p));closeMenu();if(updateHash&&location.hash!==`#${p}`)history.pushState(null,'',`#${p}`);render();window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>route(b.dataset.page));
-$('#menu').onclick=()=>document.querySelector('aside').classList.toggle('open');
+document.querySelectorAll('[data-action="menu"]').forEach(b=>b.onclick=toggleMenu);
+$('#menu').onclick=toggleMenu;
+$('#sidebarOverlay').onclick=closeMenu;
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
+window.addEventListener('popstate',()=>route(location.hash.slice(1)||'home',false));
 $('#theme').onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('dm_theme',document.body.classList.contains('dark')?'dark':'light')};
 if(localStorage.getItem('dm_theme')==='dark')document.body.classList.add('dark');
 function title(t,s){$('#pageTitle').textContent=t;$('#pageSub').textContent=s}
@@ -75,7 +89,7 @@ function backup(){
 function libraryShell(t,d,createType){return `<div class="library-head"><div><h2>${t}</h2><p>${d}</p></div><div class="library-search"><input id="libq" placeholder="Search this library..."><button class="ghost" id="clearLib">Clear</button></div></div><div class="library-actions"><button class="primary" id="createHere">＋ Create ${createType}</button></div><div id="libres" class="library-grid"></div>`}
 function wireLibrary(draw,type){$('#libq').oninput=e=>draw(e.target.value);$('#clearLib').onclick=()=>{$('#libq').value='';draw('');$('#libq').focus()};$('#createHere').onclick=()=>{store.set('creatorType',type);route('creator')}}
 function openResource(kind,index){store.set('openResource',{kind,index});route('resource')}
-function resource(){let o=store.get('openResource',null);if(!o)return route('home');let maps={devotional:DEVOTIONALS,exhortation:EXHORTATIONS,study:BIBLE_STUDIES,kids:KIDS_LESSONS,prayer:PRAYER_LIBRARY},x=maps[o.kind]?.[o.index];if(!x)return route('home');title(x.title,'Complete resource view');let body='';
+function resource(){let o=store.get('openResource',null);if(!o)return route(location.hash.slice(1)||'home',false);let maps={devotional:DEVOTIONALS,exhortation:EXHORTATIONS,study:BIBLE_STUDIES,kids:KIDS_LESSONS,prayer:PRAYER_LIBRARY},x=maps[o.kind]?.[o.index];if(!x)return route(location.hash.slice(1)||'home',false);title(x.title,'Complete resource view');let body='';
  if(o.kind==='devotional')body=`<span class="pill">${esc(x.theme)}</span><h2>${esc(x.title)}</h2><div class="scripture-banner">${esc(x.scripture)}</div><h3>Reflection</h3><p>${esc(x.reflection)}</p><h3>Application</h3><p>${esc(x.application)}</p><h3>Reflection Questions</h3><ol>${x.questions.map(q=>`<li>${esc(q)}</li>`).join('')}</ol><h3>Prayer</h3><p>${esc(x.prayer)}</p><div class="resource-foot"><b>Memory:</b> ${esc(x.memory)}<br><b>Suggested reading:</b> ${esc(x.reading)}</div>`;
  if(o.kind==='exhortation')body=`<span class="pill">${esc(x.category)}</span><h2>${esc(x.title)}</h2><div class="scripture-banner">${esc(x.main)}</div><p>${esc(x.intro)}</p>${x.points.map((p,i)=>`<section><h3>${i+1}. ${esc(p[0])}</h3><p>${esc(p[1])}</p></section>`).join('')}<h3>Supporting Scriptures</h3><p>${x.support.map(esc).join(', ')}</p><h3>Application</h3><p>${esc(x.application)}</p><h3>Challenge</h3><p>${esc(x.challenge)}</p><h3>Prayer</h3><p>${esc(x.prayer)}</p>`;
  if(o.kind==='study')body=`<span class="pill">${esc(x.type)}</span><h2>${esc(x.title)}</h2><div class="scripture-banner">${esc(x.passage)}</div><h3>Objective</h3><p>${esc(x.objective)}</p><h3>Background</h3><p>${esc(x.background)}</p><h3>Discussion Questions</h3><ol>${x.questions.map(q=>`<li>${esc(q)}</li>`).join('')}</ol><h3>Leader Notes</h3><p>${esc(x.leader_notes)}</p><h3>Application</h3><p>${esc(x.application)}</p><h3>Prayer</h3><p>${esc(x.prayer)}</p>`;
@@ -108,4 +122,4 @@ function creator(){let type=store.get('creatorType','Devotional');title('Create 
 }
 function myresources(){title('My Resources','Personal drafts saved only in this browser.');let a=store.get('createdResources');view.innerHTML=`<div class="privacy-card"><div class="privacy-icon">📁</div><div><h3>Private to this browser profile</h3><p>These drafts are not added to the public GitHub library. Use My Backup to move them to another device.</p></div></div><div class="entries">${a.length?a.map(x=>`<article class="entry"><span class="pill">${esc(x.type)}</span><h3>${esc(x.title)}</h3><div class="meta">${esc(x.created)}</div><pre class="saved-resource">${esc(x.text)}</pre><button class="ghost" data-copy="${x.id}">Copy</button> <button class="danger" data-del="${x.id}">Delete</button></article>`).join(''):'<div class="empty">You have not saved any created resources yet.</div>'}</div>`;document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=async()=>{let x=a.find(y=>y.id==b.dataset.copy);await navigator.clipboard.writeText(x.text);toast('Copied')});document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{if(confirm('Delete this personal resource?')){a=a.filter(x=>x.id!=b.dataset.del);store.set('createdResources',a);myresources()}})}
 function render(){({home,read,search,devotionals,exhortations,studies,kidslibrary,prayerlibrary,resource,creator,myresources,favourites,highlights:highlightsPage,verseNotes,notes,prayer,sermon,kids,reading,backup}[state.page]||home)()}
-route('home');
+route(location.hash.slice(1)||'home',false);
