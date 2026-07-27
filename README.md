@@ -1,45 +1,17 @@
-# De Mayo Bible Ministry — Responsive GitHub Version 8
+# De Mayo Bible Ministry — Version 11 (All NKJV Online)
 
-A responsive offline Bible ministry Progressive Web App for GitHub Pages.
+This GitHub Pages app uses the **New King James Version (NKJV)** for every Bible-reading action.
 
-## Device support
-- iPhone and Android phones
-- iPad and Android tablets
-- Windows PCs
-- MacBooks and iMacs
-- Safari, Chrome, Edge, and Firefox
+## Important
 
-## Main improvements
-- Fixed mobile hamburger menu and header overlap
-- iPhone safe-area support
-- Desktop sidebar for PC and Mac
-- Mobile bottom navigation with a working More menu
-- Shareable page links using URL hashes
-- Keyboard navigation and Escape-to-close menu
-- Full offline KJV Bible and ministry resources
+- Scripture references, Bible reading, and Bible search open the NKJV through an authorised online Bible service.
+- Internet access is required for Bible content.
+- The full copyrighted NKJV text is not bundled, copied, or stored in this repository.
+- Devotionals, exhortations, Bible studies, kids lessons, prayers, journals, plans, and ministry tools remain in the app.
+- Personal notes and journals are stored locally in the browser and can be backed up from the app.
 
-## GitHub Pages
-Upload all files, including `.github`, to the root of your repository. In **Settings → Pages**, select **GitHub Actions**.
+## GitHub Pages upload
 
-Example page links after deployment:
-- `#home`
-- `#read`
-- `#devotionals`
-- `#exhortations`
-- `#studies`
-- `#kidslibrary`
-- `#prayerlibrary`
-- `#prayer`
-- `#sermon`
-- `#kids`
-- `#creator`
-- `#myresources`
-- `#backup`
+Upload **the contents of this folder** to the root of your repository, replacing the older files. Ensure GitHub Pages deploys from the `main` branch root or through the included workflow.
 
-
-## Link fix
-This build fixes the resource-card routing bug. Devotionals, exhortations, Bible studies, kids lessons, and prayers now open their complete resource view instead of returning to Home.
-
-
-## Scripture links update
-Scripture references in Devotionals, Exhortations, Bible Studies, Kids Lessons, and the Prayer Library are clickable. They open the built-in KJV reader at the correct chapter and verse, with a Back to resource button.
+After deployment, iPhone users should remove the old Home Screen app, clear the site data if necessary, reopen the live URL in Safari, and add it to the Home Screen again.

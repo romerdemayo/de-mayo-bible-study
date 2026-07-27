@@ -7,33 +7,38 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="De Mayo Bible">
-  <meta name="description" content="Offline KJV Bible, ministry library, personal study tools, prayer journal, sermon builder, and children’s ministry planner.">
+  <meta name="description" content="NKJV-first online Bible ministry app with devotionals, studies, prayer, lessons and ministry tools.">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icon-192.png">
   <title>De Mayo Bible Ministry</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<a class="skip-link" href="#view">Skip to content</a>
 <div class="app-shell">
-  <aside id="sidebar">
+  <aside id="sidebar" aria-label="Main navigation">
     <div class="brand">
       <div class="brand-mark">✝</div>
-      <div><b>De Mayo</b><small>Bible Study</small></div>
+      <div><b>De Mayo</b><small>Bible Ministry</small></div>
+      <div class="engraved-mini" aria-label="Created by Romer De Mayo">RDM</div>
     </div>
     <nav id="nav"></nav>
     <div class="sidebar-footer">
-      <strong>Offline KJV</strong>
-      <span>Your personal content stays on this device.</span>
+      <strong>NKJV Online</strong>
+      <span>Internet required for Scripture reading.</span>
+      <div class="creator-signature"><span class="engraved-seal">RDM</span><span>Created by<br><b>Romer De Mayo</b></span></div>
     </div>
   </aside>
+  <button id="sidebarOverlay" class="sidebar-overlay" aria-label="Close menu" tabindex="-1"></button>
 
   <main>
     <header class="topbar">
-      <button id="menu" class="icon-btn" aria-label="Open menu">☰</button>
+      <button id="menu" class="icon-btn menu-btn" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">☰</button>
       <div class="title-wrap">
         <h1 id="pageTitle">Home</h1>
         <p id="pageSub">Read, study, pray, and prepare.</p>
       </div>
+      <button class="icon-btn help-btn" id="helpBtn" aria-label="Open Help and User Guide" title="Help">?</button>
       <button class="icon-btn theme-btn" id="theme" aria-label="Change theme">◐</button>
     </header>
     <section id="view"></section>
@@ -43,7 +48,6 @@
 <nav id="mobileNav" class="mobile-nav"></nav>
 <div id="toast" role="status" aria-live="polite"></div>
 
-<script src="bible-data.js"></script>
 <script src="data/devotionals.js"></script>
 <script src="data/exhortations.js"></script>
 <script src="data/bible-studies.js"></script>

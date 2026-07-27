@@ -1,12 +1,12 @@
 {
-  "name": "De Mayo Bible Ministry",
-  "short_name": "De Mayo Bible",
+  "name": "De Mayo Bible Ministry \u2014 NKJV Online",
+  "short_name": "De Mayo NKJV",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f4f0e8",
   "theme_color": "#173f35",
-  "description": "Offline KJV Bible and ministry resource library with private personal study tools.",
+  "description": "NKJV-first online Bible ministry app. Internet required for Scripture reading.",
   "icons": [
     {
       "src": "icon-192.png",
