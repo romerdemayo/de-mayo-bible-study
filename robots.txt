@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://romerdemayo.github.io/de-mayo-bible-study/sitemap.xml

@@ -23,3 +23,12 @@ After deployment, refresh the website. On iPhone, remove an older Home Screen in
 ## Bible translation
 
 This build uses the World English Bible (WEB), a public-domain modern-English translation. The Bible remains available offline after the app has loaded.
+
+
+## Version 15 SEO Edition
+
+This release adds search-engine metadata, social sharing tags, Schema.org structured data, `robots.txt`, `sitemap.xml`, and static indexable landing pages for the Bible, devotionals, exhortations, Bible studies, kids lessons, prayer library, About, Help, Privacy and Contact.
+
+After deploying, submit this sitemap in Google Search Console:
+
+`https://romerdemayo.github.io/de-mayo-bible-study/sitemap.xml`

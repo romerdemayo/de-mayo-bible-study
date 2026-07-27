@@ -4,14 +4,70 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#173f35">
+  <meta name="application-name" content="De Mayo Bible Ministry">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="De Mayo Bible">
-  <meta name="description" content="Offline World English Bible reader, study notes, prayer journal, reading plan and ministry tools.">
+
+  <title>De Mayo Bible Ministry | Free WEB Bible, Devotionals & Bible Studies</title>
+  <meta name="description" content="A free Christian Bible ministry website featuring the World English Bible, Bible search, devotionals, exhortations, Bible studies, kids lessons, prayers, sermon tools and a private prayer journal.">
+  <meta name="keywords" content="free Bible online, World English Bible, WEB Bible, Christian devotionals, Bible studies, kids Bible lessons, prayer library, prayer journal, sermon builder">
+  <meta name="author" content="De Mayo Bible Ministry">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://romerdemayo.github.io/de-mayo-bible-study/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="De Mayo Bible Ministry">
+  <meta property="og:title" content="De Mayo Bible Ministry | Free Bible & Christian Resources">
+  <meta property="og:description" content="Read the World English Bible and explore free devotionals, Bible studies, kids lessons, prayers and ministry tools.">
+  <meta property="og:url" content="https://romerdemayo.github.io/de-mayo-bible-study/">
+  <meta property="og:image" content="https://romerdemayo.github.io/de-mayo-bible-study/icon-512.png">
+  <meta property="og:image:alt" content="De Mayo Bible Ministry app icon">
+  <meta property="og:locale" content="en_NZ">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="De Mayo Bible Ministry">
+  <meta name="twitter:description" content="Free World English Bible, devotionals, Bible studies, kids lessons, prayers and ministry tools.">
+  <meta name="twitter:image" content="https://romerdemayo.github.io/de-mayo-bible-study/icon-512.png">
+
   <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon-192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="icon-192.png">
-  <title>De Mayo Bible Ministry</title>
-  <link rel="stylesheet" href="styles.css?v=14">
+  <link rel="stylesheet" href="styles.css?v=15">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://romerdemayo.github.io/de-mayo-bible-study/#website",
+        "url": "https://romerdemayo.github.io/de-mayo-bible-study/",
+        "name": "De Mayo Bible Ministry",
+        "description": "Free World English Bible and Christian ministry resources.",
+        "inLanguage": "en",
+        "publisher": {"@id": "https://romerdemayo.github.io/de-mayo-bible-study/#organization"}
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://romerdemayo.github.io/de-mayo-bible-study/#organization",
+        "name": "De Mayo Bible Ministry",
+        "url": "https://romerdemayo.github.io/de-mayo-bible-study/",
+        "logo": "https://romerdemayo.github.io/de-mayo-bible-study/icon-512.png"
+      },
+      {
+        "@type": "WebApplication",
+        "name": "De Mayo Bible Ministry",
+        "url": "https://romerdemayo.github.io/de-mayo-bible-study/",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Any",
+        "isAccessibleForFree": true,
+        "offers": {"@type": "Offer", "price": "0", "priceCurrency": "NZD"},
+        "description": "A free Bible reading, study, prayer and ministry web application using the World English Bible."
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 <a class="skip-link" href="#view">Skip to content</a>
@@ -45,13 +101,13 @@
 <nav id="mobileNav" class="mobile-nav"></nav>
 <div id="toast" role="status" aria-live="polite"></div>
 
-<script src="bible-data.js?v=14"></script>
-<script src="data/devotionals.js?v=14"></script>
-<script src="data/exhortations.js?v=14"></script>
-<script src="data/bible-studies.js?v=14"></script>
-<script src="data/kids-lessons.js?v=14"></script>
-<script src="data/prayers.js?v=14"></script>
-<script src="app.js?v=14"></script>
+<script src="bible-data.js?v=15"></script>
+<script src="data/devotionals.js?v=15"></script>
+<script src="data/exhortations.js?v=15"></script>
+<script src="data/bible-studies.js?v=15"></script>
+<script src="data/kids-lessons.js?v=15"></script>
+<script src="data/prayers.js?v=15"></script>
+<script src="app.js?v=15"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js'));
