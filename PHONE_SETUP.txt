@@ -1,0 +1,26 @@
+DE MAYO BIBLE STUDY — PHONE INSTALLATION
+
+This folder is a Progressive Web App (PWA). It must first be placed on a secure HTTPS website. Opening index.html directly from an iPhone/Android Files app will not install the offline app correctly.
+
+EASIEST FREE PUBLISHING METHOD
+1. On a computer, unzip this package.
+2. Upload the entire unzipped folder to a static website host such as Netlify Drop, Cloudflare Pages, GitHub Pages, or your own website.
+3. Open the HTTPS address on your phone.
+
+IPHONE / IPAD
+1. Open the HTTPS address in Safari.
+2. Tap Share (square with upward arrow).
+3. Tap Add to Home Screen.
+4. Tap Add.
+5. Open De Mayo Bible from the Home Screen once while online. After the Bible files finish loading, it works offline.
+
+ANDROID
+1. Open the HTTPS address in Chrome.
+2. Tap the three-dot menu.
+3. Tap Install app or Add to Home screen.
+4. Open it once while online so all Bible files are cached for offline use.
+
+IMPORTANT
+- Notes, favourites, prayers, sermons and reading progress are stored only in that browser on that device.
+- Use Backup inside the app before clearing browser data or changing phones.
+- The Bible database is large, so the first opening may take a little longer.
