@@ -1,1 +1,562 @@
-window.EXHORTATIONS = [{"title": "Do Not Grow Weary in Doing Good", "category": "Encouragement", "main": "Galatians 6:9", "intro": "Faithful service can become tiring when results are slow.", "points": [["Weariness is real", "Doing good can be costly."], ["The harvest has an appointed season", "God determines the timing."], ["Perseverance is faith", "Continuing to obey trusts God’s promise."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Encourage one weary servant.", "challenge": "Do not measure obedience only by immediate results.", "prayer": "Lord, establish the truth of Galatians 6:9 in our hearts and help us obey You."}, {"title": "Serve One Another in Love", "category": "Service", "main": "Galatians 5:13", "intro": "Christian freedom is fulfilled when love moves us to serve.", "points": [["Called to freedom", "Christ frees us from sin."], ["Do not feed selfishness", "Freedom must not become self-centred."], ["Love becomes service", "Use your gifts for others."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Meet an unnoticed need quietly.", "challenge": "Serve where there is no applause.", "prayer": "Lord, establish the truth of Galatians 5:13 in our hearts and help us obey You."}, {"title": "Pray Without Giving Up", "category": "Prayer", "main": "Luke 18:1", "intro": "Jesus taught persistence because delay can tempt believers to lose heart.", "points": [["Prayer keeps us turned to God", "God remains our source."], ["Delay is not always denial", "God’s timing has purpose."], ["Faith continues to ask", "Persistence is dependence."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Pray daily for one long-standing request.", "challenge": "Let waiting deepen dependence.", "prayer": "Lord, establish the truth of Luke 18:1 in our hearts and help us obey You."}, {"title": "Be Strong and Courageous", "category": "Faith", "main": "Joshua 1:9", "intro": "Joshua faced work larger than his strength. Courage rested on God’s presence.", "points": [["Courage begins with God’s command", "Move forward even when afraid."], ["Courage is sustained by God’s Word", "Meditate and obey."], ["Courage rests on God’s presence", "The Lord is with you."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Take one obedient step delayed by fear.", "challenge": "Do not wait for fear to disappear.", "prayer": "Lord, establish the truth of Joshua 1:9 in our hearts and help us obey You."}, {"title": "Guard Your Heart", "category": "Spiritual Growth", "main": "Proverbs 4:23", "intro": "Life is shaped by what we welcome, rehearse, and treasure.", "points": [["The heart influences life", "Thoughts shape words and actions."], ["Guarding requires attention", "Notice what forms your desires."], ["Truth renews the heart", "Scripture and prayer reshape us."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Replace one unhealthy influence with a truth-filled habit.", "challenge": "Do not protect your image while neglecting your heart.", "prayer": "Lord, establish the truth of Proverbs 4:23 in our hearts and help us obey You."}, {"title": "The Power of a Thankful Heart", "category": "Thanksgiving", "main": "1 Thessalonians 5:18", "intro": "Thanksgiving recognises God’s goodness even in hardship.", "points": [["Thankfulness is commanded", "Gratitude is a discipline of faith."], ["Thankfulness redirects attention", "It helps us notice grace."], ["Thankfulness strengthens witness", "A grateful church displays trust."]], "support": ["Psalm 119:105", "James 1:22"], "application": "List five gifts from God.", "challenge": "Replace one complaint with thanksgiving.", "prayer": "Lord, establish the truth of 1 Thessalonians 5:18 in our hearts and help us obey You."}, {"title": "Fix Your Eyes on Jesus", "category": "Perseverance", "main": "Hebrews 12:1–2", "intro": "Endurance grows when our attention moves from obstacles to Christ.", "points": [["Lay aside every weight", "Not everything slowing us is sinful, but it may still need removal."], ["Run your own race", "Faithfulness is not comparison."], ["Look to Jesus", "He is our example and strength."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Remove one distraction.", "challenge": "Keep looking to Jesus, not the crowd.", "prayer": "Lord, establish the truth of Hebrews 12:1–2 in our hearts and help us obey You."}, {"title": "Let Your Light Shine", "category": "Witness", "main": "Matthew 5:14–16", "intro": "Jesus calls His people to visible goodness that points to the Father.", "points": [["Identity comes first", "You are light because you belong to Christ."], ["Light is meant to be seen", "Faith should shape public conduct."], ["Glory belongs to God", "Good works should direct attention to Him."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Do one visible act of kindness.", "challenge": "Shine without seeking praise.", "prayer": "Lord, establish the truth of Matthew 5:14–16 in our hearts and help us obey You."}, {"title": "Choose Forgiveness", "category": "Forgiveness", "main": "Colossians 3:13", "intro": "Believers forgive from the grace they have received.", "points": [["Offence is real", "Forgiveness does not pretend harm never happened."], ["Christ is the pattern", "We forgive as the Lord forgave us."], ["Freedom follows release", "Bitterness loses its grip when vengeance is surrendered."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Begin praying for someone who hurt you.", "challenge": "Release the debt to God.", "prayer": "Lord, establish the truth of Colossians 3:13 in our hearts and help us obey You."}, {"title": "Seek First the Kingdom", "category": "Priorities", "main": "Matthew 6:33", "intro": "Anxiety loses its rule when God’s kingdom becomes first.", "points": [["God knows our needs", "We are not forgotten."], ["Kingdom priorities reorder life", "His will comes before worry."], ["Trust acts today", "Tomorrow belongs to God."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Review one anxious decision.", "challenge": "Put obedience before control.", "prayer": "Lord, establish the truth of Matthew 6:33 in our hearts and help us obey You."}, {"title": "Build One Another Up", "category": "Community", "main": "1 Thessalonians 5:11", "intro": "The church grows stronger when believers intentionally encourage one another.", "points": [["Encouragement notices grace", "Call out what God is doing."], ["Encouragement speaks truth", "Give more than vague praise."], ["Encouragement strengthens endurance", "Timely words help people continue."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Send one specific encouragement.", "challenge": "Be a builder, not a critic.", "prayer": "Lord, establish the truth of 1 Thessalonians 5:11 in our hearts and help us obey You."}, {"title": "Return to Your First Love", "category": "Revival", "main": "Revelation 2:4–5", "intro": "Religious activity cannot replace wholehearted love for Christ.", "points": [["Remember", "Recall the joy of knowing Christ."], ["Repent", "Turn from cold routine."], ["Return", "Practise the works flowing from love."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Restore one neglected spiritual habit.", "challenge": "Do not serve Christ while drifting from Christ.", "prayer": "Lord, establish the truth of Revelation 2:4–5 in our hearts and help us obey You."}, {"title": "The Lord Is Our Shepherd", "category": "Comfort", "main": "Psalm 23:1", "intro": "God’s care is personal, wise, and sufficient.", "points": [["He provides", "The Shepherd knows what the sheep need."], ["He guides", "His paths are righteous."], ["He stays near", "Even the valley is not godless."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Entrust one need to God.", "challenge": "Follow the Shepherd one step at a time.", "prayer": "Lord, establish the truth of Psalm 23:1 in our hearts and help us obey You."}, {"title": "Walk by the Spirit", "category": "Holiness", "main": "Galatians 5:16", "intro": "Victory over sinful desire comes through active dependence on the Holy Spirit.", "points": [["The conflict is real", "Flesh and Spirit oppose one another."], ["Dependence is daily", "Walking is continuous."], ["Fruit reveals direction", "Character shows what is leading us."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Choose one Spirit-led response today.", "challenge": "Do not fight the flesh in the strength of the flesh.", "prayer": "Lord, establish the truth of Galatians 5:16 in our hearts and help us obey You."}, {"title": "Faith Comes by Hearing", "category": "Scripture", "main": "Romans 10:17", "intro": "Faith is nourished as God’s Word is heard, received, and obeyed.", "points": [["God speaks through Scripture", "The message is not self-invention."], ["Hearing requires attention", "Exposure is not the same as reception."], ["Faith responds", "True hearing moves toward trust."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Read one passage aloud.", "challenge": "Make room to hear God’s Word.", "prayer": "Lord, establish the truth of Romans 10:17 in our hearts and help us obey You."}, {"title": "God Is Our Refuge", "category": "Protection", "main": "Psalm 46:1", "intro": "Trouble does not cancel God’s presence; it reveals where our refuge truly is.", "points": [["God is present help", "He is not distant in crisis."], ["Fear is challenged", "Even shaking creation cannot dethrone Him."], ["Stillness recognises sovereignty", "We stop striving and know He is God."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Pause and pray before reacting.", "challenge": "Run to God before running to panic.", "prayer": "Lord, establish the truth of Psalm 46:1 in our hearts and help us obey You."}, {"title": "Be Quick to Hear", "category": "Relationships", "main": "James 1:19", "intro": "Mature faith listens carefully, speaks wisely, and slows anger.", "points": [["Listening honours people", "It makes room for understanding."], ["Words need restraint", "Not every thought must be spoken."], ["Anger needs surrender", "Human anger does not produce God’s righteousness."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Listen without interrupting in one conversation.", "challenge": "Let grace set the pace of your speech.", "prayer": "Lord, establish the truth of James 1:19 in our hearts and help us obey You."}, {"title": "Faithful With What You Have", "category": "Stewardship", "main": "Matthew 25:21", "intro": "God values faithful stewardship more than comparison.", "points": [["Everything is entrusted", "Time, gifts, and resources belong to God."], ["Faithfulness is measurable", "We use what we have, not what we wish we had."], ["Joy follows obedience", "The Master welcomes faithful servants."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Use one neglected gift.", "challenge": "Stop comparing and start stewarding.", "prayer": "Lord, establish the truth of Matthew 25:21 in our hearts and help us obey You."}, {"title": "Carry One Another’s Burdens", "category": "Care", "main": "Galatians 6:2", "intro": "Christian community becomes visible when burdens are shared.", "points": [["Notice the burden", "Love pays attention."], ["Move toward the person", "Compassion becomes presence."], ["Share the weight", "Prayer and practical help fulfil Christ’s law."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Ask one person how you can help.", "challenge": "Do not let someone suffer alone when you can stand beside them.", "prayer": "Lord, establish the truth of Galatians 6:2 in our hearts and help us obey You."}, {"title": "Nothing Can Separate Us", "category": "Assurance", "main": "Romans 8:38–39", "intro": "The believer’s security rests in God’s love in Christ, not in changing feelings.", "points": [["Trials cannot sever His love", "Hardship is not abandonment."], ["Powers cannot defeat His love", "No spiritual force is greater."], ["Christ holds us securely", "Our hope rests in Him."]], "support": ["Psalm 119:105", "James 1:22"], "application": "Speak this promise over a fearful moment.", "challenge": "Let assurance produce worship.", "prayer": "Lord, establish the truth of Romans 8:38–39 in our hearts and help us obey You."}];
+window.EXHORTATIONS = [
+  {
+    "title": "Do Not Grow Weary in Doing Good",
+    "category": "Encouragement",
+    "main": "Galatians 6:9",
+    "intro": "Faithful service can become tiring when results are slow.",
+    "points": [
+      [
+        "Weariness is real",
+        "Doing good can be costly."
+      ],
+      [
+        "The harvest has an appointed season",
+        "God determines the timing."
+      ],
+      [
+        "Perseverance is faith",
+        "Continuing to obey trusts God’s promise."
+      ]
+    ],
+    "support": [
+      "Isaiah 40:31",
+      "Hebrews 12:1–3",
+      "1 Corinthians 15:58"
+    ],
+    "application": "Encourage one weary servant.",
+    "challenge": "Do not measure obedience only by immediate results.",
+    "prayer": "Lord, establish the truth of Galatians 6:9 in our hearts and help us obey You."
+  },
+  {
+    "title": "Serve One Another in Love",
+    "category": "Service",
+    "main": "Galatians 5:13",
+    "intro": "Christian freedom is fulfilled when love moves us to serve.",
+    "points": [
+      [
+        "Called to freedom",
+        "Christ frees us from sin."
+      ],
+      [
+        "Do not feed selfishness",
+        "Freedom must not become self-centred."
+      ],
+      [
+        "Love becomes service",
+        "Use your gifts for others."
+      ]
+    ],
+    "support": [
+      "John 13:14–15",
+      "Philippians 2:3–4",
+      "1 Peter 4:10"
+    ],
+    "application": "Meet an unnoticed need quietly.",
+    "challenge": "Serve where there is no applause.",
+    "prayer": "Lord, establish the truth of Galatians 5:13 in our hearts and help us obey You."
+  },
+  {
+    "title": "Pray Without Giving Up",
+    "category": "Prayer",
+    "main": "Luke 18:1",
+    "intro": "Jesus taught persistence because delay can tempt believers to lose heart.",
+    "points": [
+      [
+        "Prayer keeps us turned to God",
+        "God remains our source."
+      ],
+      [
+        "Delay is not always denial",
+        "God’s timing has purpose."
+      ],
+      [
+        "Faith continues to ask",
+        "Persistence is dependence."
+      ]
+    ],
+    "support": [
+      "1 Thessalonians 5:17",
+      "Philippians 4:6–7",
+      "Colossians 4:2"
+    ],
+    "application": "Pray daily for one long-standing request.",
+    "challenge": "Let waiting deepen dependence.",
+    "prayer": "Lord, establish the truth of Luke 18:1 in our hearts and help us obey You."
+  },
+  {
+    "title": "Be Strong and Courageous",
+    "category": "Faith",
+    "main": "Joshua 1:9",
+    "intro": "Joshua faced work larger than his strength. Courage rested on God’s presence.",
+    "points": [
+      [
+        "Courage begins with God’s command",
+        "Move forward even when afraid."
+      ],
+      [
+        "Courage is sustained by God’s Word",
+        "Meditate and obey."
+      ],
+      [
+        "Courage rests on God’s presence",
+        "The Lord is with you."
+      ]
+    ],
+    "support": [
+      "Deuteronomy 31:8",
+      "Psalm 27:1",
+      "Isaiah 41:10"
+    ],
+    "application": "Take one obedient step delayed by fear.",
+    "challenge": "Do not wait for fear to disappear.",
+    "prayer": "Lord, establish the truth of Joshua 1:9 in our hearts and help us obey You."
+  },
+  {
+    "title": "Guard Your Heart",
+    "category": "Spiritual Growth",
+    "main": "Proverbs 4:23",
+    "intro": "Life is shaped by what we welcome, rehearse, and treasure.",
+    "points": [
+      [
+        "The heart influences life",
+        "Thoughts shape words and actions."
+      ],
+      [
+        "Guarding requires attention",
+        "Notice what forms your desires."
+      ],
+      [
+        "Truth renews the heart",
+        "Scripture and prayer reshape us."
+      ]
+    ],
+    "support": [
+      "Philippians 4:8",
+      "Romans 12:2",
+      "Psalm 51:10"
+    ],
+    "application": "Replace one unhealthy influence with a truth-filled habit.",
+    "challenge": "Do not protect your image while neglecting your heart.",
+    "prayer": "Lord, establish the truth of Proverbs 4:23 in our hearts and help us obey You."
+  },
+  {
+    "title": "The Power of a Thankful Heart",
+    "category": "Thanksgiving",
+    "main": "1 Thessalonians 5:18",
+    "intro": "Thanksgiving recognises God’s goodness even in hardship.",
+    "points": [
+      [
+        "Thankfulness is commanded",
+        "Gratitude is a discipline of faith."
+      ],
+      [
+        "Thankfulness redirects attention",
+        "It helps us notice grace."
+      ],
+      [
+        "Thankfulness strengthens witness",
+        "A grateful church displays trust."
+      ]
+    ],
+    "support": [
+      "Psalm 100:4",
+      "Colossians 3:15–17",
+      "Philippians 4:4–6"
+    ],
+    "application": "List five gifts from God.",
+    "challenge": "Replace one complaint with thanksgiving.",
+    "prayer": "Lord, establish the truth of 1 Thessalonians 5:18 in our hearts and help us obey You."
+  },
+  {
+    "title": "Fix Your Eyes on Jesus",
+    "category": "Perseverance",
+    "main": "Hebrews 12:1–2",
+    "intro": "Endurance grows when our attention moves from obstacles to Christ.",
+    "points": [
+      [
+        "Lay aside every weight",
+        "Not everything slowing us is sinful, but it may still need removal."
+      ],
+      [
+        "Run your own race",
+        "Faithfulness is not comparison."
+      ],
+      [
+        "Look to Jesus",
+        "He is our example and strength."
+      ]
+    ],
+    "support": [
+      "Colossians 3:1–2",
+      "Philippians 3:13–14",
+      "2 Corinthians 4:16–18"
+    ],
+    "application": "Remove one distraction.",
+    "challenge": "Keep looking to Jesus, not the crowd.",
+    "prayer": "Lord, establish the truth of Hebrews 12:1–2 in our hearts and help us obey You."
+  },
+  {
+    "title": "Let Your Light Shine",
+    "category": "Witness",
+    "main": "Matthew 5:14–16",
+    "intro": "Jesus calls His people to visible goodness that points to the Father.",
+    "points": [
+      [
+        "Identity comes first",
+        "You are light because you belong to Christ."
+      ],
+      [
+        "Light is meant to be seen",
+        "Faith should shape public conduct."
+      ],
+      [
+        "Glory belongs to God",
+        "Good works should direct attention to Him."
+      ]
+    ],
+    "support": [
+      "Ephesians 5:8–10",
+      "Philippians 2:14–15",
+      "1 Peter 2:12"
+    ],
+    "application": "Do one visible act of kindness.",
+    "challenge": "Shine without seeking praise.",
+    "prayer": "Lord, establish the truth of Matthew 5:14–16 in our hearts and help us obey You."
+  },
+  {
+    "title": "Choose Forgiveness",
+    "category": "Forgiveness",
+    "main": "Colossians 3:13",
+    "intro": "Believers forgive from the grace they have received.",
+    "points": [
+      [
+        "Offence is real",
+        "Forgiveness does not pretend harm never happened."
+      ],
+      [
+        "Christ is the pattern",
+        "We forgive as the Lord forgave us."
+      ],
+      [
+        "Freedom follows release",
+        "Bitterness loses its grip when vengeance is surrendered."
+      ]
+    ],
+    "support": [
+      "Ephesians 4:31–32",
+      "Matthew 6:14–15",
+      "Luke 6:36–37"
+    ],
+    "application": "Begin praying for someone who hurt you.",
+    "challenge": "Release the debt to God.",
+    "prayer": "Lord, establish the truth of Colossians 3:13 in our hearts and help us obey You."
+  },
+  {
+    "title": "Seek First the Kingdom",
+    "category": "Priorities",
+    "main": "Matthew 6:33",
+    "intro": "Anxiety loses its rule when God’s kingdom becomes first.",
+    "points": [
+      [
+        "God knows our needs",
+        "We are not forgotten."
+      ],
+      [
+        "Kingdom priorities reorder life",
+        "His will comes before worry."
+      ],
+      [
+        "Trust acts today",
+        "Tomorrow belongs to God."
+      ]
+    ],
+    "support": [
+      "Psalm 37:4–5",
+      "Proverbs 3:5–6",
+      "Colossians 3:1–2"
+    ],
+    "application": "Review one anxious decision.",
+    "challenge": "Put obedience before control.",
+    "prayer": "Lord, establish the truth of Matthew 6:33 in our hearts and help us obey You."
+  },
+  {
+    "title": "Build One Another Up",
+    "category": "Community",
+    "main": "1 Thessalonians 5:11",
+    "intro": "The church grows stronger when believers intentionally encourage one another.",
+    "points": [
+      [
+        "Encouragement notices grace",
+        "Call out what God is doing."
+      ],
+      [
+        "Encouragement speaks truth",
+        "Give more than vague praise."
+      ],
+      [
+        "Encouragement strengthens endurance",
+        "Timely words help people continue."
+      ]
+    ],
+    "support": [
+      "Hebrews 10:24–25",
+      "Ephesians 4:29",
+      "Romans 15:2"
+    ],
+    "application": "Send one specific encouragement.",
+    "challenge": "Be a builder, not a critic.",
+    "prayer": "Lord, establish the truth of 1 Thessalonians 5:11 in our hearts and help us obey You."
+  },
+  {
+    "title": "Return to Your First Love",
+    "category": "Revival",
+    "main": "Revelation 2:4–5",
+    "intro": "Religious activity cannot replace wholehearted love for Christ.",
+    "points": [
+      [
+        "Remember",
+        "Recall the joy of knowing Christ."
+      ],
+      [
+        "Repent",
+        "Turn from cold routine."
+      ],
+      [
+        "Return",
+        "Practise the works flowing from love."
+      ]
+    ],
+    "support": [
+      "Jeremiah 2:2",
+      "Psalm 51:10–12",
+      "James 4:8"
+    ],
+    "application": "Restore one neglected spiritual habit.",
+    "challenge": "Do not serve Christ while drifting from Christ.",
+    "prayer": "Lord, establish the truth of Revelation 2:4–5 in our hearts and help us obey You."
+  },
+  {
+    "title": "The Lord Is Our Shepherd",
+    "category": "Comfort",
+    "main": "Psalm 23:1",
+    "intro": "God’s care is personal, wise, and sufficient.",
+    "points": [
+      [
+        "He provides",
+        "The Shepherd knows what the sheep need."
+      ],
+      [
+        "He guides",
+        "His paths are righteous."
+      ],
+      [
+        "He stays near",
+        "Even the valley is not godless."
+      ]
+    ],
+    "support": [
+      "John 10:11",
+      "Isaiah 40:11",
+      "1 Peter 5:7"
+    ],
+    "application": "Entrust one need to God.",
+    "challenge": "Follow the Shepherd one step at a time.",
+    "prayer": "Lord, establish the truth of Psalm 23:1 in our hearts and help us obey You."
+  },
+  {
+    "title": "Walk by the Spirit",
+    "category": "Holiness",
+    "main": "Galatians 5:16",
+    "intro": "Victory over sinful desire comes through active dependence on the Holy Spirit.",
+    "points": [
+      [
+        "The conflict is real",
+        "Flesh and Spirit oppose one another."
+      ],
+      [
+        "Dependence is daily",
+        "Walking is continuous."
+      ],
+      [
+        "Fruit reveals direction",
+        "Character shows what is leading us."
+      ]
+    ],
+    "support": [
+      "Romans 8:5–6",
+      "Galatians 5:22–25",
+      "Ephesians 5:18"
+    ],
+    "application": "Choose one Spirit-led response today.",
+    "challenge": "Do not fight the flesh in the strength of the flesh.",
+    "prayer": "Lord, establish the truth of Galatians 5:16 in our hearts and help us obey You."
+  },
+  {
+    "title": "Faith Comes by Hearing",
+    "category": "Scripture",
+    "main": "Romans 10:17",
+    "intro": "Faith is nourished as God’s Word is heard, received, and obeyed.",
+    "points": [
+      [
+        "God speaks through Scripture",
+        "The message is not self-invention."
+      ],
+      [
+        "Hearing requires attention",
+        "Exposure is not the same as reception."
+      ],
+      [
+        "Faith responds",
+        "True hearing moves toward trust."
+      ]
+    ],
+    "support": [
+      "Hebrews 4:12",
+      "2 Timothy 3:16–17",
+      "James 1:21–22"
+    ],
+    "application": "Read one passage aloud.",
+    "challenge": "Make room to hear God’s Word.",
+    "prayer": "Lord, establish the truth of Romans 10:17 in our hearts and help us obey You."
+  },
+  {
+    "title": "God Is Our Refuge",
+    "category": "Protection",
+    "main": "Psalm 46:1",
+    "intro": "Trouble does not cancel God’s presence; it reveals where our refuge truly is.",
+    "points": [
+      [
+        "God is present help",
+        "He is not distant in crisis."
+      ],
+      [
+        "Fear is challenged",
+        "Even shaking creation cannot dethrone Him."
+      ],
+      [
+        "Stillness recognises sovereignty",
+        "We stop striving and know He is God."
+      ]
+    ],
+    "support": [
+      "Psalm 91:1–2",
+      "Nahum 1:7",
+      "Proverbs 18:10"
+    ],
+    "application": "Pause and pray before reacting.",
+    "challenge": "Run to God before running to panic.",
+    "prayer": "Lord, establish the truth of Psalm 46:1 in our hearts and help us obey You."
+  },
+  {
+    "title": "Be Quick to Hear",
+    "category": "Relationships",
+    "main": "James 1:19",
+    "intro": "Mature faith listens carefully, speaks wisely, and slows anger.",
+    "points": [
+      [
+        "Listening honours people",
+        "It makes room for understanding."
+      ],
+      [
+        "Words need restraint",
+        "Not every thought must be spoken."
+      ],
+      [
+        "Anger needs surrender",
+        "Human anger does not produce God’s righteousness."
+      ]
+    ],
+    "support": [
+      "Proverbs 18:13",
+      "Proverbs 15:1",
+      "Ecclesiastes 5:2"
+    ],
+    "application": "Listen without interrupting in one conversation.",
+    "challenge": "Let grace set the pace of your speech.",
+    "prayer": "Lord, establish the truth of James 1:19 in our hearts and help us obey You."
+  },
+  {
+    "title": "Faithful With What You Have",
+    "category": "Stewardship",
+    "main": "Matthew 25:21",
+    "intro": "God values faithful stewardship more than comparison.",
+    "points": [
+      [
+        "Everything is entrusted",
+        "Time, gifts, and resources belong to God."
+      ],
+      [
+        "Faithfulness is measurable",
+        "We use what we have, not what we wish we had."
+      ],
+      [
+        "Joy follows obedience",
+        "The Master welcomes faithful servants."
+      ]
+    ],
+    "support": [
+      "Luke 16:10",
+      "1 Corinthians 4:2",
+      "1 Peter 4:10"
+    ],
+    "application": "Use one neglected gift.",
+    "challenge": "Stop comparing and start stewarding.",
+    "prayer": "Lord, establish the truth of Matthew 25:21 in our hearts and help us obey You."
+  },
+  {
+    "title": "Carry One Another’s Burdens",
+    "category": "Care",
+    "main": "Galatians 6:2",
+    "intro": "Christian community becomes visible when burdens are shared.",
+    "points": [
+      [
+        "Notice the burden",
+        "Love pays attention."
+      ],
+      [
+        "Move toward the person",
+        "Compassion becomes presence."
+      ],
+      [
+        "Share the weight",
+        "Prayer and practical help fulfil Christ’s law."
+      ]
+    ],
+    "support": [
+      "Romans 12:15",
+      "1 Thessalonians 5:14",
+      "Philippians 2:4"
+    ],
+    "application": "Ask one person how you can help.",
+    "challenge": "Do not let someone suffer alone when you can stand beside them.",
+    "prayer": "Lord, establish the truth of Galatians 6:2 in our hearts and help us obey You."
+  },
+  {
+    "title": "Nothing Can Separate Us",
+    "category": "Assurance",
+    "main": "Romans 8:38–39",
+    "intro": "The believer’s security rests in God’s love in Christ, not in changing feelings.",
+    "points": [
+      [
+        "Trials cannot sever His love",
+        "Hardship is not abandonment."
+      ],
+      [
+        "Powers cannot defeat His love",
+        "No spiritual force is greater."
+      ],
+      [
+        "Christ holds us securely",
+        "Our hope rests in Him."
+      ]
+    ],
+    "support": [
+      "John 10:28–29",
+      "Hebrews 13:5–6",
+      "Isaiah 43:1–2"
+    ],
+    "application": "Speak this promise over a fearful moment.",
+    "challenge": "Let assurance produce worship.",
+    "prayer": "Lord, establish the truth of Romans 8:38–39 in our hearts and help us obey You."
+  }
+];
