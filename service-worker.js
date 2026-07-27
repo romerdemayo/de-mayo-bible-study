@@ -1,11 +1,29 @@
-const CACHE = 'de-mayo-bible-v17-exhortations-fixed';
+const CACHE = 'de-mayo-bible-v18-bilingual-foundation';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./bible-data.js',
   './manifest.webmanifest','./icon-192.png','./icon-512.png',
   './data/devotionals.js','./data/exhortations.js','./data/bible-studies.js',
   './data/kids-lessons.js','./data/prayers.js',
-  './images/david.svg','./images/helping.svg','./images/storm.svg',
-  './images/sheep.svg','./images/daniel.svg','./images/samaritan.svg'
+  './images/abraham.svg',
+  './images/baby-moses.svg',
+  './images/creation.svg',
+  './images/daniel.svg',
+  './images/david.svg',
+  './images/elijah-widow.svg',
+  './images/esther.svg',
+  './images/five-thousand.svg',
+  './images/helping.svg',
+  './images/jericho.svg',
+  './images/jonah.svg',
+  './images/joseph.svg',
+  './images/noah.svg',
+  './images/pentecost.svg',
+  './images/red-sea.svg',
+  './images/ruth.svg',
+  './images/samaritan.svg',
+  './images/samuel.svg',
+  './images/sheep.svg',
+  './images/storm.svg'
 ];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));

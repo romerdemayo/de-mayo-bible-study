@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-language="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="De Mayo Bible">
-  <meta name="description" content="Offline KJV Bible reader, study notes, prayer journal, reading plan and ministry tools.">
+  <meta name="description" content="Easy-to-read WEB Bible with English and Tagalog ministry tools, study notes, prayer journal and reading plans.">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icon-192.png">
   <title>De Mayo Bible Ministry</title>
@@ -23,8 +23,8 @@
     </div>
     <nav id="nav"></nav>
     <div class="sidebar-footer">
-      <strong>Offline KJV</strong>
-      <span>Your personal content stays on this device.</span>
+      <strong id="translationLabel">Easy-English WEB Bible</strong>
+      <span id="privacyLabel">Your personal content stays on this device.</span>
     </div>
   </aside>
   <button id="sidebarOverlay" class="sidebar-overlay" aria-label="Close menu" tabindex="-1"></button>
@@ -36,6 +36,7 @@
         <h1 id="pageTitle">Home</h1>
         <p id="pageSub">Read, study, pray, and prepare.</p>
       </div>
+      <button class="language-btn" id="language" aria-label="Change language">EN</button>
       <button class="icon-btn theme-btn" id="theme" aria-label="Change theme">◐</button>
     </header>
     <section id="view"></section>
@@ -45,13 +46,13 @@
 <nav id="mobileNav" class="mobile-nav"></nav>
 <div id="toast" role="status" aria-live="polite"></div>
 
-<script src="bible-data.js?v=17"></script>
-<script src="data/devotionals.js?v=17"></script>
-<script src="data/exhortations.js?v=17"></script>
-<script src="data/bible-studies.js?v=17"></script>
-<script src="data/kids-lessons.js?v=17"></script>
-<script src="data/prayers.js?v=17"></script>
-<script src="app.js?v=17"></script>
+<script src="bible-data.js?v=18"></script>
+<script src="data/devotionals.js?v=18"></script>
+<script src="data/exhortations.js?v=18"></script>
+<script src="data/bible-studies.js?v=18"></script>
+<script src="data/kids-lessons.js?v=18"></script>
+<script src="data/prayers.js?v=18"></script>
+<script src="app.js?v=18"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js'));

@@ -1,5 +1,37 @@
 const D=window.BIBLE_DATA,V=D.verses,B=D.books,$=s=>document.querySelector(s),view=$('#view');
 const store={get:(k,d=[])=>{try{return JSON.parse(localStorage.getItem('dm_'+k)||JSON.stringify(d))}catch{return d}},set:(k,v)=>localStorage.setItem('dm_'+k,JSON.stringify(v))};
+const I18N={
+ en:{code:'EN',html:'en',
+  navGroups:['Bible','Public Library','My Resources','Ministry Tools','Settings'],
+  pages:{home:'⌂ Home',read:'📖 Read Bible',search:'🔎 Search',devotionals:'🌅 Devotionals',exhortations:'🎤 Exhortations',studies:'📚 Bible Studies',kidslibrary:'👧 Kids Lessons',prayerlibrary:'🙏 Prayer Library',favourites:'★ Favourites',highlights:'🖍 Highlights',verseNotes:'🗒 Verse Notes',notes:'📝 Study Notes',prayer:'🙏 Prayer Journal',myresources:'📁 Created Resources',sermon:'🎤 Sermon Builder',kids:'🧒 Kids Planner',reading:'📅 Reading Plan',creator:'✨ Create Resource',help:'❓ Help & User Guide',backup:'🔒 Backup & Restore'},
+  mobile:{home:'Home',read:'Read',search:'Search',prayer:'Prayer',more:'More'},
+  footer:'Easy-English WEB Bible',privacy:'Your personal content stays on this device.',
+  homeTitle:'Home',homeSub:'Read, study, pray, and prepare.',
+  langTitle:'Language',langSub:'Choose English or Tagalog for the app menus and guides.',
+  switched:'Language changed to English'},
+ tl:{code:'TL',html:'tl',
+  navGroups:['Bibliya','Pampublikong Aklatan','Aking mga Materyales','Mga Gamit sa Ministeryo','Mga Setting'],
+  pages:{home:'⌂ Tahanan',read:'📖 Basahin ang Bibliya',search:'🔎 Maghanap',devotionals:'🌅 Mga Debosyonal',exhortations:'🎤 Mga Exhortation',studies:'📚 Pag-aaral ng Bibliya',kidslibrary:'👧 Aralin para sa Bata',prayerlibrary:'🙏 Aklatan ng Panalangin',favourites:'★ Mga Paborito',highlights:'🖍 Mga Highlight',verseNotes:'🗒 Tala sa Talata',notes:'📝 Tala sa Pag-aaral',prayer:'🙏 Prayer Journal',myresources:'📁 Ginawang Materyales',sermon:'🎤 Sermon Builder',kids:'🧒 Kids Planner',reading:'📅 Plano sa Pagbasa',creator:'✨ Gumawa ng Materyales',help:'❓ Tulong at Gabay',backup:'🔒 Backup at Restore'},
+  mobile:{home:'Tahanan',read:'Basahin',search:'Hanapin',prayer:'Panalangin',more:'Iba pa'},
+  footer:'Madaling Basahing WEB Bible',privacy:'Ang personal mong nilalaman ay nananatili sa device na ito.',
+  homeTitle:'Tahanan',homeSub:'Magbasa, mag-aral, manalangin, at maghanda.',
+  langTitle:'Wika',langSub:'Piliin ang English o Tagalog para sa mga menu at gabay ng app.',
+  switched:'Tagalog na ang wika ng app'}
+};
+let appLanguage=store.get('language','en');
+function lang(){return I18N[appLanguage]||I18N.en}
+function buildNavigation(){
+ const L=lang();
+ $('#nav').innerHTML=navGroups.map((g,gi)=>`<div class="nav-section">${L.navGroups[gi]}</div>${g[1].map(p=>`<button data-page="${p[0]}">${L.pages[p[0]]||p[1]}</button>`).join('')}`).join('');
+ const icons={home:'⌂',read:'📖',search:'🔎',prayer:'🙏'};
+ $('#mobileNav').innerHTML=['home','read','search','prayer'].map(k=>`<button data-page="${k}"><span>${icons[k]}</span>${L.mobile[k]}</button>`).join('')+`<button data-action="menu"><span>☰</span>${L.mobile.more}</button>`;
+ document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>route(b.dataset.page));
+ document.querySelectorAll('[data-action="menu"]').forEach(b=>b.onclick=toggleMenu);
+ $('#translationLabel').textContent=L.footer;$('#privacyLabel').textContent=L.privacy;
+ $('#language').textContent=L.code;document.documentElement.lang=L.html;document.documentElement.dataset.language=appLanguage;
+}
+function setLanguage(code){appLanguage=code==='tl'?'tl':'en';store.set('language',appLanguage);buildNavigation();render();toast(lang().switched)}
+
 const navGroups=[
  ['Bible',[['home','⌂ Home'],['read','📖 Read Bible'],['search','🔎 Search']]],
  ['Public Library',[['devotionals','🌅 Devotionals'],['exhortations','🎤 Exhortations'],['studies','📚 Bible Studies'],['kidslibrary','👧 Kids Lessons'],['prayerlibrary','🙏 Prayer Library']]],
@@ -10,9 +42,7 @@ const navGroups=[
 const pages=navGroups.flatMap(g=>g[1]);
 const internalPages=['resource'];
 const validPages=new Set([...pages.map(x=>x[0]),...internalPages]);
-$('#nav').innerHTML=navGroups.map(g=>`<div class="nav-section">${g[0]}</div>${g[1].map(p=>`<button data-page="${p[0]}">${p[1]}</button>`).join('')}`).join('');
 const mobilePages=[['home','⌂','Home'],['read','📖','Read'],['search','🔎','Search'],['prayer','🙏','Prayer']];
-$('#mobileNav').innerHTML=mobilePages.map(p=>`<button data-page="${p[0]}"><span>${p[1]}</span>${p[2]}</button>`).join('')+`<button data-action="menu"><span>☰</span>More</button>`;
 let state={page:'home',book:store.get('lastBook','John'),chapter:store.get('lastChapter',3),font:store.get('fontSize',19)};
 function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function parseBibleReference(input=''){
@@ -40,12 +70,12 @@ function closeMenu(){const side=$('#sidebar'),overlay=$('#sidebarOverlay'),menu=
 function openMenu(){const side=$('#sidebar'),overlay=$('#sidebarOverlay'),menu=$('#menu');side.classList.add('open');overlay.classList.add('open');document.body.classList.add('menu-open');menu.setAttribute('aria-expanded','true')}
 function toggleMenu(){const open=$('#sidebar').classList.contains('open');open?closeMenu():openMenu()}
 function route(p,updateHash=true){if(!validPages.has(p))p='home';state.page=p;document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===p));closeMenu();if(updateHash&&location.hash!==`#${p}`)history.pushState(null,'',`#${p}`);render();window.scrollTo({top:0,behavior:'smooth'})}
-document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>route(b.dataset.page));
-document.querySelectorAll('[data-action="menu"]').forEach(b=>b.onclick=toggleMenu);
+buildNavigation();
 $('#menu').onclick=toggleMenu;
 $('#sidebarOverlay').onclick=closeMenu;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
 window.addEventListener('popstate',()=>route(location.hash.slice(1)||'home',false));
+$('#language').onclick=()=>setLanguage(appLanguage==='en'?'tl':'en');
 $('#theme').onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('dm_theme',document.body.classList.contains('dark')?'dark':'light')};
 if(localStorage.getItem('dm_theme')==='dark')document.body.classList.add('dark');
 function title(t,s){$('#pageTitle').textContent=t;$('#pageSub').textContent=s}
@@ -58,9 +88,9 @@ function notesMap(){return store.get('verseNotes',{})}
 function saveLast(){store.set('lastBook',state.book);store.set('lastChapter',state.chapter)}
 function todayVerse(){const d=new Date(),i=Math.abs(Math.floor((d-new Date(d.getFullYear(),0,0))/86400000))%V.length;return V[i]}
 function home(){
- title('Home','Read, study, pray, and prepare.');
+ title(lang().homeTitle,lang().homeSub);
  const f=favs().length,n=store.get('notes').length,p=store.get('prayers').length,h=Object.keys(highlights()).length,d=store.get('reading',{}),done=Object.keys(d).length,tv=todayVerse();
- view.innerHTML=`<div class="hero"><div><span class="badge light">VERSION 7</span><h2>Read Scripture. Grow in faith. Prepare to serve.</h2><p>Your complete offline KJV Bible with reading, search, highlights, notes, prayer, reading plans, sermon preparation, and children’s ministry tools.</p><div class="hero-actions"><button class="primary" id="continue">Continue ${esc(state.book)} ${state.chapter}</button><button class="ghost light-btn" onclick="route('search')">Search Bible</button></div></div><div class="verse-card"><span class="small-light">VERSE OF THE DAY</span><br>“${esc(tv.x)}”<br><small>${ref(tv)}</small></div></div>
+ view.innerHTML=`<div class="hero"><div><span class="badge light">VERSION 18 • ENGLISH / TAGALOG</span><h2>Read Scripture. Grow in faith. Prepare to serve.</h2><p>Your easy-to-read World English Bible with private study tools and a new English/Tagalog interface. Full bilingual ministry content will be added in Versions 19 and 20.</p><div class="hero-actions"><button class="primary" id="continue">Continue ${esc(state.book)} ${state.chapter}</button><button class="ghost light-btn" onclick="route('search')">Search Bible</button></div></div><div class="verse-card"><span class="small-light">VERSE OF THE DAY</span><br>“${esc(tv.x)}”<br><small>${ref(tv)}</small></div></div>
  <div class="grid"><div class="card"><div class="metric">${done}</div><div>Chapters completed</div></div><div class="card"><div class="metric">${f}</div><div>Favourite verses</div></div><div class="card"><div class="metric">${h}</div><div>Highlighted verses</div></div><div class="card"><div class="metric">${n+p}</div><div>Notes and prayers</div></div></div>`;
  $('#continue').onclick=()=>route('read');
 }
@@ -139,7 +169,7 @@ function creator(){let type=store.get('creatorType','Devotional');title('Create 
  function fields(){type=$('#ctype').value;store.set('creatorType',type);$('#creatorInputs').innerHTML=creatorFields[type].map((x,i)=>`<label><span>${x}</span><input data-cf="${i}" placeholder="${x}"></label>`).join('')};fields();$('#ctype').onchange=fields;
  const vals=()=>[...document.querySelectorAll('[data-cf]')].map(x=>x.value.trim());
  $('#offlineCreate').onclick=()=>{$('#draft').value=makeOfflineDraft(type,vals());toast('Offline draft created')};
- $('#aiPrompt').onclick=()=>{let v=vals(),prompt=`Create a ${v[4]||'medium-length'} biblical ${type.toLowerCase()} about “${v[0]||'faith'}” based primarily on ${v[1]||'an appropriate KJV passage'}. Audience: ${v[2]||'adults'}. Tone/style: ${v[3]||'encouraging and pastoral'}. Include a clear title, main Scripture, faithful explanation of the passage in context, supporting KJV references, practical application, reflection or discussion questions, and a closing prayer. For a kids lesson, also include an opening prayer, simple Bible story, memory verse, activity, craft, and age-appropriate questions. Clearly distinguish Scripture from commentary. Do not invent quotations or claim that commentary is Scripture. Produce an editable ministry draft that should be reviewed before use.`;$('#draft').value=prompt;navigator.clipboard?.writeText(prompt);toast('ChatGPT prompt prepared and copied')};
+ $('#aiPrompt').onclick=()=>{let v=vals(),prompt=`Create a ${v[4]||'medium-length'} biblical ${type.toLowerCase()} about “${v[0]||'faith'}” based primarily on ${v[1]||'an appropriate Bible passage'}. Audience: ${v[2]||'adults'}. Tone/style: ${v[3]||'encouraging and pastoral'}. Include a clear title, main Scripture, faithful explanation of the passage in context, supporting Bible references, practical application, reflection or discussion questions, and a closing prayer. For a kids lesson, also include an opening prayer, simple Bible story, memory verse, activity, craft, and age-appropriate questions. Clearly distinguish Scripture from commentary. Do not invent quotations or claim that commentary is Scripture. Produce an editable ministry draft that should be reviewed before use.`;$('#draft').value=prompt;navigator.clipboard?.writeText(prompt);toast('ChatGPT prompt prepared and copied')};
  $('#clearCreator').onclick=()=>{document.querySelectorAll('[data-cf]').forEach(x=>x.value='');$('#draft').value=''};
  $('#copyDraft').onclick=async()=>{await navigator.clipboard.writeText($('#draft').value);toast('Draft copied')};$('#openChat').onclick=()=>window.open('https://chatgpt.com/','_blank','noopener');
  $('#saveDraft').onclick=()=>{let text=$('#draft').value.trim();if(!text)return toast('Create or paste a draft first');let a=store.get('createdResources');a.unshift({id:Date.now(),type,title:(text.match(/^Title:\s*(.+)/mi)||[])[1]||`${type} Draft`,text,created:new Date().toLocaleString()});store.set('createdResources',a);toast('Saved to My Resources')}
@@ -151,9 +181,9 @@ function help(){
  view.innerHTML=`
  <section class="help-hero card">
    <div class="help-seal">📖</div>
-   <div><span class="pill">WELCOME</span><h2>How to use De Mayo Bible Ministry</h2><p>The complete King James Version (KJV) is built into the app, so Bible reading and searching can continue even without internet after the app has loaded.</p></div>
+   <div><span class="pill">WELCOME</span><h2>How to use De Mayo Bible Ministry</h2><p>The easy-to-read World English Bible (WEB) is built into the app, so Bible reading and searching can continue even without internet after the app has loaded.</p></div>
  </section>
- <div class="help-quick-grid">
+ <section class="card"><h3>${appLanguage==='tl'?'Piliin ang Wika':'Choose Language'}</h3><p>${appLanguage==='tl'?'Ang mga menu at gabay ay maaaring ipakita sa English o Tagalog.':'Menus and guides can be displayed in English or Tagalog.'}</p><div class="language-panel"><button class="language-choice ${appLanguage==='en'?'active':''}" data-language-choice="en">🇬🇧 English</button><button class="language-choice ${appLanguage==='tl'?'active':''}" data-language-choice="tl">🇵🇭 Tagalog</button></div><div class="notice small-note">${appLanguage==='tl'?'Ang Bible text ay kasalukuyang World English Bible. Ang buong Tagalog na nilalaman ay idadagdag sa susunod na releases.':'The Bible text currently uses the World English Bible. Full Tagalog ministry content will be added in the next releases.'}</div></section><div class="help-quick-grid">
    <button class="help-jump card" data-go="read"><span>📖</span><b>Read the Bible</b><small>Choose a book and chapter, adjust text size, highlight verses, add notes, and save favourites.</small></button>
    <button class="help-jump card" data-go="search"><span>🔎</span><b>Search Scripture</b><small>Search a word, phrase, book, or exact reference such as John 3:16.</small></button>
    <button class="help-jump card" data-go="devotionals"><span>📚</span><b>Use the Library</b><small>Open devotionals, exhortations, Bible studies, kids lessons, and prayers.</small></button>
@@ -161,7 +191,7 @@ function help(){
  </div>
  <section class="help-sections">
    <details open><summary>Getting around the app</summary><div class="help-body"><p><b>On iPhone, Android, or tablet:</b> use the bottom navigation for Home, Read, Search, and Prayer. Tap <b>More</b> or the ☰ menu button to see every section.</p><p><b>On Windows or Mac:</b> use the menu on the left side.</p></div></details>
-   <details open><summary>Opening a Scripture reference</summary><div class="help-body"><p>Scripture references inside devotionals, exhortations, Bible studies, kids lessons, and prayers are clickable. Tap a reference such as <b>Galatians 5:13</b> to open the built-in KJV Bible at that chapter. The selected verse is highlighted, and a <b>Back to resource</b> button returns you to the lesson.</p></div></details>
+   <details open><summary>Opening a Scripture reference</summary><div class="help-body"><p>Scripture references inside devotionals, exhortations, Bible studies, kids lessons, and prayers are clickable. Tap a reference such as <b>Galatians 5:13</b> to open the built-in WEB Bible at that chapter. The selected verse is highlighted, and a <b>Back to resource</b> button returns you to the lesson.</p></div></details>
    <details><summary>Reading, highlighting, notes, and favourites</summary><div class="help-body"><ol><li>Open <b>Read Bible</b>.</li><li>Select a book and chapter.</li><li>Tap a verse to open its options.</li><li>Choose a highlight colour, add a note, or save it as a favourite.</li></ol><p>These personal items stay private in the browser on that device.</p></div></details>
    <details><summary>Using the public ministry library</summary><div class="help-body"><p>Choose Devotionals, Exhortations, Bible Studies, Kids Lessons, or Prayer Library. Search by title, topic, Scripture, or keyword. Tap a card to open the complete resource, then copy or print it when needed.</p></div></details>
    <details><summary>Prayer Journal and personal resources</summary><div class="help-body"><p>Your prayer journal, study notes, sermons, kids plans, highlights, favourites, and created resources are stored locally on your device. They are not visible to other visitors.</p></div></details>
@@ -169,7 +199,7 @@ function help(){
    <details><summary>Installing on a phone or computer</summary><div class="help-body"><p><b>iPhone/iPad:</b> open the site in Safari, tap Share, then <b>Add to Home Screen</b>.</p><p><b>Android:</b> open the site in Chrome, open the menu, then choose <b>Install app</b> or <b>Add to Home screen</b>.</p><p><b>Windows/Mac:</b> use the browser install icon when available, or bookmark the site.</p></div></details>
    <details><summary>When an older version appears</summary><div class="help-body"><p>Refresh the page. On an installed phone app, remove the old Home Screen copy, reopen the live website in Safari or Chrome, and install it again.</p></div></details>
  </section>`;
- document.querySelectorAll('.help-jump').forEach(b=>b.onclick=()=>route(b.dataset.go));
+ document.querySelectorAll('.help-jump').forEach(b=>b.onclick=()=>route(b.dataset.go));document.querySelectorAll('[data-language-choice]').forEach(b=>b.onclick=()=>setLanguage(b.dataset.languageChoice));
 }
 
 function render(){({home,read,search,devotionals,exhortations,studies,kidslibrary,prayerlibrary,resource,creator,myresources,favourites,highlights:highlightsPage,verseNotes,notes,prayer,sermon,kids,reading,help,backup}[state.page]||home)()}

@@ -106,3 +106,7 @@ nav button:focus-visible,.icon-btn:focus-visible,.mobile-nav button:focus-visibl
 .help-sections details{background:var(--card,#fff);border:1px solid var(--border,#ddd);border-radius:14px;margin:10px 0;overflow:hidden}
 .help-sections summary{cursor:pointer;font-weight:700;padding:15px 18px}.help-body{padding:0 18px 16px;line-height:1.65}.help-body ol{padding-left:22px}
 @media(max-width:700px){.help-quick-grid{grid-template-columns:1fr}.help-hero{align-items:flex-start}.help-seal{min-width:52px;height:52px;font-size:32px}}
+
+/* Version 18 bilingual foundation */
+.language-btn{min-width:46px;height:42px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--text);font-weight:800;cursor:pointer;padding:0 10px}.language-btn:hover{transform:translateY(-1px)}
+.language-panel{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}.language-choice{padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-weight:700}.language-choice.active{outline:3px solid rgba(23,63,53,.18);border-color:var(--primary)}
