@@ -25,5 +25,11 @@ After deployment, refresh the website. On iPhone, remove an older Home Screen in
 This build uses the World English Bible (WEB), a public-domain modern-English translation. The Bible remains available offline after the app has loaded.
 
 
-## Version 15
+## Version 16
 All 20 kids lessons now include local, offline child-friendly illustrations.
+
+
+## Version 16 image fix
+- Repaired the Walls of Jericho SVG.
+- Added fallback illustrations if an image cannot load.
+- Added all kids lesson illustrations to the offline cache.
