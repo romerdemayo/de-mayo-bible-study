@@ -1,8 +1,8 @@
-const CACHE = 'de-mayo-bible-v21-bilingual-bible';
+const CACHE = 'de-mayo-bible-v22-smart-study-tools';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./bible-data.js',
   './manifest.webmanifest','./icon-192.png','./icon-512.png',
-  './data/tagalog-bible-loader.js','./data/devotionals.js','./data/exhortations.js','./data/bible-studies.js',
+  './data/devotionals.js','./data/exhortations.js','./data/bible-studies.js',
   './data/kids-lessons.js','./data/prayers.js','./data/v20-tools.js',
   './images/abraham.svg',
   './images/baby-moses.svg',
