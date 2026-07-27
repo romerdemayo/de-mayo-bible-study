@@ -1,0 +1,7 @@
+DE MAYO BIBLE MINISTRY — CORRECT GITHUB UPLOAD
+
+IMPORTANT: Upload the FILES AND FOLDERS INSIDE this ZIP directly into the ROOT of your GitHub repository.
+
+After upload, the repository root must show index.html, app.js, bible-data.js, styles.css, service-worker.js, data, and images.
+
+Do NOT upload an enclosing de-mayo-bible-study-main folder. GitHub Pages will keep showing the old app if index.html is one folder too deep.
