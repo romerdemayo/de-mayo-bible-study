@@ -35,3 +35,7 @@ Example page links after deployment:
 - `#creator`
 - `#myresources`
 - `#backup`
+
+
+## Link fix
+This build fixes the resource-card routing bug. Devotionals, exhortations, Bible studies, kids lessons, and prayers now open their complete resource view instead of returning to Home.

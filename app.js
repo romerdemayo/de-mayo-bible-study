@@ -8,6 +8,8 @@ const navGroups=[
  ['Settings',[['backup','🔒 Backup & Restore']]]
 ];
 const pages=navGroups.flatMap(g=>g[1]);
+const internalPages=['resource'];
+const validPages=new Set([...pages.map(x=>x[0]),...internalPages]);
 $('#nav').innerHTML=navGroups.map(g=>`<div class="nav-section">${g[0]}</div>${g[1].map(p=>`<button data-page="${p[0]}">${p[1]}</button>`).join('')}`).join('');
 const mobilePages=[['home','⌂','Home'],['read','📖','Read'],['search','🔎','Search'],['prayer','🙏','Prayer']];
 $('#mobileNav').innerHTML=mobilePages.map(p=>`<button data-page="${p[0]}"><span>${p[1]}</span>${p[2]}</button>`).join('')+`<button data-action="menu"><span>☰</span>More</button>`;
@@ -17,7 +19,7 @@ function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show'
 function closeMenu(){const side=$('#sidebar'),overlay=$('#sidebarOverlay'),menu=$('#menu');side.classList.remove('open');overlay.classList.remove('open');document.body.classList.remove('menu-open');menu.setAttribute('aria-expanded','false')}
 function openMenu(){const side=$('#sidebar'),overlay=$('#sidebarOverlay'),menu=$('#menu');side.classList.add('open');overlay.classList.add('open');document.body.classList.add('menu-open');menu.setAttribute('aria-expanded','true')}
 function toggleMenu(){const open=$('#sidebar').classList.contains('open');open?closeMenu():openMenu()}
-function route(p,updateHash=true){if(!pages.some(x=>x[0]===p))p='home';state.page=p;document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===p));closeMenu();if(updateHash&&location.hash!==`#${p}`)history.pushState(null,'',`#${p}`);render();window.scrollTo({top:0,behavior:'smooth'})}
+function route(p,updateHash=true){if(!validPages.has(p))p='home';state.page=p;document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===p));closeMenu();if(updateHash&&location.hash!==`#${p}`)history.pushState(null,'',`#${p}`);render();window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>route(b.dataset.page));
 document.querySelectorAll('[data-action="menu"]').forEach(b=>b.onclick=toggleMenu);
 $('#menu').onclick=toggleMenu;
@@ -89,7 +91,7 @@ function backup(){
 function libraryShell(t,d,createType){return `<div class="library-head"><div><h2>${t}</h2><p>${d}</p></div><div class="library-search"><input id="libq" placeholder="Search this library..."><button class="ghost" id="clearLib">Clear</button></div></div><div class="library-actions"><button class="primary" id="createHere">＋ Create ${createType}</button></div><div id="libres" class="library-grid"></div>`}
 function wireLibrary(draw,type){$('#libq').oninput=e=>draw(e.target.value);$('#clearLib').onclick=()=>{$('#libq').value='';draw('');$('#libq').focus()};$('#createHere').onclick=()=>{store.set('creatorType',type);route('creator')}}
 function openResource(kind,index){store.set('openResource',{kind,index});route('resource')}
-function resource(){let o=store.get('openResource',null);if(!o)return route(location.hash.slice(1)||'home',false);let maps={devotional:DEVOTIONALS,exhortation:EXHORTATIONS,study:BIBLE_STUDIES,kids:KIDS_LESSONS,prayer:PRAYER_LIBRARY},x=maps[o.kind]?.[o.index];if(!x)return route(location.hash.slice(1)||'home',false);title(x.title,'Complete resource view');let body='';
+function resource(){let o=store.get('openResource',null);if(!o)return route('home');let maps={devotional:DEVOTIONALS,exhortation:EXHORTATIONS,study:BIBLE_STUDIES,kids:KIDS_LESSONS,prayer:PRAYER_LIBRARY},x=maps[o.kind]?.[o.index];if(!x)return route('home');title(x.title,'Complete resource view');let body='';
  if(o.kind==='devotional')body=`<span class="pill">${esc(x.theme)}</span><h2>${esc(x.title)}</h2><div class="scripture-banner">${esc(x.scripture)}</div><h3>Reflection</h3><p>${esc(x.reflection)}</p><h3>Application</h3><p>${esc(x.application)}</p><h3>Reflection Questions</h3><ol>${x.questions.map(q=>`<li>${esc(q)}</li>`).join('')}</ol><h3>Prayer</h3><p>${esc(x.prayer)}</p><div class="resource-foot"><b>Memory:</b> ${esc(x.memory)}<br><b>Suggested reading:</b> ${esc(x.reading)}</div>`;
  if(o.kind==='exhortation')body=`<span class="pill">${esc(x.category)}</span><h2>${esc(x.title)}</h2><div class="scripture-banner">${esc(x.main)}</div><p>${esc(x.intro)}</p>${x.points.map((p,i)=>`<section><h3>${i+1}. ${esc(p[0])}</h3><p>${esc(p[1])}</p></section>`).join('')}<h3>Supporting Scriptures</h3><p>${x.support.map(esc).join(', ')}</p><h3>Application</h3><p>${esc(x.application)}</p><h3>Challenge</h3><p>${esc(x.challenge)}</p><h3>Prayer</h3><p>${esc(x.prayer)}</p>`;
  if(o.kind==='study')body=`<span class="pill">${esc(x.type)}</span><h2>${esc(x.title)}</h2><div class="scripture-banner">${esc(x.passage)}</div><h3>Objective</h3><p>${esc(x.objective)}</p><h3>Background</h3><p>${esc(x.background)}</p><h3>Discussion Questions</h3><ol>${x.questions.map(q=>`<li>${esc(q)}</li>`).join('')}</ol><h3>Leader Notes</h3><p>${esc(x.leader_notes)}</p><h3>Application</h3><p>${esc(x.application)}</p><h3>Prayer</h3><p>${esc(x.prayer)}</p>`;
