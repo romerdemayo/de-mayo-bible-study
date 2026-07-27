@@ -1,20 +1,45 @@
-# De Mayo Bible Ministry — Version 12
+# De Mayo Bible Ministry — Responsive GitHub Version 8
 
-A responsive GitHub Pages Bible ministry app with the complete offline King James Version (KJV).
+A responsive offline Bible ministry Progressive Web App for GitHub Pages.
 
-## Version 12 improvements
+## Device support
+- iPhone and Android phones
+- iPad and Android tablets
+- Windows PCs
+- MacBooks and iMacs
+- Safari, Chrome, Edge, and Firefox
 
-- Clickable Scripture references throughout devotionals, exhortations, Bible studies, kids lessons, and prayer resources
-- Direct opening to the correct KJV book, chapter, and verse
-- Selected verse highlighting and Back to resource navigation
-- Full Help & User Guide
-- Responsive navigation for iPhone, Android, iPad, Windows, and Mac
-- Bible search, favourites, highlights, verse notes, prayer journal, sermon builder, kids planner, reading plan, creator, and private backup
+## Main improvements
+- Fixed mobile hamburger menu and header overlap
+- iPhone safe-area support
+- Desktop sidebar for PC and Mac
+- Mobile bottom navigation with a working More menu
+- Shareable page links using URL hashes
+- Keyboard navigation and Escape-to-close menu
+- Full offline KJV Bible and ministry resources
 
-## Deploy to GitHub Pages
+## GitHub Pages
+Upload all files, including `.github`, to the root of your repository. In **Settings → Pages**, select **GitHub Actions**.
 
-Upload all files and folders from this package to the root of the `de-mayo-bible-study` repository. Replace the older files. In GitHub Settings → Pages, deploy from the `main` branch and `/root`, or use the included GitHub Actions workflow.
+Example page links after deployment:
+- `#home`
+- `#read`
+- `#devotionals`
+- `#exhortations`
+- `#studies`
+- `#kidslibrary`
+- `#prayerlibrary`
+- `#prayer`
+- `#sermon`
+- `#kids`
+- `#creator`
+- `#myresources`
+- `#backup`
 
-Live address: `https://romerdemayo.github.io/de-mayo-bible-study/`
 
-After deployment, refresh the website. On iPhone, remove an older Home Screen installation and add the site again if the old cached version remains.
+## Link fix
+This build fixes the resource-card routing bug. Devotionals, exhortations, Bible studies, kids lessons, and prayers now open their complete resource view instead of returning to Home.
+
+
+## Scripture links update
+Scripture references in Devotionals, Exhortations, Bible Studies, Kids Lessons, and the Prayer Library are clickable. They open the built-in KJV reader at the correct chapter and verse, with a Back to resource button.

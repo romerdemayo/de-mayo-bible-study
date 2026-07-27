@@ -1,11 +1,10 @@
-DE MAYO BIBLE MINISTRY — VERSION 12
+DE MAYO BIBLE MINISTRY — GITHUB UPLOAD
 
-1. Extract this ZIP.
-2. Open your GitHub repository: de-mayo-bible-study
-3. Upload ALL files and folders inside this folder to the repository root.
-4. Replace the existing versions when prompted.
-5. Confirm GitHub Pages deployment is complete.
-6. Open: https://romerdemayo.github.io/de-mayo-bible-study/
-7. Refresh the browser. On iPhone, remove the old Home Screen app and add it again if required.
-
-Do not delete bible-data.js. It contains the built-in KJV Bible used by the app.
+1. Unzip this package.
+2. Open your GitHub repository.
+3. Upload EVERYTHING INSIDE the folder, including .github.
+4. Replace the older files and commit to main.
+5. Go to Settings > Pages.
+6. Choose GitHub Actions as the source.
+7. Wait for the Pages workflow to finish.
+8. On iPhone, close and reopen the installed app. If the old version remains, clear Safari website data or remove and reinstall the Home Screen app.

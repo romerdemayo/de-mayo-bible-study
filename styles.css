@@ -95,14 +95,3 @@ nav button:focus-visible,.icon-btn:focus-visible,.mobile-nav button:focus-visibl
 .reference-focus{outline:3px solid #d9a514;outline-offset:4px;background:rgba(255,220,90,.28)!important;border-radius:8px;animation:referencePulse 1.2s ease 2}
 @keyframes referencePulse{50%{transform:scale(1.01);box-shadow:0 0 0 8px rgba(217,165,20,.14)}}
 @media (max-width:700px){.scripture-link{min-height:44px;display:inline-flex;align-items:center}.scripture-banner .scripture-link{display:flex}}
-
-
-/* Version 12 Help & User Guide */
-.help-hero{display:flex;gap:18px;align-items:center;margin-bottom:18px}
-.help-seal{font-size:42px;min-width:64px;height:64px;display:grid;place-items:center;border-radius:18px;background:var(--soft,#f4efe3)}
-.help-quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:18px}
-.help-jump{text-align:left;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:center;cursor:pointer}
-.help-jump>span{font-size:28px;grid-row:1/3}.help-jump small{line-height:1.4;opacity:.8}
-.help-sections details{background:var(--card,#fff);border:1px solid var(--border,#ddd);border-radius:14px;margin:10px 0;overflow:hidden}
-.help-sections summary{cursor:pointer;font-weight:700;padding:15px 18px}.help-body{padding:0 18px 16px;line-height:1.65}.help-body ol{padding-left:22px}
-@media(max-width:700px){.help-quick-grid{grid-template-columns:1fr}.help-hero{align-items:flex-start}.help-seal{min-width:52px;height:52px;font-size:32px}}
