@@ -1,9 +1,9 @@
-const CACHE = 'de-mayo-bible-v30-phase2-complete';
+const CACHE = 'de-mayo-bible-v23-complete-bilingual-study';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./bible-data.js',
   './manifest.webmanifest','./icon-192.png','./icon-512.png',
   './data/devotionals.js','./data/exhortations.js','./data/bible-studies.js',
-  './data/kids-lessons.js','./data/prayers.js','./data/v20-tools.js',
+  './data/kids-lessons.js','./data/prayers.js','./data/v20-tools.js','./data/tagalog-bible-loader.js',
   './images/abraham.svg',
   './images/baby-moses.svg',
   './images/creation.svg',
@@ -23,8 +23,7 @@ const ASSETS = [
   './images/samaritan.svg',
   './images/samuel.svg',
   './images/sheep.svg',
-  './images/storm.svg',
-  './images/lesson-placeholder.svg'
+  './images/storm.svg'
 ];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));
