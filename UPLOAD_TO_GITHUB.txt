@@ -1,9 +1,15 @@
-DE MAYO BIBLE STUDY VERSION 6
+UPLOAD TO GITHUB
+================
 
-1. Unzip this file.
-2. Open your GitHub repository.
-3. Choose Add file > Upload files.
-4. Upload EVERYTHING inside this folder, including data and images.
-5. Commit directly to main.
-6. Wait for the Pages deployment green tick.
-7. Force-refresh the live site. If the installed app still shows Version 5, remove it from the Home Screen, clear the site cache, reopen the GitHub Pages address, and add it again.
+1. Unzip this package.
+2. Open your GitHub repository: de-mayo-bible-study
+3. Upload ALL files and folders from inside this project folder.
+4. Commit directly to the main branch.
+5. Go to Settings > Pages.
+6. Choose GitHub Actions as the source.
+7. The included workflow will deploy the app.
+
+Your website should remain at:
+https://romerdemayo.github.io/de-mayo-bible-study/
+
+After deployment, refresh twice or clear the old site cache if Version 6 still appears.
