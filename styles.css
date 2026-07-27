@@ -72,3 +72,26 @@ nav button:focus-visible,.icon-btn:focus-visible,.mobile-nav button:focus-visibl
   .mobile-nav button span{font-size:18px}
 }
 @media(hover:hover) and (pointer:fine){nav button:hover,.resource-card:hover,.primary:hover,.ghost:hover{transition:.15s}}
+
+/* Clickable Bible references */
+.scripture-link{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:var(--primary,#256f5a);
+  padding:3px 2px;
+  margin:0;
+  font:inherit;
+  font-weight:750;
+  text-decoration:underline;
+  text-decoration-thickness:2px;
+  text-underline-offset:3px;
+  cursor:pointer;
+  border-radius:6px;
+}
+.scripture-link:hover,.scripture-link:focus-visible{background:rgba(37,111,90,.12);outline:2px solid transparent}
+.scripture-banner .scripture-link{display:block;font-size:1.12em;margin-top:5px}
+.scripture-banner>span{display:block;font-size:.76rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;opacity:.72}
+.reference-focus{outline:3px solid #d9a514;outline-offset:4px;background:rgba(255,220,90,.28)!important;border-radius:8px;animation:referencePulse 1.2s ease 2}
+@keyframes referencePulse{50%{transform:scale(1.01);box-shadow:0 0 0 8px rgba(217,165,20,.14)}}
+@media (max-width:700px){.scripture-link{min-height:44px;display:inline-flex;align-items:center}.scripture-banner .scripture-link{display:flex}}

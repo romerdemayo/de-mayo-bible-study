@@ -39,3 +39,7 @@ Example page links after deployment:
 
 ## Link fix
 This build fixes the resource-card routing bug. Devotionals, exhortations, Bible studies, kids lessons, and prayers now open their complete resource view instead of returning to Home.
+
+
+## Scripture links update
+Scripture references in Devotionals, Exhortations, Bible Studies, Kids Lessons, and the Prayer Library are clickable. They open the built-in KJV reader at the correct chapter and verse, with a Back to resource button.
