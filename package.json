@@ -1,6 +1,6 @@
 {
   "name": "de-mayo-bible-studies",
-  "version": "50.0.0",
+  "version": "60.0.0",
   "private": true,
   "description": "De Mayo Bible Studies PWA and Capacitor mobile wrapper",
   "scripts": {
