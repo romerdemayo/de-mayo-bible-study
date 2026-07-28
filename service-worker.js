@@ -1,5 +1,5 @@
 /* De Mayo Bible Ministry | Version 51 PWA */
-const CACHE = 'de-mayo-bible-v54-highlight-controls';
+const CACHE = 'de-mayo-bible-v56-stability-fix';
 const OFFLINE_URL = './index.html';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./bible-data.js',
