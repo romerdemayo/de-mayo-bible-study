@@ -1,4 +1,4 @@
-const CACHE = 'de-mayo-bible-v31-ai-notes';
+const CACHE = 'de-mayo-bible-v38-powerpoint-outline';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./bible-data.js',
   './manifest.webmanifest','./icon-192.png','./icon-512.png',

@@ -552,8 +552,166 @@ SUGGESTED LEARNINGS / NEXT STUDY
 
 SPEAKER NOTES
 ${n}`}
+
+function sermonPowerPointOutline(data){
+ const title=data.title||ui('Sermon Title','Pamagat ng Sermon');
+ const passage=data.text||ui('Main Bible Passage','Pangunahing Talata');
+ const theme=data.theme||ui('Central Theme','Pangunahing Tema');
+ const audience=data.audience||ui('Church Congregation','Kongregasyon');
+ return appLanguage==='tl'?`POWERPOINT PRESENTATION SUGGESTION
+
+SLIDE 1 — PAMAGAT
+${title}
+Pangunahing Talata: ${passage}
+Tema: ${theme}
+
+SLIDE 2 — LAYUNIN NG MENSAHE
+• Tagapakinig: ${audience}
+• Layunin: ${data.purpose||'Idagdag ang nais na tugon ng mga tagapakinig.'}
+
+SLIDE 3 — PAMBUNGAD NA TALATA
+• Ipakita ang pangunahing talata.
+• I-highlight ang isang key phrase lamang.
+
+SLIDE 4 — INTRODUCTION / HOOK
+• Isang maikling tanong, sitwasyon, testimony, o larawan.
+• Ipakilala kung bakit mahalaga ang mensahe.
+
+SLIDE 5 — BACKGROUND AT CONTEXT
+• May-akda at unang tagapakinig, kung tiyak.
+• Sitwasyon ng passage.
+• Pangunahing katotohanang dapat maunawaan.
+
+SLIDE 6 — MAIN POINT 1
+• Maikling heading.
+• Isang pangunahing paliwanag.
+• Isang supporting verse.
+• Isang application statement.
+
+SLIDE 7 — MAIN POINT 2
+• Maikling heading.
+• Isang pangunahing paliwanag.
+• Isang illustration o halimbawa.
+• Isang application statement.
+
+SLIDE 8 — MAIN POINT 3
+• Maikling heading.
+• Isang pangunahing paliwanag.
+• Isang supporting verse.
+• Isang challenge para sa tagapakinig.
+
+SLIDE 9 — CHRIST / GOSPEL CONNECTION
+• Paano itinuturo ng passage ang character, gawain, biyaya, o pagliligtas ni Cristo?
+• Panatilihing tapat sa pangunahing passage.
+
+SLIDE 10 — PRAKTIKAL NA APPLICATION
+• Sa personal na buhay
+• Sa pamilya at relasyon
+• Sa iglesia at paglilingkod
+• Isang konkretong hakbang ngayong linggo
+
+SLIDE 11 — REFLECTION QUESTIONS
+• Ano ang ipinapakita ng Diyos sa akin?
+• Ano ang kailangan kong baguhin o sundin?
+• Sino ang kailangan kong hikayatin o paglingkuran?
+
+SLIDE 12 — CONCLUSION
+• Ulitin ang Big Idea sa isang pangungusap.
+• I-summarise ang tatlong main points.
+• Magbigay ng malinaw na call to action.
+
+SLIDE 13 — CLOSING PRAYER
+• Pasasalamat
+• Pagsisisi at surrender
+• Tulong upang maisabuhay ang mensahe
+
+PRESENTATION NOTES
+• Gumamit ng maiikling phrases, hindi mahahabang paragraph.
+• Isang pangunahing ideya lamang bawat slide.
+• Malaking font at malinaw na contrast.
+• Ilagay ang buong paliwanag sa speaker notes, hindi sa slide.
+• Suriing mabuti ang lahat ng verses bago ipakita.
+
+PERSONAL NOTES
+${data.notes||'Idagdag ang personal notes, testimony, larawan, at church announcements dito.'}`:`POWERPOINT PRESENTATION SUGGESTION
+
+SLIDE 1 — TITLE
+${title}
+Main Passage: ${passage}
+Theme: ${theme}
+
+SLIDE 2 — MESSAGE PURPOSE
+• Audience: ${audience}
+• Purpose: ${data.purpose||'Add the response you want listeners to make.'}
+
+SLIDE 3 — OPENING SCRIPTURE
+• Display the main passage.
+• Highlight only one key phrase.
+
+SLIDE 4 — INTRODUCTION / HOOK
+• Use one short question, situation, testimony, or image.
+• Explain why the message matters.
+
+SLIDE 5 — BACKGROUND AND CONTEXT
+• Author and original audience, when certain.
+• Situation surrounding the passage.
+• Main truth listeners need to understand.
+
+SLIDE 6 — MAIN POINT 1
+• Short heading.
+• One central explanation.
+• One supporting verse.
+• One application statement.
+
+SLIDE 7 — MAIN POINT 2
+• Short heading.
+• One central explanation.
+• One illustration or example.
+• One application statement.
+
+SLIDE 8 — MAIN POINT 3
+• Short heading.
+• One central explanation.
+• One supporting verse.
+• One challenge for the audience.
+
+SLIDE 9 — CHRIST / GOSPEL CONNECTION
+• How does the passage reveal Christ’s character, work, grace, or saving purpose?
+• Keep the connection faithful to the main passage.
+
+SLIDE 10 — PRACTICAL APPLICATION
+• Personal life
+• Family and relationships
+• Church and ministry
+• One specific action for this week
+
+SLIDE 11 — REFLECTION QUESTIONS
+• What is God showing me?
+• What must I change or obey?
+• Who should I encourage or serve?
+
+SLIDE 12 — CONCLUSION
+• Restate the Big Idea in one sentence.
+• Summarise the three main points.
+• Give one clear call to action.
+
+SLIDE 13 — CLOSING PRAYER
+• Thanksgiving
+• Confession and surrender
+• Help to live out the message
+
+PRESENTATION NOTES
+• Use short phrases rather than long paragraphs.
+• Keep one main idea on each slide.
+• Use large text and clear contrast.
+• Put full explanations in speaker notes, not on the slide.
+• Verify every Scripture reference before presenting.
+
+PERSONAL NOTES
+${data.notes||'Add personal notes, testimony, image ideas, and church announcements here.'}`
+}
 function sermonPrompt(data){return `Create a complete, editable Christian sermon in ${appLanguage==='tl'?'Tagalog':'English'} using a ${sermonDepthLabel(data.depth)} format. Title: “${data.title||''}”. Main passage: “${data.text||''}”. Theme: “${data.theme||''}”. Audience: “${data.audience||''}”. Purpose: “${data.purpose||''}”. Personal notes: “${data.notes||''}”. Organise it by ministry sections rather than visible minutes: Big Idea, opening prayer, Scripture reading, introduction/hook, background and context, three main points, careful explanation, checked cross-references, clearly labelled illustrations, personal notes under each point, practical application, Gospel/Christ connection faithful to the passage, reflection questions, challenge, conclusion, closing prayer, and suggested learning. Make the selected message format control depth and detail only. Distinguish Scripture from commentary. Do not invent quotations, historical facts, original-language meanings, promises, or guaranteed outcomes. Keep the main passage central and make every section editable.`}
-function sermon(){let arr=store.get('sermons');title(ui('Sermon Studio','Sermon Studio'),ui('Build an editable sermon by points and ministry sections, with personal notes and optional AI assistance.','Bumuo ng editable sermon ayon sa points at ministry sections, may personal notes at optional AI assistance.'));view.innerHTML=`<div class="creator-layout"><section class="card"><div class="form-grid"><input id="title" placeholder="${ui('Sermon title','Pamagat ng sermon')}"><input id="text" placeholder="${ui('Main Bible passage','Pangunahing talata')}"><input id="theme" placeholder="${ui('Central theme or main truth','Pangunahing tema o katotohanan')}"><input id="audience" placeholder="${ui('Audience or occasion','Tagapakinig o okasyon')}"><input class="wide" id="purpose" placeholder="${ui('Purpose or desired response','Layunin o nais na tugon')}"><label class="field-label wide">${ui('Message format','Uri ng mensahe')}<select id="depth"><option value="devotion">${ui('Devotional','Debosyonal')}</option><option value="short">${ui('Short Message','Maikling Mensahe')}</option><option value="standard">${ui('Standard Sermon','Karaniwang Sermon')}</option><option value="full" selected>${ui('Full Sermon','Buong Sermon')}</option><option value="extended">${ui('Extended Teaching','Mas Malalim na Pagtuturo')}</option></select></label><textarea class="wide sermon-notes" id="notes" placeholder="${ui('Personal notes, testimony, illustrations, church situation, or required points','Personal notes, patotoo, illustrations, sitwasyon ng iglesia, o required points')}"></textarea><div class="wide ai-assist-row"><button class="primary" id="sermonDraft">✨ ${ui('Create Sermon by Points','Gumawa ng Sermon ayon sa Points')}</button><button class="ghost" id="sermonPrompt">🤖 ${ui('Prepare Detailed AI Prompt','Ihanda ang Detalyadong AI Prompt')}</button><button class="ghost" id="sermonClear">${ui('Clear','Burahin')}</button></div><div class="notice small-note wide">${ui('Message format controls depth, not a visible timer. Every point and note remains editable. Always review teaching against Scripture.','Ang uri ng mensahe ang kumokontrol sa lalim, hindi visible timer. Editable ang bawat point at note. Palaging suriin ayon sa Kasulatan.')}</div></div></section><section class="card"><div class="draft-head"><h3>${ui('Editable Sermon Workspace','Editable Sermon Workspace')}</h3><span class="pill">${ui('Point-Based','Ayon sa Points')}</span></div><textarea id="body" class="draft-area sermon-draft-area" placeholder="${ui('Your sermon workspace will appear here...','Lalabas dito ang sermon workspace...')}"></textarea><div class="creator-buttons"><button class="primary" id="sermonSave">${ui('Save Sermon','I-save ang Sermon')}</button><button class="ghost" id="sermonCopy">${ui('Copy Draft','Kopyahin ang Draft')}</button></div></section></div><div class="entries sermon-entries">${arr.length?arr.map((x,i)=>`<div class="entry"><button class="danger" style="float:right" data-del="${i}">${ui('Delete','Burahin')}</button><h3>${esc(x.title||ui('Untitled sermon','Walang pamagat'))}</h3><p><b>${ui('Passage','Talata')}:</b> ${esc(x.text||'')}</p><p><b>${ui('Format','Uri')}:</b> ${esc(sermonDepthLabel(x.depth))}</p><details><summary>${ui('Open complete sermon','Buksan ang buong sermon')}</summary><pre class="saved-sermon">${esc(x.body||'')}</pre></details><div class="meta">${x.date}</div></div>`).join(''):`<div class="empty">${ui('No saved sermons yet.','Wala pang naka-save na sermon.')}</div>`}</div>`;const values=()=>({title:$('#title').value.trim(),text:$('#text').value.trim(),theme:$('#theme').value.trim(),audience:$('#audience').value.trim(),purpose:$('#purpose').value.trim(),depth:$('#depth').value,notes:$('#notes').value.trim(),body:$('#body').value.trim()});$('#sermonDraft').onclick=()=>{$('#body').value=sermonDraft(values());toast(ui('Point-based sermon created','Nagawa ang sermon ayon sa points'))};$('#sermonPrompt').onclick=async()=>{let prompt=sermonPrompt(values());$('#body').value=prompt;try{await navigator.clipboard.writeText(prompt)}catch{}toast(ui('Detailed AI prompt prepared and copied','Naihanda at nakopya ang detalyadong AI prompt'))};$('#sermonClear').onclick=()=>{['title','text','theme','audience','purpose','notes','body'].forEach(id=>$('#'+id).value='');$('#depth').value='full'};$('#sermonCopy').onclick=async()=>{if(!$('#body').value.trim())return toast(ui('Create or write a sermon first','Gumawa o sumulat muna ng sermon'));try{await navigator.clipboard.writeText($('#body').value);toast(ui('Sermon copied','Nakopya ang sermon'))}catch{toast(ui('Select the sermon and copy it manually','Piliin ang sermon at kopyahin nang manual'))}};$('#sermonSave').onclick=()=>{let x={date:new Date().toLocaleString(),...values()};if(!x.title||!x.body)return toast(ui('Add a title and create or write the sermon first','Maglagay ng pamagat at gumawa o sumulat muna ng sermon'));arr.unshift(x);store.set('sermons',arr);sermon()};document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{arr.splice(+b.dataset.del,1);store.set('sermons',arr);sermon()})}
+function sermon(){let arr=store.get('sermons');title(ui('Sermon Studio','Sermon Studio'),ui('Build an editable sermon by points and ministry sections, with personal notes and optional AI assistance.','Bumuo ng editable sermon ayon sa points at ministry sections, may personal notes at optional AI assistance.'));view.innerHTML=`<div class="creator-layout"><section class="card"><div class="form-grid"><input id="title" placeholder="${ui('Sermon title','Pamagat ng sermon')}"><input id="text" placeholder="${ui('Main Bible passage','Pangunahing talata')}"><input id="theme" placeholder="${ui('Central theme or main truth','Pangunahing tema o katotohanan')}"><input id="audience" placeholder="${ui('Audience or occasion','Tagapakinig o okasyon')}"><input class="wide" id="purpose" placeholder="${ui('Purpose or desired response','Layunin o nais na tugon')}"><label class="field-label wide">${ui('Message format','Uri ng mensahe')}<select id="depth"><option value="devotion">${ui('Devotional','Debosyonal')}</option><option value="short">${ui('Short Message','Maikling Mensahe')}</option><option value="standard">${ui('Standard Sermon','Karaniwang Sermon')}</option><option value="full" selected>${ui('Full Sermon','Buong Sermon')}</option><option value="extended">${ui('Extended Teaching','Mas Malalim na Pagtuturo')}</option></select></label><textarea class="wide sermon-notes" id="notes" placeholder="${ui('Personal notes, testimony, illustrations, church situation, or required points','Personal notes, patotoo, illustrations, sitwasyon ng iglesia, o required points')}"></textarea><div class="wide ai-assist-row"><button class="primary" id="sermonDraft">✨ ${ui('Create Sermon by Points','Gumawa ng Sermon ayon sa Points')}</button><button class="ghost" id="sermonPrompt">🤖 ${ui('Prepare Detailed AI Prompt','Ihanda ang Detalyadong AI Prompt')}</button><button class="ghost" id="sermonPpt">📊 ${ui('PowerPoint Outline','PowerPoint Outline')}</button><button class="ghost" id="sermonClear">${ui('Clear','Burahin')}</button></div><div class="notice small-note wide">${ui('Message format controls depth, not a visible timer. Every point and note remains editable. Always review teaching against Scripture.','Ang uri ng mensahe ang kumokontrol sa lalim, hindi visible timer. Editable ang bawat point at note. Palaging suriin ayon sa Kasulatan.')}</div></div></section><section class="card"><div class="draft-head"><h3>${ui('Editable Sermon Workspace','Editable Sermon Workspace')}</h3><span class="pill">${ui('Point-Based','Ayon sa Points')}</span></div><textarea id="body" class="draft-area sermon-draft-area" placeholder="${ui('Your sermon workspace will appear here...','Lalabas dito ang sermon workspace...')}"></textarea><div class="creator-buttons"><button class="primary" id="sermonSave">${ui('Save Sermon','I-save ang Sermon')}</button><button class="ghost" id="sermonCopy">${ui('Copy Draft','Kopyahin ang Draft')}</button></div><div id="pptPanel" class="notice" style="display:none;margin-top:14px"><div class="draft-head"><h3>📊 ${ui('PowerPoint Slide Outline','PowerPoint Slide Outline')}</h3><span class="pill">${ui('Suggestion only','Suggestion lamang')}</span></div><textarea id="pptBody" class="draft-area" style="min-height:360px" placeholder="${ui('Your slide outline will appear here...','Lalabas dito ang slide outline...')}"></textarea><div class="creator-buttons"><button class="primary" id="pptCopy">${ui('Copy PowerPoint Outline','Kopyahin ang PowerPoint Outline')}</button></div></div></section></div><div class="entries sermon-entries">${arr.length?arr.map((x,i)=>`<div class="entry"><button class="danger" style="float:right" data-del="${i}">${ui('Delete','Burahin')}</button><h3>${esc(x.title||ui('Untitled sermon','Walang pamagat'))}</h3><p><b>${ui('Passage','Talata')}:</b> ${esc(x.text||'')}</p><p><b>${ui('Format','Uri')}:</b> ${esc(sermonDepthLabel(x.depth))}</p><details><summary>${ui('Open complete sermon','Buksan ang buong sermon')}</summary><pre class="saved-sermon">${esc(x.body||'')}</pre></details><div class="meta">${x.date}</div></div>`).join(''):`<div class="empty">${ui('No saved sermons yet.','Wala pang naka-save na sermon.')}</div>`}</div>`;const values=()=>({title:$('#title').value.trim(),text:$('#text').value.trim(),theme:$('#theme').value.trim(),audience:$('#audience').value.trim(),purpose:$('#purpose').value.trim(),depth:$('#depth').value,notes:$('#notes').value.trim(),body:$('#body').value.trim()});$('#sermonDraft').onclick=()=>{$('#body').value=sermonDraft(values());toast(ui('Point-based sermon created','Nagawa ang sermon ayon sa points'))};$('#sermonPrompt').onclick=async()=>{let prompt=sermonPrompt(values());$('#body').value=prompt;try{await navigator.clipboard.writeText(prompt)}catch{}toast(ui('Detailed AI prompt prepared and copied','Naihanda at nakopya ang detalyadong AI prompt'))};$('#sermonPpt').onclick=()=>{let outline=sermonPowerPointOutline(values());$('#pptBody').value=outline;$('#pptPanel').style.display='block';$('#pptPanel').scrollIntoView({behavior:'smooth',block:'start'});toast(ui('PowerPoint outline prepared below','Naihanda sa ibaba ang PowerPoint outline'))};$('#pptCopy').onclick=async()=>{if(!$('#pptBody').value.trim())return;try{await navigator.clipboard.writeText($('#pptBody').value);toast(ui('PowerPoint outline copied','Nakopya ang PowerPoint outline'))}catch{toast(ui('Select the outline and copy it manually','Piliin ang outline at kopyahin nang manual'))}};$('#sermonClear').onclick=()=>{['title','text','theme','audience','purpose','notes','body'].forEach(id=>$('#'+id).value='');$('#depth').value='full'};$('#sermonCopy').onclick=async()=>{if(!$('#body').value.trim())return toast(ui('Create or write a sermon first','Gumawa o sumulat muna ng sermon'));try{await navigator.clipboard.writeText($('#body').value);toast(ui('Sermon copied','Nakopya ang sermon'))}catch{toast(ui('Select the sermon and copy it manually','Piliin ang sermon at kopyahin nang manual'))}};$('#sermonSave').onclick=()=>{let x={date:new Date().toLocaleString(),...values()};if(!x.title||!x.body)return toast(ui('Add a title and create or write the sermon first','Maglagay ng pamagat at gumawa o sumulat muna ng sermon'));arr.unshift(x);store.set('sermons',arr);sermon()};document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{arr.splice(+b.dataset.del,1);store.set('sermons',arr);sermon()})}
 function kidsFormatLabel(format){return ({simple:ui('Simple Lesson','Simpleng Aralin'),standard:ui('Standard Lesson','Karaniwang Aralin'),complete:ui('Complete Ministry Lesson','Kumpletong Ministry Lesson')})[format]||ui('Standard Lesson','Karaniwang Aralin')}
 function kidsDraft(data){const t=data.title||ui('Learning to Trust God','Matutong Magtiwala sa Diyos'),p=data.passage||data.verse||ui('Add the main Bible passage','Idagdag ang pangunahing talata'),v=data.verse||p,a=data.age||ui('Ages 6–12','Edad 6–12'),g=data.goal||ui('Children will understand the Bible truth and choose one way to obey God.','Mauunawaan ng mga bata ang katotohanan sa Biblia at pipili ng isang paraan upang sundin ang Diyos.'),n=data.notes||ui('Add teacher notes, class needs, materials, or illustration ideas here.','Idagdag dito ang teacher notes, class needs, materials, o illustration ideas.'),f=kidsFormatLabel(data.format);return appLanguage==='tl'?`KIDS MINISTRY STUDIO
 
@@ -707,7 +865,295 @@ This week, read ${p} again, practise ${v}, and discuss how to live the lesson.
 TEACHER NOTES
 ${n}`}
 function kidsPrompt(data){return `Create a complete, editable Christian children's Bible lesson in ${appLanguage==='tl'?'Tagalog':'English'} using a ${kidsFormatLabel(data.format)} format. Title/theme: “${data.title||''}”. Main passage: “${data.passage||''}”. Memory verse: “${data.verse||''}”. Age group: “${data.age||''}”. Learning goal: “${data.goal||''}”. Teacher notes: “${data.notes||''}”. Organise it by lesson sections rather than visible minutes: teacher preparation, opening prayer, welcome/icebreaker, memory verse activity, Bible story, three teaching points, object lesson, discussion questions, active game, craft/quiet activity, practical application, conclusion, closing prayer, parent take-home note, materials, and safety reminders. Keep it age-appropriate, Christ-centred, editable, and faithful to the passage. Do not invent Bible quotations, story details, historical facts, promises, or guaranteed outcomes.`}
-function kids(){let arr=store.get('kids');title(ui('Kids Ministry Studio','Kids Ministry Studio'),ui('Create an editable children’s Bible lesson organised by teaching points and ministry sections.','Gumawa ng editable children’s Bible lesson ayon sa teaching points at ministry sections.'));view.innerHTML=`<div class="creator-layout"><section class="card"><div class="form-grid"><input id="title" placeholder="${ui('Lesson title or theme','Pamagat o tema ng aralin')}"><input id="passage" placeholder="${ui('Main Bible passage','Pangunahing talata sa Biblia')}"><input id="verse" placeholder="${ui('Memory verse','Talatang isasaulo')}"><input id="age" placeholder="${ui('Age group, e.g. 6–12','Edad, hal. 6–12')}"><input class="wide" id="goal" placeholder="${ui('Learning goal or desired response','Layunin ng aralin o nais na tugon')}"><label class="field-label wide">${ui('Lesson format','Uri ng aralin')}<select id="format"><option value="simple">${ui('Simple Lesson','Simpleng Aralin')}</option><option value="standard" selected>${ui('Standard Lesson','Karaniwang Aralin')}</option><option value="complete">${ui('Complete Ministry Lesson','Kumpletong Ministry Lesson')}</option></select></label><textarea class="wide sermon-notes" id="notes" placeholder="${ui('Teacher notes, class needs, materials, illustration ideas, or church context','Teacher notes, class needs, materials, illustration ideas, o church context')}"></textarea><div class="wide ai-assist-row"><button class="primary" id="kidsDraft">✨ ${ui('Create Lesson by Points','Gumawa ng Lesson ayon sa Points')}</button><button class="ghost" id="kidsPrompt">🤖 ${ui('Prepare Detailed AI Prompt','Ihanda ang Detalyadong AI Prompt')}</button><button class="ghost" id="kidsClear">${ui('Clear','Burahin')}</button></div><div class="notice small-note wide">${ui('Lesson format controls depth, not a visible timer. Teachers can edit every section and add their own activities and notes.','Ang uri ng aralin ang kumokontrol sa lalim, hindi visible timer. Maaaring i-edit ng teacher ang bawat section at magdagdag ng sariling activities at notes.')}</div></div></section><section class="card"><div class="draft-head"><h3>${ui('Editable Kids Ministry Workspace','Editable Kids Ministry Workspace')}</h3><span class="pill">${ui('Point-Based','Ayon sa Points')}</span></div><textarea id="body" class="draft-area sermon-draft-area" placeholder="${ui('Your complete kids lesson will appear here...','Lalabas dito ang buong kids lesson...')}"></textarea><div class="creator-buttons"><button class="primary" id="kidsSave">${ui('Save Lesson','I-save ang Lesson')}</button><button class="ghost" id="kidsCopy">${ui('Copy Draft','Kopyahin ang Draft')}</button></div></section></div><div class="entries sermon-entries">${arr.length?arr.map((x,i)=>`<div class="entry"><button class="danger" style="float:right" data-del="${i}">${ui('Delete','Burahin')}</button><h3>${esc(x.title||ui('Untitled lesson','Walang pamagat'))}</h3><p><b>${ui('Passage','Talata')}:</b> ${esc(x.passage||'')}</p><p><b>${ui('Format','Uri')}:</b> ${esc(kidsFormatLabel(x.format))}</p><details><summary>${ui('Open complete lesson','Buksan ang buong lesson')}</summary><pre class="saved-sermon">${esc(x.body||'')}</pre></details><div class="meta">${x.date}</div></div>`).join(''):`<div class="empty">${ui('No saved kids lessons yet.','Wala pang naka-save na kids lesson.')}</div>`}</div>`;const values=()=>({title:$('#title').value.trim(),passage:$('#passage').value.trim(),verse:$('#verse').value.trim(),age:$('#age').value.trim(),goal:$('#goal').value.trim(),format:$('#format').value,notes:$('#notes').value.trim(),body:$('#body').value.trim()});$('#kidsDraft').onclick=()=>{$('#body').value=kidsDraft(values());toast(ui('Point-based kids lesson created','Nagawa ang kids lesson ayon sa points'))};$('#kidsPrompt').onclick=async()=>{let prompt=kidsPrompt(values());$('#body').value=prompt;try{await navigator.clipboard.writeText(prompt)}catch{}toast(ui('Detailed AI prompt prepared and copied','Naihanda at nakopya ang detalyadong AI prompt'))};$('#kidsClear').onclick=()=>{['title','passage','verse','age','goal','notes','body'].forEach(id=>$('#'+id).value='');$('#format').value='standard'};$('#kidsCopy').onclick=async()=>{if(!$('#body').value.trim())return toast(ui('Create or write a lesson first','Gumawa o sumulat muna ng lesson'));try{await navigator.clipboard.writeText($('#body').value);toast(ui('Lesson copied','Nakopya ang lesson'))}catch{toast(ui('Select the lesson and copy it manually','Piliin ang lesson at kopyahin nang manual'))}};$('#kidsSave').onclick=()=>{let x={date:new Date().toLocaleString(),...values()};if(!x.title||!x.body)return toast(ui('Add a title and create or write the lesson first','Maglagay ng pamagat at gumawa o sumulat muna ng lesson'));arr.unshift(x);store.set('kids',arr);kids()};document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{arr.splice(+b.dataset.del,1);store.set('kids',arr);kids()})}
+
+function kidsPresentationOutline(data){const title=data.title||ui('Children’s Bible Lesson','Aralin sa Biblia para sa Bata'),passage=data.passage||data.story||ui('Add Bible passage','Idagdag ang talata'),verse=data.verse||data.memory||passage,age=data.age||ui('Children','Mga Bata'),goal=data.goal||data.lesson||ui('Know God’s truth and respond in faith and obedience.','Makilala ang katotohanan ng Diyos at tumugon nang may pananampalataya at pagsunod.');return appLanguage==='tl'?`KIDS PRESENTATION OUTLINE
+
+SLIDE 1 — PAMAGAT
+${title}
+Tema: ${goal}
+Edad: ${age}
+
+SLIDE 2 — PAMBUNGAD NA TANONG
+• Ano ang alam na ninyo tungkol sa paksang ito?
+• Magbigay ng isang simpleng icebreaker na konektado sa lesson.
+
+SLIDE 3 — TALATANG ISASAULO
+${verse}
+• Basahin nang sabay-sabay.
+• Ulitin gamit ang actions o hand motions.
+
+SLIDE 4 — BIBLE STORY
+${passage}
+• Ipakilala ang pangunahing tauhan at sitwasyon.
+• Ipakita ang suggested visual: simpleng larawan o drawing ng eksena.
+
+SLIDE 5 — ANO ANG NANGYARI?
+• Unang mahalagang pangyayari
+• Ikalawang mahalagang pangyayari
+• Paano kumilos ang Diyos?
+
+SLIDE 6 — TEACHING POINT 1
+• Katotohanan tungkol sa Diyos
+• Maikling paliwanag para sa mga bata
+• Suggested picture o object lesson
+
+SLIDE 7 — TEACHING POINT 2
+• Katotohanan tungkol sa pananampalataya o pagsunod
+• Isang halimbawa sa bahay o paaralan
+
+SLIDE 8 — TEACHING POINT 3
+• Paano ito nagtuturo tungkol kay Jesus
+• Isang malinaw na gospel connection
+
+SLIDE 9 — GAME O ACTIVITY
+• Pangalan ng laro
+• Layunin
+• Materials
+• Simpleng instructions
+
+SLIDE 10 — CRAFT
+• Craft title
+• Materials
+• Steps
+• Safety reminder
+
+SLIDE 11 — DISCUSSION QUESTIONS
+1. Ano ang nangyari sa kuwento?
+2. Ano ang natutuhan natin tungkol sa Diyos?
+3. Ano ang maaari nating gawin ngayong linggo?
+
+SLIDE 12 — LIFE APPLICATION
+• Sa bahay
+• Sa paaralan
+• Sa iglesia
+• Isang action challenge
+
+SLIDE 13 — PANGWAKAS NA BUOD
+• Ulitin ang main truth
+• Ulitin ang memory verse
+• Isang pangungusap na dapat tandaan
+
+SLIDE 14 — CLOSING PRAYER
+Maikling panalangin ng pasasalamat, pagtitiwala, at pagsunod.
+
+SLIDE 15 — TAKE-HOME CHALLENGE
+• Basahin muli ang ${passage}
+• Sanayin ang ${verse}
+• Ibahagi ang isang natutuhan sa pamilya
+
+DESIGN SUGGESTIONS
+• Gumamit ng malalaking font at kaunting salita bawat slide.
+• Gumamit ng malinaw, child-friendly na visuals.
+• Huwag punuin ang slides; ang teacher ang magpapaliwanag.`:`KIDS PRESENTATION OUTLINE
+
+SLIDE 1 — TITLE
+${title}
+Theme: ${goal}
+Age group: ${age}
+
+SLIDE 2 — OPENING QUESTION
+• What do you already know about this topic?
+• Add one simple icebreaker connected to the lesson.
+
+SLIDE 3 — MEMORY VERSE
+${verse}
+• Read it together.
+• Repeat it using actions or hand motions.
+
+SLIDE 4 — BIBLE STORY
+${passage}
+• Introduce the main person and setting.
+• Suggested visual: a simple picture or drawing of the scene.
+
+SLIDE 5 — WHAT HAPPENED?
+• First important event
+• Second important event
+• How did God act?
+
+SLIDE 6 — TEACHING POINT 1
+• A truth about God
+• Child-friendly explanation
+• Suggested picture or object lesson
+
+SLIDE 7 — TEACHING POINT 2
+• A truth about faith or obedience
+• One example from home or school
+
+SLIDE 8 — TEACHING POINT 3
+• How the lesson points to Jesus
+• One clear gospel connection
+
+SLIDE 9 — GAME OR ACTIVITY
+• Game name
+• Purpose
+• Materials
+• Simple instructions
+
+SLIDE 10 — CRAFT
+• Craft title
+• Materials
+• Steps
+• Safety reminder
+
+SLIDE 11 — DISCUSSION QUESTIONS
+1. What happened in the story?
+2. What did we learn about God?
+3. What can we do this week?
+
+SLIDE 12 — LIFE APPLICATION
+• At home
+• At school
+• At church
+• One action challenge
+
+SLIDE 13 — CONCLUSION
+• Repeat the main truth
+• Repeat the memory verse
+• One sentence to remember
+
+SLIDE 14 — CLOSING PRAYER
+A short prayer of thanks, trust, and obedience.
+
+SLIDE 15 — TAKE-HOME CHALLENGE
+• Read ${passage} again
+• Practise ${verse}
+• Share one lesson with the family
+
+DESIGN SUGGESTIONS
+• Use large fonts and only a few words per slide.
+• Use clear, child-friendly visuals.
+• Keep slides simple; the teacher provides the explanation.`}
+function kidsResourcePack(data){const title=data.title||ui('Children’s Bible Lesson','Aralin sa Biblia para sa Bata'),passage=data.passage||data.story||ui('Add Bible passage','Idagdag ang talata'),verse=data.verse||data.memory||passage,age=data.age||ui('Children','Mga Bata'),goal=data.goal||data.lesson||ui('Know God’s truth and respond in faith and obedience.','Makilala ang katotohanan ng Diyos at tumugon nang may pananampalataya at pagsunod.'),notes=data.notes||'';return appLanguage==='tl'?`KIDS MINISTRY RESOURCE PACK
+
+LESSON TITLE
+${title}
+
+BIBLE PASSAGE
+${passage}
+
+MEMORY VERSE
+${verse}
+
+AGE GROUP
+${age}
+
+MAIN LEARNING GOAL
+${goal}
+
+1. TEACHER PREPARATION
+• Basahin ang passage sa context.
+• Ihanda ang Bible, visual aids, activity materials, at craft supplies.
+• I-check ang allergies, choking hazards, scissors, at room safety.
+• Personal notes: ${notes}
+
+2. PRESENTATION OUTLINE
+${kidsPresentationOutline(data)}
+
+3. GAME SUGGESTION
+Bible Truth Relay
+Objective: Ulitin ang main lesson at memory verse.
+Materials: Verse cards o printed words.
+Instructions: Hatiin sa teams, ayusin ang verse, at ipaliwanag ang isang natutuhan.
+Small-group option: Gawin bilang matching game.
+
+4. CRAFT SUGGESTION
+Truth Reminder Card
+Materials: Card paper, crayons, stickers, child-safe scissors, glue.
+Instructions: Isulat ang memory verse at gumuhit ng larawan mula sa story.
+Safety: Gumamit lamang ng age-appropriate materials at adult supervision.
+
+5. OBJECT LESSON
+Pumili ng isang simpleng bagay na konektado sa tema—halimbawa ilaw, bato, binhi, lubid, o regalo. Ipaliwanag nang malinaw na ang object ay illustration lamang at hindi bahagi ng Bible text.
+
+6. WORSHIP SONG SUGGESTIONS
+• Isang awit tungkol sa pag-ibig ng Diyos
+• Isang awit tungkol sa pagtitiwala kay Jesus
+• Isang action song na pamilyar sa mga bata
+Teacher note: Pumili ng kanta na alam ng church at ang lyrics ay biblikal.
+
+7. PARENT TAKE-HOME HANDOUT
+Ngayong araw natutuhan namin: ${goal}
+Bible passage: ${passage}
+Memory verse: ${verse}
+Tanong sa bahay:
+1. Ano ang paborito mong bahagi ng story?
+2. Ano ang natutuhan natin tungkol sa Diyos?
+3. Paano natin ito maisasabuhay ngayong linggo?
+Family prayer: Panginoon, tulungan Mo kaming alalahanin ang Iyong Salita at sundin Ka nang may kagalakan. Amen.
+Weekly challenge: Basahin muli ang passage at gawin ang isang act of kindness o obedience.
+
+8. TEACHER REVIEW
+• Tama ba sa Scripture ang lesson?
+• Simple ba para sa age group?
+• Malinaw ba ang connection kay Jesus?
+• May sapat bang participation ang mga bata?
+• Ano ang babaguhin sa susunod?`:`KIDS MINISTRY RESOURCE PACK
+
+LESSON TITLE
+${title}
+
+BIBLE PASSAGE
+${passage}
+
+MEMORY VERSE
+${verse}
+
+AGE GROUP
+${age}
+
+MAIN LEARNING GOAL
+${goal}
+
+1. TEACHER PREPARATION
+• Read the passage in context.
+• Prepare the Bible, visual aids, activity materials, and craft supplies.
+• Check allergies, choking hazards, scissors, and room safety.
+• Personal notes: ${notes}
+
+2. PRESENTATION OUTLINE
+${kidsPresentationOutline(data)}
+
+3. GAME SUGGESTION
+Bible Truth Relay
+Objective: Reinforce the main lesson and memory verse.
+Materials: Verse cards or printed words.
+Instructions: Divide into teams, arrange the verse, then explain one lesson learned.
+Small-group option: Use the cards as a matching game.
+
+4. CRAFT SUGGESTION
+Truth Reminder Card
+Materials: Card paper, crayons, stickers, child-safe scissors, and glue.
+Instructions: Write the memory verse and draw a picture from the story.
+Safety: Use age-appropriate materials with adult supervision.
+
+5. OBJECT LESSON
+Choose one simple object connected to the theme—for example a light, rock, seed, rope, or gift. Clearly explain that the object is only an illustration and is not part of the Bible text.
+
+6. WORSHIP SONG SUGGESTIONS
+• One song about God’s love
+• One song about trusting Jesus
+• One familiar action song
+Teacher note: Choose songs your church knows and check that the lyrics are biblical.
+
+7. PARENT TAKE-HOME HANDOUT
+Today we learned: ${goal}
+Bible passage: ${passage}
+Memory verse: ${verse}
+Questions for home:
+1. What was your favourite part of the story?
+2. What did we learn about God?
+3. How can we live this lesson this week?
+Family prayer: Lord, help our family remember Your Word and obey You with joy. Amen.
+Weekly challenge: Read the passage again and complete one act of kindness or obedience.
+
+8. TEACHER REVIEW
+• Is the lesson faithful to Scripture?
+• Is it simple enough for the age group?
+• Is the connection to Jesus clear?
+• Did the children have enough participation?
+• What should be improved next time?`}
+
+function kids(){let arr=store.get('kids');title(ui('Kids Ministry Studio','Kids Ministry Studio'),ui('Create an editable children’s Bible lesson, presentation, and ministry resource pack.','Gumawa ng editable children’s Bible lesson, presentation, at ministry resource pack.'));view.innerHTML=`<div class="creator-layout"><section class="card"><div class="form-grid"><input id="title" placeholder="${ui('Lesson title or theme','Pamagat o tema ng aralin')}"><input id="passage" placeholder="${ui('Main Bible passage','Pangunahing talata sa Biblia')}"><input id="verse" placeholder="${ui('Memory verse','Talatang isasaulo')}"><input id="age" placeholder="${ui('Age group, e.g. 6–12','Edad, hal. 6–12')}"><input class="wide" id="goal" placeholder="${ui('Learning goal or desired response','Layunin ng aralin o nais na tugon')}"><label class="field-label wide">${ui('Lesson format','Uri ng aralin')}<select id="format"><option value="simple">${ui('Simple Lesson','Simpleng Aralin')}</option><option value="standard" selected>${ui('Standard Lesson','Karaniwang Aralin')}</option><option value="complete">${ui('Complete Ministry Lesson','Kumpletong Ministry Lesson')}</option></select></label><textarea class="wide sermon-notes" id="notes" placeholder="${ui('Teacher notes, class needs, materials, illustration ideas, or church context','Teacher notes, class needs, materials, illustration ideas, o church context')}"></textarea><div class="wide ai-assist-row"><button class="primary" id="kidsDraft">✨ ${ui('Create Lesson by Points','Gumawa ng Lesson ayon sa Points')}</button><button class="ghost" id="kidsPrompt">🤖 ${ui('Prepare Detailed AI Prompt','Ihanda ang Detalyadong AI Prompt')}</button><button class="ghost" id="kidsPpt">📺 ${ui('Kids Presentation','Kids Presentation')}</button><button class="ghost" id="kidsPack">📦 ${ui('Resource Pack','Resource Pack')}</button><button class="ghost" id="kidsClear">${ui('Clear','Burahin')}</button></div><div class="notice small-note wide">${ui('Create the lesson first, then build a slide outline or complete teacher resource pack. Everything remains editable.','Gumawa muna ng lesson, pagkatapos ay gumawa ng slide outline o kumpletong teacher resource pack. Editable ang lahat.')}</div></div></section><section class="card"><div class="draft-head"><h3>${ui('Editable Kids Ministry Workspace','Editable Kids Ministry Workspace')}</h3><span class="pill">${ui('Point-Based','Ayon sa Points')}</span></div><textarea id="body" class="draft-area sermon-draft-area" placeholder="${ui('Your complete kids lesson will appear here...','Lalabas dito ang buong kids lesson...')}"></textarea><div class="creator-buttons"><button class="primary" id="kidsSave">${ui('Save Lesson','I-save ang Lesson')}</button><button class="ghost" id="kidsCopy">${ui('Copy Draft','Kopyahin ang Draft')}</button></div><div id="kidsExtraPanel" class="notice" style="display:none;margin-top:14px"><div class="draft-head"><h3 id="kidsExtraTitle">📺 ${ui('Kids Presentation Outline','Kids Presentation Outline')}</h3><span class="pill">${ui('Editable suggestion','Editable suggestion')}</span></div><textarea id="kidsExtraBody" class="draft-area" style="min-height:420px"></textarea><div class="creator-buttons"><button class="primary" id="kidsExtraCopy">${ui('Copy Resource','Kopyahin ang Resource')}</button></div></div></section></div><div class="entries sermon-entries">${arr.length?arr.map((x,i)=>`<div class="entry"><button class="danger" style="float:right" data-del="${i}">${ui('Delete','Burahin')}</button><h3>${esc(x.title||ui('Untitled lesson','Walang pamagat'))}</h3><p><b>${ui('Passage','Talata')}:</b> ${esc(x.passage||'')}</p><p><b>${ui('Format','Uri')}:</b> ${esc(kidsFormatLabel(x.format))}</p><details><summary>${ui('Open complete lesson','Buksan ang buong lesson')}</summary><pre class="saved-sermon">${esc(x.body||'')}</pre></details><div class="meta">${x.date}</div></div>`).join(''):`<div class="empty">${ui('No saved kids lessons yet.','Wala pang naka-save na kids lesson.')}</div>`}</div>`;const values=()=>({title:$('#title').value.trim(),passage:$('#passage').value.trim(),verse:$('#verse').value.trim(),age:$('#age').value.trim(),goal:$('#goal').value.trim(),format:$('#format').value,notes:$('#notes').value.trim(),body:$('#body').value.trim()});const showExtra=(titleText,text)=>{$('#kidsExtraTitle').textContent=titleText;$('#kidsExtraBody').value=text;$('#kidsExtraPanel').style.display='block';$('#kidsExtraPanel').scrollIntoView({behavior:'smooth',block:'start'})};$('#kidsDraft').onclick=()=>{$('#body').value=kidsDraft(values());toast(ui('Point-based kids lesson created','Nagawa ang kids lesson ayon sa points'))};$('#kidsPrompt').onclick=async()=>{let prompt=kidsPrompt(values());$('#body').value=prompt;try{await navigator.clipboard.writeText(prompt)}catch{}toast(ui('Detailed AI prompt prepared and copied','Naihanda at nakopya ang detalyadong AI prompt'))};$('#kidsPpt').onclick=()=>{showExtra('📺 '+ui('Kids Presentation Outline','Kids Presentation Outline'),kidsPresentationOutline(values()));toast(ui('Kids presentation outline prepared','Naihanda ang kids presentation outline'))};$('#kidsPack').onclick=()=>{showExtra('📦 '+ui('Kids Ministry Resource Pack','Kids Ministry Resource Pack'),kidsResourcePack(values()));toast(ui('Kids resource pack prepared','Naihanda ang kids resource pack'))};$('#kidsExtraCopy').onclick=async()=>{if(!$('#kidsExtraBody').value.trim())return;try{await navigator.clipboard.writeText($('#kidsExtraBody').value);toast(ui('Resource copied','Nakopya ang resource'))}catch{toast(ui('Select the resource and copy it manually','Piliin ang resource at kopyahin nang manual'))}};$('#kidsClear').onclick=()=>{['title','passage','verse','age','goal','notes','body'].forEach(id=>$('#'+id).value='');$('#format').value='standard';$('#kidsExtraBody').value='';$('#kidsExtraPanel').style.display='none'};$('#kidsCopy').onclick=async()=>{if(!$('#body').value.trim())return toast(ui('Create or write a lesson first','Gumawa o sumulat muna ng lesson'));try{await navigator.clipboard.writeText($('#body').value);toast(ui('Lesson copied','Nakopya ang lesson'))}catch{toast(ui('Select the lesson and copy it manually','Piliin ang lesson at kopyahin nang manual'))}};$('#kidsSave').onclick=()=>{let x={date:new Date().toLocaleString(),...values()};if(!x.title||!x.body)return toast(ui('Add a title and create or write the lesson first','Maglagay ng pamagat at gumawa o sumulat muna ng lesson'));arr.unshift(x);store.set('kids',arr);kids()};document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{arr.splice(+b.dataset.del,1);store.set('kids',arr);kids()})}
 function reading(){title('Reading Plan','Mark chapters complete as you read.');let done=store.get('reading',{}),total=Object.keys(done).length,pct=Math.round(total/1189*100);view.innerHTML=`<div class="card"><h3>Progress: ${total} of 1,189 chapters (${pct}%)</h3><progress value="${total}" max="1189"></progress></div><div class="grid book-progress">${B.map(b=>{let n=Array.from({length:b.chapters},(_,i)=>done[b.name+' '+(i+1)]).filter(Boolean).length;return `<div class="card"><h3>${b.name}</h3><p>${n} / ${b.chapters} chapters</p><select data-book="${b.name}"><option>Choose chapter</option>${Array.from({length:b.chapters},(_,i)=>`<option>${i+1}</option>`).join('')}</select><button class="primary" data-mark="${b.name}">Mark complete</button></div>`}).join('')}</div>`;document.querySelectorAll('[data-mark]').forEach(btn=>btn.onclick=()=>{let b=btn.dataset.mark,s=document.querySelector(`select[data-book="${CSS.escape(b)}"]`),c=+s.value;if(!c)return;done[b+' '+c]=true;store.set('reading',done);reading()})}
 
 function backup(){
@@ -724,10 +1170,10 @@ function resource(){let o=store.get('openResource',null);if(!o)return route('hom
  if(o.kind==='devotional')body=`<span class="pill">${esc(x.theme)}</span><h2>${esc(x.title)}</h2><div class="scripture-banner"><span>${ui('Main Scripture','Pangunahing Talata')}</span>${scriptureLink(x.scripture)}</div><h3>${ui('Reflection','Pagninilay')}</h3><p>${esc(x.reflection)}</p><h3>${ui('Application','Aplikasyon')}</h3><p>${esc(x.application)}</p><h3>${ui('Reflection Questions','Mga Tanong sa Pagninilay')}</h3><ol>${x.questions.map(q=>`<li>${esc(q)}</li>`).join('')}</ol><h3>${ui('Prayer','Panalangin')}</h3><p>${esc(x.prayer)}</p><div class="resource-foot"><b>${ui('Memory Verse','Talatang Isasaulo')}:</b> ${scriptureLink(x.memory)}<br><b>${ui('Suggested reading','Iminungkahing pagbasa')}:</b> ${scriptureLink(x.reading)}</div>`;
  if(o.kind==='exhortation')body=`<span class="pill">${esc(x.category)}</span><h2>${esc(x.title)}</h2><div class="scripture-banner"><span>${ui('Main Scripture','Pangunahing Talata')}</span>${scriptureLink(x.main)}</div><p>${esc(x.intro)}</p>${x.points.map((p,i)=>`<section><h3>${i+1}. ${esc(p[0])}</h3><p>${esc(p[1])}</p></section>`).join('')}<h3>${ui('Supporting Scriptures','Mga Kaugnay na Talata')}</h3><p>${scriptureList(x.support)}</p><h3>${ui('Application','Aplikasyon')}</h3><p>${esc(x.application)}</p><h3>${ui('Challenge','Hamon')}</h3><p>${esc(x.challenge)}</p><h3>${ui('Prayer','Panalangin')}</h3><p>${esc(x.prayer)}</p>`;
  if(o.kind==='study')body=`<span class="pill">${esc(x.type)}</span><h2>${esc(x.title)}</h2><div class="scripture-banner"><span>${ui('Main Passage','Pangunahing Talata')}</span>${scriptureLink(x.passage)}</div><h3>${ui('Objective','Layunin')}</h3><p>${esc(x.objective)}</p><h3>${ui('Background','Konteksto')}</h3><p>${esc(x.background)}</p><h3>${ui('Discussion Questions','Mga Tanong sa Talakayan')}</h3><ol>${x.questions.map(q=>`<li>${esc(q)}</li>`).join('')}</ol><h3>${ui('Leader Notes','Tala para sa Leader')}</h3><p>${esc(x.leader_notes)}</p><h3>${ui('Application','Aplikasyon')}</h3><p>${esc(x.application)}</p><h3>${ui('Prayer','Panalangin')}</h3><p>${esc(x.prayer)}</p>`;
- if(o.kind==='kids')body=`<img class="lesson-hero" src="${esc(x.image||'')}" alt="${esc(x.title)}"><span class="pill">${ui('Ages','Edad')} ${esc(x.age)}</span><h2>${esc(x.title)}</h2><div class="scripture-banner"><span>${ui('Bible Story','Kuwento sa Biblia')}</span>${scriptureLink(x.story)}</div><h3>${ui('Opening Prayer','Pambungad na Panalangin')}</h3><p>${esc(x.opening)}</p><h3>${ui('Teaching Lesson','Aralin')}</h3><p>${esc(x.lesson)}</p><h3>${ui('Questions','Mga Tanong')}</h3><ol>${x.questions.map(q=>`<li>${esc(q)}</li>`).join('')}</ol><div class="idea-grid"><div><h3>🎲 ${ui('Activity','Gawain')}</h3><p>${esc(x.activity)}</p></div><div><h3>✂️ Craft</h3><p>${esc(x.craft)}</p></div></div><h3>${ui('Memory Verse','Talatang Isasaulo')}</h3><p>${scriptureLink(x.memory)}</p><h3>${ui('Closing Prayer','Pangwakas na Panalangin')}</h3><p>${esc(x.closing)}</p>`;
+ if(o.kind==='kids')body=`<img class="lesson-hero" src="${esc(x.image||'')}" alt="${esc(x.title)}"><span class="pill">${ui('Ages','Edad')} ${esc(x.age)}</span><h2>${esc(x.title)}</h2><div class="scripture-banner"><span>${ui('Bible Story','Kuwento sa Biblia')}</span>${scriptureLink(x.story)}</div><h3>${ui('Opening Prayer','Pambungad na Panalangin')}</h3><p>${esc(x.opening)}</p><h3>${ui('Teaching Lesson','Aralin')}</h3><p>${esc(x.lesson)}</p><h3>${ui('Questions','Mga Tanong')}</h3><ol>${x.questions.map(q=>`<li>${esc(q)}</li>`).join('')}</ol><div class="idea-grid"><div><h3>🎲 ${ui('Activity','Gawain')}</h3><p>${esc(x.activity)}</p></div><div><h3>✂️ Craft</h3><p>${esc(x.craft)}</p></div></div><h3>${ui('Memory Verse','Talatang Isasaulo')}</h3><p>${scriptureLink(x.memory)}</p><h3>${ui('Closing Prayer','Pangwakas na Panalangin')}</h3><p>${esc(x.closing)}</p><div class="resource-buttons"><button class="primary" id="libraryKidsPpt">📺 ${ui('Create Presentation Outline','Gumawa ng Presentation Outline')}</button><button class="ghost" id="libraryKidsPack">📦 ${ui('Create Resource Pack','Gumawa ng Resource Pack')}</button></div><div id="libraryKidsPanel" class="notice" style="display:none;margin-top:14px"><textarea id="libraryKidsBody" class="draft-area" style="min-height:420px"></textarea><button class="primary" id="libraryKidsCopy">${ui('Copy Resource','Kopyahin ang Resource')}</button></div>`;
  if(o.kind==='prayer')body=`<span class="pill">${esc(x.category)}</span><h2>${esc(x.title)}</h2><div class="prayer-paper"><p>${esc(x.text)}</p></div>`;
  view.innerHTML=`<button class="ghost" id="backLib">← ${ui('Back to library','Bumalik sa aklatan')}</button><article class="resource-page">${body}<div class="resource-buttons"><button class="ghost" id="copyResource">${ui('Copy','Kopyahin')}</button><button class="ghost" id="printResource">${ui('Print','I-print')}</button></div></article>`;
- wireScriptureLinks();$('#backLib').onclick=()=>{store.set('returnToResource',false);route({devotional:'devotionals',exhortation:'exhortations',study:'studies',kids:'kidslibrary',prayer:'prayerlibrary'}[o.kind])};$('#copyResource').onclick=async()=>{await navigator.clipboard.writeText(view.querySelector('.resource-page').innerText);toast(ui('Resource copied','Nakopya ang materyales'))};$('#printResource').onclick=()=>window.print();
+ wireScriptureLinks();$('#backLib').onclick=()=>{store.set('returnToResource',false);route({devotional:'devotionals',exhortation:'exhortations',study:'studies',kids:'kidslibrary',prayer:'prayerlibrary'}[o.kind])};$('#copyResource').onclick=async()=>{await navigator.clipboard.writeText(view.querySelector('.resource-page').innerText);toast(ui('Resource copied','Nakopya ang materyales'))};$('#printResource').onclick=()=>window.print();if(o.kind==='kids'){const kd={title:x.title,passage:x.story,story:x.story,verse:x.memory,memory:x.memory,age:x.age,goal:x.lesson,lesson:x.lesson,notes:x.activity+' '+x.craft};const show=text=>{$('#libraryKidsBody').value=text;$('#libraryKidsPanel').style.display='block';$('#libraryKidsPanel').scrollIntoView({behavior:'smooth',block:'start'})};$('#libraryKidsPpt').onclick=()=>show(kidsPresentationOutline(kd));$('#libraryKidsPack').onclick=()=>show(kidsResourcePack(kd));$('#libraryKidsCopy').onclick=async()=>{try{await navigator.clipboard.writeText($('#libraryKidsBody').value);toast(ui('Resource copied','Nakopya ang resource'))}catch{toast(ui('Select and copy manually','Piliin at kopyahin nang manual'))}}}
 }
 function devotionals(){title(ui('Devotionals','Mga Debosyonal'),ui('Clear, practical daily Bible reflections.','Malinaw at praktikal na pagninilay sa Biblia.'));view.innerHTML=libraryShell(ui('Daily Devotional Library','Aklatan ng mga Debosyonal'),ui('Open any card to read the complete devotional.','Buksan ang card upang basahin ang buong debosyonal.'),ui('Devotional','Debosyonal'));const draw=q=>{let list=DEVOTIONALS.map((raw,i)=>({...localizeResource(raw),_i:i,_raw:raw})).filter(x=>JSON.stringify(x).toLowerCase().includes(q.toLowerCase()));$('#libres').innerHTML=list.map(x=>`<button class="resource-card" data-i="${x._i}"><span class="pill">${esc(x.theme)}</span><h3>${esc(x.title)}</h3><b>${esc(x.scripture)}</b><p>${esc(x.reflection.slice(0,150))}…</p><span class="open-label">${ui('Open devotional →','Buksan ang debosyonal →')}</span></button>`).join('')||`<div class="empty">${ui('No devotionals found.','Walang nahanap na debosyonal.')}</div>`;document.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>openResource('devotional',+b.dataset.i))};draw('');wireLibrary(draw,ui('Devotional','Debosyonal'))}
 function exhortations(){title(ui('Exhortations','Mga Exhortation'),ui('Ready-to-use biblical encouragements.','Mga mensaheng biblikal na handang gamitin.'));view.innerHTML=libraryShell(ui('Exhortation Library','Aklatan ng mga Exhortation'),ui('Open any card for the complete teaching outline.','Buksan ang card para sa buong outline.'),ui('Exhortation','Exhortation'));const draw=q=>{let list=EXHORTATIONS.map((raw,i)=>({...localizeResource(raw),_i:i})).filter(x=>JSON.stringify(x).toLowerCase().includes(q.toLowerCase()));$('#libres').innerHTML=list.map(x=>`<button class="resource-card" data-i="${x._i}"><span class="pill">${esc(x.category)}</span><h3>${esc(x.title)}</h3><b>${esc(x.main)}</b><p>${esc(x.intro)}</p><span class="open-label">${ui('Open exhortation →','Buksan ang exhortation →')}</span></button>`).join('')||`<div class="empty">${ui('No exhortations found.','Walang nahanap na exhortation.')}</div>`;document.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>openResource('exhortation',+b.dataset.i))};draw('');wireLibrary(draw,'Exhortation')}
