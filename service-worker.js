@@ -1,4 +1,5 @@
-const CACHE = 'de-mayo-bible-v42-editable-verse-notes';
+/* De Mayo Bible Ministry | Copyright © 2026 Romer Sadio De Mayo | All Rights Reserved */
+const CACHE = 'de-mayo-bible-v43-copyright';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./bible-data.js',
   './manifest.webmanifest','./icon-192.png','./icon-512.png',

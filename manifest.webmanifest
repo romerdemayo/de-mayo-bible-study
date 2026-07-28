@@ -6,7 +6,7 @@
   "display": "standalone",
   "background_color": "#f4f0e8",
   "theme_color": "#173f35",
-  "description": "Easy-to-read WEB Bible and bilingual English/Tagalog ministry app with private study tools.",
+  "description": "Bilingual Bible and ministry preparation app created by Romer Sadio De Mayo.",
   "icons": [
     {
       "src": "icon-192.png",
@@ -18,5 +18,7 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "author": "Romer Sadio De Mayo",
+  "version": "43"
 }

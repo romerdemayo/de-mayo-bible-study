@@ -1,3 +1,4 @@
+/* De Mayo Bible Ministry | Copyright © 2026 Romer Sadio De Mayo | Original app/ministry content protected; third-party/public-domain material excluded. */
 window.DM_READING_PLANS=[
 {id:'new-believer',days:7,title:'7-Day New Believer Plan',tlTitle:'7-Araw na Plano para sa Bagong Mananampalataya',readings:[
 ['John 1','Who Jesus is','Kung sino si Jesus'],['John 3','New birth and God’s love','Bagong kapanganakan at pag-ibig ng Diyos'],['Luke 15','God welcomes those who return','Tinatanggap ng Diyos ang nagbabalik'],['Romans 5','Peace with God through Jesus','Kapayapaan sa Diyos sa pamamagitan ni Jesus'],['Romans 8','Life through the Holy Spirit','Buhay sa pamamagitan ng Espiritu Santo'],['Ephesians 2','Saved by grace','Naligtas dahil sa biyaya'],['Philippians 4','Prayer, peace, and faithful living','Panalangin, kapayapaan, at tapat na pamumuhay']]},

@@ -1,9 +1,14 @@
+/*
+ De Mayo Bible Ministry
+ Copyright © 2026 Romer Sadio De Mayo
+ All Rights Reserved. Unauthorised copying, modification, distribution, or sale is prohibited.
+*/
 const D=window.BIBLE_DATA,V=D.verses,B=D.books,$=s=>document.querySelector(s),view=$('#view');
 const store={get:(k,d=[])=>{try{return JSON.parse(localStorage.getItem('dm_'+k)||JSON.stringify(d))}catch{return d}},set:(k,v)=>localStorage.setItem('dm_'+k,JSON.stringify(v))};
 const I18N={
  en:{code:'EN',html:'en',
   navGroups:['Bible','Public Library','My Resources','Ministry Tools','Settings'],
-  pages:{home:'⌂ Home',read:'📖 Read Bible',search:'🔎 Search',devotionals:'🌅 Devotionals',exhortations:'🎤 Exhortations',studies:'📚 Bible Studies',kidslibrary:'👧 Kids Lessons',prayerlibrary:'🙏 Prayer Library',favourites:'★ Favourites',highlights:'🖍 Highlights',verseNotes:'🗒 Verse Notes',notes:'📝 Study Notes',prayer:'🙏 Prayer Journal',myresources:'📁 Created Resources',sermon:'🎤 Sermon Studio',kids:'🧒 Kids Ministry Studio',reading:'📅 Chapter Tracker',plans:'🗓 Guided Reading Plans',salvation:'❤️ Salvation Guide',characters:'👥 Bible Characters',dictionary:'📘 Bible Dictionary',creator:'✨ Create Resource',help:'❓ Help & User Guide',backup:'🔒 Backup & Restore'},
+  pages:{home:'⌂ Home',read:'📖 Read Bible',search:'🔎 Search',devotionals:'🌅 Devotionals',exhortations:'🎤 Exhortations',studies:'📚 Bible Studies',kidslibrary:'👧 Kids Lessons',prayerlibrary:'🙏 Prayer Library',favourites:'★ Favourites',highlights:'🖍 Highlights',verseNotes:'🗒 Verse Notes',notes:'📝 Study Notes',prayer:'🙏 Prayer Journal',myresources:'📁 Created Resources',sermon:'🎤 Sermon Studio',kids:'🧒 Kids Ministry Studio',reading:'📅 Chapter Tracker',plans:'🗓 Guided Reading Plans',salvation:'❤️ Salvation Guide',characters:'👥 Bible Characters',dictionary:'📘 Bible Dictionary',creator:'✨ Create Resource',help:'❓ Help & User Guide',about:'ℹ️ About & Copyright',backup:'🔒 Backup & Restore'},
   mobile:{home:'Home',read:'Read',search:'Search',prayer:'Prayer',more:'More'},
   footer:'Easy-English WEB Bible',privacy:'Your personal content stays on this device.',
   homeTitle:'Home',homeSub:'Read, study, pray, and prepare.',
@@ -11,7 +16,7 @@ const I18N={
   switched:'Language changed to English'},
  tl:{code:'TL',html:'tl',
   navGroups:['Bibliya','Pampublikong Aklatan','Aking mga Materyales','Mga Gamit sa Ministeryo','Mga Setting'],
-  pages:{home:'⌂ Tahanan',read:'📖 Basahin ang Bibliya',search:'🔎 Maghanap',devotionals:'🌅 Mga Debosyonal',exhortations:'🎤 Mga Exhortation',studies:'📚 Pag-aaral ng Bibliya',kidslibrary:'👧 Aralin para sa Bata',prayerlibrary:'🙏 Aklatan ng Panalangin',favourites:'★ Mga Paborito',highlights:'🖍 Mga Highlight',verseNotes:'🗒 Tala sa Talata',notes:'📝 Tala sa Pag-aaral',prayer:'🙏 Prayer Journal',myresources:'📁 Ginawang Materyales',sermon:'🎤 Sermon Studio',kids:'🧒 Kids Ministry Studio',reading:'📅 Talaan ng Kabanata',plans:'🗓 Mga Gabay sa Pagbasa',salvation:'❤️ Gabay sa Kaligtasan',characters:'👥 Mga Tauhan sa Bibliya',dictionary:'📘 Diksyunaryo ng Bibliya',creator:'✨ Gumawa ng Materyales',help:'❓ Tulong at Gabay',backup:'🔒 Backup at Restore'},
+  pages:{home:'⌂ Tahanan',read:'📖 Basahin ang Bibliya',search:'🔎 Maghanap',devotionals:'🌅 Mga Debosyonal',exhortations:'🎤 Mga Exhortation',studies:'📚 Pag-aaral ng Bibliya',kidslibrary:'👧 Aralin para sa Bata',prayerlibrary:'🙏 Aklatan ng Panalangin',favourites:'★ Mga Paborito',highlights:'🖍 Mga Highlight',verseNotes:'🗒 Tala sa Talata',notes:'📝 Tala sa Pag-aaral',prayer:'🙏 Prayer Journal',myresources:'📁 Ginawang Materyales',sermon:'🎤 Sermon Studio',kids:'🧒 Kids Ministry Studio',reading:'📅 Talaan ng Kabanata',plans:'🗓 Mga Gabay sa Pagbasa',salvation:'❤️ Gabay sa Kaligtasan',characters:'👥 Mga Tauhan sa Bibliya',dictionary:'📘 Diksyunaryo ng Bibliya',creator:'✨ Gumawa ng Materyales',help:'❓ Tulong at Gabay',about:'ℹ️ Tungkol at Copyright',backup:'🔒 Backup at Restore'},
   mobile:{home:'Tahanan',read:'Basahin',search:'Hanapin',prayer:'Panalangin',more:'Iba pa'},
   footer:'Ang Dating Biblia (1905)',privacy:'Ang personal mong nilalaman ay nananatili sa device na ito.',
   homeTitle:'Tahanan',homeSub:'Magbasa, mag-aral, manalangin, at maghanda.',
@@ -37,7 +42,7 @@ const navGroups=[
  ['Public Library',[['devotionals','🌅 Devotionals'],['exhortations','🎤 Exhortations'],['studies','📚 Bible Studies'],['kidslibrary','👧 Kids Lessons'],['prayerlibrary','🙏 Prayer Library']]],
  ['My Resources',[['favourites','★ Favourites'],['highlights','🖍 Highlights'],['verseNotes','🗒 Verse Notes'],['notes','📝 Study Notes'],['prayer','🙏 Prayer Journal'],['myresources','📁 Created Resources']]],
  ['Ministry Tools',[['sermon','🎤 Sermon Studio'],['kids','🧒 Kids Ministry Studio'],['reading','📅 Chapter Tracker'],['plans','🗓 Guided Reading Plans'],['salvation','❤️ Salvation Guide'],['characters','👥 Bible Characters'],['dictionary','📘 Bible Dictionary'],['creator','✨ Create Resource']]],
- ['Settings',[['help','❓ Help & User Guide'],['backup','🔒 Backup & Restore']]]
+ ['Settings',[['help','❓ Help & User Guide'],['about','ℹ️ About & Copyright'],['backup','🔒 Backup & Restore']]]
 ];
 const pages=navGroups.flatMap(g=>g[1]);
 const internalPages=['resource'];
@@ -1283,5 +1288,22 @@ function help(){
  document.querySelectorAll('.help-jump').forEach(b=>b.onclick=()=>route(b.dataset.go));document.querySelectorAll('[data-language-choice]').forEach(b=>b.onclick=()=>setLanguage(b.dataset.languageChoice));
 }
 
-function render(){({home,read,search,devotionals,exhortations,studies,kidslibrary,prayerlibrary,resource,creator,myresources,favourites,highlights:highlightsPage,verseNotes,notes,prayer,sermon,kids,reading,plans:guidedPlans,salvation:salvationGuide,characters:charactersPage,dictionary:dictionaryPage,help,backup}[state.page]||home)()}
+function about(){
+ title(ui('About & Copyright','Tungkol at Copyright'),ui('Ownership, credits, and permitted use.','Pagmamay-ari, pagkilala, at pinahihintulutang paggamit.'));
+ view.innerHTML=`<section class="card about-card">
+   <div class="about-mark">✝</div>
+   <span class="pill">DE MAYO BIBLE MINISTRY</span>
+   <h2>${ui('Created by Romer Sadio De Mayo','Ginawa ni Romer Sadio De Mayo')}</h2>
+   <p>${ui('A bilingual Christian ministry application designed in New Zealand to support Bible reading, study, prayer, sermon preparation, and children’s ministry.','Isang bilingual Christian ministry application na ginawa sa New Zealand para sa pagbabasa at pag-aaral ng Bibliya, panalangin, paghahanda ng sermon, at ministeryo para sa mga bata.')}</p>
+   <div class="copyright-panel"><strong>Copyright © 2026 Romer Sadio De Mayo</strong><br>${ui('All Rights Reserved.','Lahat ng Karapatan ay Nakalaan.')}</div>
+   <h3>${ui('Protected original work','Protektadong orihinal na gawa')}</h3>
+   <p>${ui('The original application code, interface design, original devotionals, exhortations, Bible studies, kids lessons, prayer resources, and ministry templates are protected. They may not be copied, modified, redistributed, sublicensed, or sold without prior written permission.','Protektado ang orihinal na app code, disenyo, mga debosyonal, exhortation, Bible study, kids lesson, prayer resources, at ministry templates. Hindi maaaring kopyahin, baguhin, ipamahagi, i-sublicense, o ibenta nang walang paunang nakasulat na pahintulot.')}</p>
+   <h3>${ui('Bible translations and third-party material','Mga salin ng Bibliya at third-party material')}</h3>
+   <p>${ui('Copyright does not claim ownership of public-domain Bible translations or separately owned third-party material. The World English Bible and Ang Dating Biblia (1905) remain subject to their own legal status and attribution requirements.','Hindi inaangkin ng copyright na ito ang pagmamay-ari ng public-domain Bible translations o hiwalay na third-party material. Ang World English Bible at Ang Dating Biblia (1905) ay nananatiling sakop ng sarili nilang legal status at attribution requirements.')}</p>
+   <div class="prepared-credit">${ui('Resources prepared using','Mga materyales na inihanda gamit ang')}<br><b>De Mayo Bible Ministry</b><br>© 2026 Romer Sadio De Mayo</div>
+   <p class="small-note">Version 43 · ${ui('Developed in New Zealand','Ginawa sa New Zealand')}</p>
+ </section>`;
+}
+
+function render(){({home,read,search,devotionals,exhortations,studies,kidslibrary,prayerlibrary,resource,creator,myresources,favourites,highlights:highlightsPage,verseNotes,notes,prayer,sermon,kids,reading,plans:guidedPlans,salvation:salvationGuide,characters:charactersPage,dictionary:dictionaryPage,help,about,backup}[state.page]||home)()}
 route(location.hash.slice(1)||'home',false);

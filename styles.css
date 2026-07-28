@@ -1,3 +1,4 @@
+/* De Mayo Bible Ministry | Copyright © 2026 Romer Sadio De Mayo | All Rights Reserved */
 
 :root{
   --bg:#f7f4ec;--surface:#fff;--surface2:#eef4f0;--text:#1f2c28;--muted:#6d7873;
@@ -119,3 +120,6 @@ nav button:focus-visible,.icon-btn:focus-visible,.mobile-nav button:focus-visibl
 .entry p{white-space:pre-wrap}
 @media(max-width:640px){.ai-assist-row{display:grid;grid-template-columns:1fr}.ai-assist-row button{width:100%}.sheet-card{max-height:92vh;overflow:auto}.sheet-card textarea{min-height:230px}}
 .resource-editor{margin-top:16px}.resource-edit-area{min-height:125px;resize:vertical}.resource-editor .field-label{display:flex;flex-direction:column;gap:6px}.resource-editor input,.resource-editor textarea{width:100%}
+
+/* Copyright and About */
+.app-copyright{text-align:center;color:var(--muted);padding:12px 20px 34px;font-size:.82rem;line-height:1.45}.app-copyright small{font-size:.72rem}.about-card{max-width:820px;margin:auto}.about-mark{width:72px;height:72px;border-radius:22px;display:grid;place-items:center;font-size:42px;background:var(--soft);margin-bottom:16px}.copyright-panel,.prepared-credit{border:1px solid var(--line);border-radius:14px;padding:18px;margin:18px 0;background:var(--soft);line-height:1.6}.prepared-credit{text-align:center}.about-card p{line-height:1.7}
