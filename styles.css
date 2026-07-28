@@ -157,3 +157,6 @@ nav button:focus-visible,.icon-btn:focus-visible,.mobile-nav button:focus-visibl
 @keyframes dmPageEnter{from{opacity:.35;transform:translateX(10px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.page-enter{animation:none}}
 @media(max-width:640px){.page-back{width:40px;height:40px;border-radius:12px}.topbar:has(.page-back:not([hidden])) .menu-btn{display:none}}
+
+/* Version 54 highlight controls */
+.highlight-tools{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:14px 0}.colour-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.colour-row button{border:1px solid var(--border);background:var(--surface2);color:var(--text);border-radius:999px;padding:9px 12px;font-weight:700}.colour-row button.selected{outline:3px solid var(--brand2);outline-offset:2px}.remove-highlight{white-space:nowrap}.highlight-card-actions{float:right;display:flex;gap:8px;flex-wrap:wrap;margin-left:12px}@media(max-width:620px){.highlight-card-actions{float:none;margin:0 0 12px;justify-content:flex-start}.highlight-card-actions button{flex:1}.highlight-tools{align-items:stretch}.remove-highlight{width:100%}}
