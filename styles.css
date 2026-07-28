@@ -118,3 +118,4 @@ nav button:focus-visible,.icon-btn:focus-visible,.mobile-nav button:focus-visibl
 .ai-assist-row button{flex:0 1 auto}
 .entry p{white-space:pre-wrap}
 @media(max-width:640px){.ai-assist-row{display:grid;grid-template-columns:1fr}.ai-assist-row button{width:100%}.sheet-card{max-height:92vh;overflow:auto}.sheet-card textarea{min-height:230px}}
+.resource-editor{margin-top:16px}.resource-edit-area{min-height:125px;resize:vertical}.resource-editor .field-label{display:flex;flex-direction:column;gap:6px}.resource-editor input,.resource-editor textarea{width:100%}
