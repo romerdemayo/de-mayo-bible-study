@@ -126,3 +126,15 @@ nav button:focus-visible,.icon-btn:focus-visible,.mobile-nav button:focus-visibl
 
 /* GitHub Sponsors support page */
 .support-hero{text-align:center;max-width:900px;margin:0 auto 18px;padding:clamp(24px,5vw,48px);background:linear-gradient(145deg,var(--surface),var(--surface2))}.support-heart{font-size:58px;line-height:1;margin-bottom:10px}.support-hero h2{font-family:Georgia,serif;font-size:clamp(30px,5vw,48px);margin:12px 0}.support-hero p{max-width:740px;margin:12px auto;line-height:1.65}.support-hero blockquote{max-width:720px;margin:22px auto;padding:18px;border-left:5px solid var(--accent);background:var(--surface);border-radius:14px;font-family:Georgia,serif;font-size:18px;line-height:1.55}.sponsor-button{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-size:17px;padding:14px 22px;margin-top:6px;box-shadow:0 8px 20px rgba(23,63,53,.16)}.support-benefits{max-width:900px;margin:0 auto}.support-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0 20px}.support-grid>div{display:flex;gap:10px;align-items:center;background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:16px}.support-grid span{font-size:25px}@media(max-width:700px){.support-grid{grid-template-columns:1fr}.sponsor-button{width:100%}}
+
+
+/* Home-page GitHub Sponsors card */
+.home-support-card{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;margin:18px 0;padding:22px;background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid var(--border)}
+.home-support-icon{font-size:42px;line-height:1}
+.home-support-copy h3{margin:0 0 6px;font-family:Georgia,serif;font-size:22px}
+.home-support-copy p{margin:0 0 5px;line-height:1.5}
+.home-support-copy small{opacity:.75}
+.home-support-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.home-support-actions .sponsor-button{margin:0;white-space:nowrap}
+@media(max-width:800px){.home-support-card{grid-template-columns:auto 1fr}.home-support-actions{grid-column:1/-1;justify-content:stretch}.home-support-actions>*{flex:1}.home-support-actions .sponsor-button{width:auto}}
+@media(max-width:520px){.home-support-card{grid-template-columns:1fr;text-align:center}.home-support-icon{font-size:38px}.home-support-actions{grid-column:auto;flex-direction:column}.home-support-actions>*{width:100%}}
