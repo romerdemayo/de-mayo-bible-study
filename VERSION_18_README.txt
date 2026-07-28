@@ -1,4 +1,4 @@
-DE MAYO BIBLE STUDIES — VERSION 18
+DE MAYO BIBLE MINISTRY — VERSION 18
 
 This release starts the bilingual upgrade.
 

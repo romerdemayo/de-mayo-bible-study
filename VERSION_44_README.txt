@@ -1,4 +1,4 @@
-DE MAYO BIBLE STUDIES — VERSION 44
+DE MAYO BIBLE MINISTRY — VERSION 44
 
 Added GitHub Sponsors integration:
 - New Support the Ministry page in English and Tagalog

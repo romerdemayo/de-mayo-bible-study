@@ -1,4 +1,4 @@
-DE MAYO BIBLE STUDIES — VERSION 37
+DE MAYO BIBLE MINISTRY — VERSION 37
 
 Built from the runtime-fixed Version 36.
 

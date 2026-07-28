@@ -1,4 +1,4 @@
-# De Mayo Bible Studies — Version 43
+# De Mayo Bible Ministry — Version 43
 
 A bilingual English and Tagalog Bible and ministry-preparation application created by **Romer Sadio De Mayo** in New Zealand.
 
@@ -31,8 +31,8 @@ In GitHub, open **Settings → Pages**, select the `main` branch and `/root`, th
 Live site: `https://romerdemayo.github.io/de-mayo-bible-study/`
 
 
-## ❤️ Support De Mayo Bible Studies
+## ❤️ Support De Mayo Bible Ministry
 
-De Mayo Bible Studies is provided free of charge. Sponsorship helps support continued development, maintenance, and free Bible resources.
+De Mayo Bible Ministry is provided free of charge. Sponsorship helps support continued development, maintenance, and free Bible resources.
 
 [**Become a GitHub Sponsor**](https://github.com/sponsors/romerdemayo)

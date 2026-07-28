@@ -1,4 +1,4 @@
-/* De Mayo Bible Studies v21 - Ang Dating Biblia (1905) loader
+/* De Mayo Bible Ministry v21 - Ang Dating Biblia (1905) loader
    Source: seven1m/open-bibles (Public Domain)
    The 6 MB XML is loaded only when Tagalog Bible is selected and is cached by the browser/service worker. */
 (function(){

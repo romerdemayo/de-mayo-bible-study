@@ -1,0 +1,16 @@
+DE MAYO BIBLE STUDIES — GOOGLE SEARCH SETUP
+
+Website:
+https://romerdemayo.github.io/de-mayo-bible-study/
+
+1. Upload every file and folder in this package to the ROOT of your GitHub repository.
+2. Wait for GitHub Pages to finish deploying.
+3. Open Google Search Console: https://search.google.com/search-console
+4. Add this URL-prefix property:
+   https://romerdemayo.github.io/de-mayo-bible-study/
+5. Use the HTML tag verification method. Copy Google's verification meta tag into index.html inside <head>, then upload index.html again.
+6. After verification, submit this sitemap:
+   https://romerdemayo.github.io/de-mayo-bible-study/sitemap.xml
+7. Use URL Inspection for the homepage and click Request Indexing.
+
+Important: Google indexing is controlled by Google and may take time. The site is now configured to allow indexing and provide clear SEO metadata.

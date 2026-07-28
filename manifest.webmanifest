@@ -1,12 +1,12 @@
 {
-  "name": "De Mayo Bible Studies",
-  "short_name": "De Mayo Studies",
+  "name": "De Mayo Bible Studies - English & Tagalog Bible App",
+  "short_name": "De Mayo Bible",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f4f0e8",
   "theme_color": "#173f35",
-  "description": "Bilingual English and Tagalog Bible study and ministry preparation app created by Romer Sadio De Mayo.",
+  "description": "Free bilingual English and Tagalog Bible study app with devotionals, lessons, prayers and ministry tools.",
   "icons": [
     {
       "src": "icon-192.png",

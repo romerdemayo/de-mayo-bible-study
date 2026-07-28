@@ -1,8 +1,8 @@
-/* De Mayo Bible Studies | Copyright © 2026 Romer Sadio De Mayo | All Rights Reserved */
-const CACHE = 'de-mayo-bible-studies-v46';
+/* De Mayo Bible Ministry | Copyright © 2026 Romer Sadio De Mayo | All Rights Reserved */
+const CACHE = 'de-mayo-bible-v46-google-search-ready';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./bible-data.js',
-  './manifest.webmanifest','./icon-192.png','./icon-512.png',
+  './manifest.webmanifest','./icon-192.png','./icon-512.png','./social-preview.png',
   './data/tagalog-bible-loader.js','./data/devotionals.js','./data/exhortations.js','./data/bible-studies.js',
   './data/kids-lessons.js','./data/prayers.js','./data/v20-tools.js',
   './images/abraham.svg',

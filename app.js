@@ -1,5 +1,5 @@
 /*
- De Mayo Bible Studies
+ De Mayo Bible Ministry
  Copyright © 2026 Romer Sadio De Mayo
  All Rights Reserved. Unauthorised copying, modification, distribution, or sale is prohibited.
 */
@@ -128,7 +128,7 @@ function home(){
  title(lang().homeTitle,lang().homeSub);
  const f=favs().length,n=store.get('notes').length,p=store.get('prayers').length,h=Object.keys(highlights()).length,d=store.get('reading',{}),done=Object.keys(d).length,av=activeVerses(),tv=av[Math.abs(new Date().getDate())%av.length]||todayVerse();
  view.innerHTML=`<div class="hero"><div><span class="badge light">VERSION 44 • AI-ASSISTED BIBLE TOOLS</span><h2>${ui('Read Scripture. Grow in faith. Prepare to serve.','Basahin ang Salita. Lumago sa pananampalataya. Maglingkod.')}</h2><p>${ui('A professional bilingual Bible app with the WEB English Bible and Ang Dating Biblia (1905) in Tagalog.','Isang propesyonal na bilingual Bible app na may WEB English Bible at Ang Dating Biblia (1905) sa Tagalog.')}</p><div class="hero-actions"><button class="primary" id="continue">${ui('Continue','Magpatuloy')} ${esc(state.book)} ${state.chapter}</button><button class="ghost light-btn" onclick="route('search')">${ui('Search Bible','Maghanap sa Bibliya')}</button></div></div><div class="verse-card"><span class="small-light">${ui('VERSE OF THE DAY','TALATA NG ARAW')}</span><br>“${esc(tv.x)}”<br><small>${ref(tv)}</small></div></div>
- <section class="card home-support-card"><div class="home-support-icon">❤️</div><div class="home-support-copy"><h3>${ui('Support De Mayo Bible Studies','Suportahan ang De Mayo Bible Studies')}</h3><p>${ui('Help us keep this Bible ministry free for churches, families, teachers, and believers around the world.','Tulungan kaming panatilihing libre ang Bible ministry na ito para sa mga iglesya, pamilya, guro, at mananampalataya sa buong mundo.')}</p><small>${ui('Giving is completely optional.','Ganap na opsyonal ang pagbibigay.')}</small></div><div class="home-support-actions"><a class="primary sponsor-button" href="https://github.com/sponsors/romerdemayo" target="_blank" rel="noopener noreferrer">❤️ ${ui('Sponsor on GitHub','Mag-sponsor sa GitHub')}</a><button class="ghost" id="learnSupport">${ui('Learn more','Alamin pa')}</button></div></section>
+ <section class="card home-support-card"><div class="home-support-icon">❤️</div><div class="home-support-copy"><h3>${ui('Support De Mayo Bible Ministry','Suportahan ang De Mayo Bible Ministry')}</h3><p>${ui('Help us keep this Bible ministry free for churches, families, teachers, and believers around the world.','Tulungan kaming panatilihing libre ang Bible ministry na ito para sa mga iglesya, pamilya, guro, at mananampalataya sa buong mundo.')}</p><small>${ui('Giving is completely optional.','Ganap na opsyonal ang pagbibigay.')}</small></div><div class="home-support-actions"><a class="primary sponsor-button" href="https://github.com/sponsors/romerdemayo" target="_blank" rel="noopener noreferrer">❤️ ${ui('Sponsor on GitHub','Mag-sponsor sa GitHub')}</a><button class="ghost" id="learnSupport">${ui('Learn more','Alamin pa')}</button></div></section>
  <div class="grid"><div class="card"><div class="metric">${done}</div><div>${ui('Chapters completed','Natapos na kabanata')}</div></div><div class="card"><div class="metric">${f}</div><div>${ui('Favourite verses','Paboritong talata')}</div></div><div class="card"><div class="metric">${h}</div><div>${ui('Highlighted verses','Na-highlight na talata')}</div></div><div class="card"><div class="metric">${n+p}</div><div>${ui('Notes and prayers','Mga tala at panalangin')}</div></div></div>`;
  $('#continue').onclick=()=>route('read');
  $('#learnSupport').onclick=()=>route('support');
@@ -1266,11 +1266,11 @@ function dictionaryPage(){title(ui('Bible Dictionary','Diksyunaryo ng Bibliya'),
 
 
 function support(){
- title(ui('Support the Ministry','Suportahan ang Ministeryo'),ui('Help keep De Mayo Bible Studies free and growing.','Tumulong upang manatiling libre at patuloy na lumago ang De Mayo Bible Studies.'));
+ title(ui('Support the Ministry','Suportahan ang Ministeryo'),ui('Help keep De Mayo Bible Ministry free and growing.','Tumulong upang manatiling libre at patuloy na lumago ang De Mayo Bible Ministry.'));
  view.innerHTML=`<section class="support-hero card">
    <div class="support-heart">❤️</div>
    <span class="pill">${ui('GITHUB SPONSORS','GITHUB SPONSORS')}</span>
-   <h2>${ui('Support De Mayo Bible Studies','Suportahan ang De Mayo Bible Studies')}</h2>
+   <h2>${ui('Support De Mayo Bible Ministry','Suportahan ang De Mayo Bible Ministry')}</h2>
    <p>${ui('This Bible ministry app is provided free of charge for individuals, families, churches, teachers, and ministry leaders. Your sponsorship helps support continued development, maintenance, and the creation of more free Bible resources.','Ang Bible ministry app na ito ay ibinibigay nang libre para sa mga indibidwal, pamilya, iglesya, guro, at ministry leaders. Ang iyong sponsorship ay tumutulong sa patuloy na development, maintenance, at paggawa ng mas marami pang libreng Bible resources.')}</p>
    <blockquote>“${ui('Each one must give as he has decided in his heart, not reluctantly or under compulsion, for God loves a cheerful giver.','Magbigay ang bawat isa ayon sa ipinasiya ng kaniyang puso, hindi mabigat sa loob o sapilitan, sapagkat iniibig ng Diyos ang nagbibigay nang masaya.')}”<br><strong>2 Corinthians 9:7</strong></blockquote>
    <a class="primary sponsor-button" href="https://github.com/sponsors/romerdemayo" target="_blank" rel="noopener noreferrer">❤️ ${ui('Become a GitHub Sponsor','Maging GitHub Sponsor')}</a>
@@ -1292,11 +1292,11 @@ function support(){
 }
 
 function help(){
- title('Help & User Guide','A simple guide to using De Mayo Bible Studies on any device.');
+ title('Help & User Guide','A simple guide to using De Mayo Bible Ministry on any device.');
  view.innerHTML=`
  <section class="help-hero card">
    <div class="help-seal">📖</div>
-   <div><span class="pill">WELCOME</span><h2>How to use De Mayo Bible Studies</h2><p>The easy-to-read World English Bible (WEB) is built into the app, so Bible reading and searching can continue even without internet after the app has loaded.</p></div>
+   <div><span class="pill">WELCOME</span><h2>How to use De Mayo Bible Ministry</h2><p>The easy-to-read World English Bible (WEB) is built into the app, so Bible reading and searching can continue even without internet after the app has loaded.</p></div>
  </section>
  <section class="card"><h3>${appLanguage==='tl'?'Piliin ang Wika':'Choose Language'}</h3><p>${appLanguage==='tl'?'Ang mga menu at gabay ay maaaring ipakita sa English o Tagalog.':'Menus and guides can be displayed in English or Tagalog.'}</p><div class="language-panel"><button class="language-choice ${appLanguage==='en'?'active':''}" data-language-choice="en">🇬🇧 English</button><button class="language-choice ${appLanguage==='tl'?'active':''}" data-language-choice="tl">🇵🇭 Tagalog</button></div><div class="notice small-note">${appLanguage==='tl'?'Kapag Tagalog ang pinili, ang Bible text ay Ang Dating Biblia (1905). Kailangan lamang ng internet sa unang paggamit; pagkatapos ay maaari itong gumana mula sa browser cache.':'English uses the World English Bible (WEB). Tagalog uses the public-domain Ang Dating Biblia (1905). The Tagalog Bible needs internet on first use and is then stored in the browser cache.'}</div></section><div class="help-quick-grid">
    <button class="help-jump card" data-go="read"><span>📖</span><b>Read the Bible</b><small>Choose a book and chapter, adjust text size, highlight verses, add notes, and save favourites.</small></button>
@@ -1321,7 +1321,7 @@ function about(){
  title(ui('About & Copyright','Tungkol at Copyright'),ui('Ownership, credits, and permitted use.','Pagmamay-ari, pagkilala, at pinahihintulutang paggamit.'));
  view.innerHTML=`<section class="card about-card">
    <div class="about-mark">✝</div>
-   <span class="pill">DE MAYO BIBLE STUDIES</span>
+   <span class="pill">DE MAYO BIBLE MINISTRY</span>
    <h2>${ui('Created by Romer Sadio De Mayo','Ginawa ni Romer Sadio De Mayo')}</h2>
    <p>${ui('A bilingual Christian ministry application designed in New Zealand to support Bible reading, study, prayer, sermon preparation, and children’s ministry.','Isang bilingual Christian ministry application na ginawa sa New Zealand para sa pagbabasa at pag-aaral ng Bibliya, panalangin, paghahanda ng sermon, at ministeryo para sa mga bata.')}</p>
    <div class="copyright-panel"><strong>Copyright © 2026 Romer Sadio De Mayo</strong><br>${ui('All Rights Reserved.','Lahat ng Karapatan ay Nakalaan.')}</div>
@@ -1329,7 +1329,7 @@ function about(){
    <p>${ui('The original application code, interface design, original devotionals, exhortations, Bible studies, kids lessons, prayer resources, and ministry templates are protected. They may not be copied, modified, redistributed, sublicensed, or sold without prior written permission.','Protektado ang orihinal na app code, disenyo, mga debosyonal, exhortation, Bible study, kids lesson, prayer resources, at ministry templates. Hindi maaaring kopyahin, baguhin, ipamahagi, i-sublicense, o ibenta nang walang paunang nakasulat na pahintulot.')}</p>
    <h3>${ui('Bible translations and third-party material','Mga salin ng Bibliya at third-party material')}</h3>
    <p>${ui('Copyright does not claim ownership of public-domain Bible translations or separately owned third-party material. The World English Bible and Ang Dating Biblia (1905) remain subject to their own legal status and attribution requirements.','Hindi inaangkin ng copyright na ito ang pagmamay-ari ng public-domain Bible translations o hiwalay na third-party material. Ang World English Bible at Ang Dating Biblia (1905) ay nananatiling sakop ng sarili nilang legal status at attribution requirements.')}</p>
-   <div class="prepared-credit">${ui('Resources prepared using','Mga materyales na inihanda gamit ang')}<br><b>De Mayo Bible Studies</b><br>© 2026 Romer Sadio De Mayo</div>
+   <div class="prepared-credit">${ui('Resources prepared using','Mga materyales na inihanda gamit ang')}<br><b>De Mayo Bible Ministry</b><br>© 2026 Romer Sadio De Mayo</div>
    <p class="small-note">Version 43 · ${ui('Developed in New Zealand','Ginawa sa New Zealand')}</p>
  </section>`;
 }
