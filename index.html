@@ -9,10 +9,16 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="De Mayo Bible">
   <meta name="description" content="Free bilingual English and Tagalog Bible study app with the World English Bible, Ang Dating Biblia, devotionals, Bible studies, kids lessons, prayer library, reading plans and Christian ministry tools.">
-  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="author" content="Romer Sadio De Mayo">
-  <meta name="keywords" content="English Tagalog Bible, Tagalog Bible app, free Bible study app, Bible studies, daily devotionals, kids Bible lessons, Christian prayer library, Ang Dating Biblia, World English Bible">
+  <meta name="keywords" content="De Mayo Bible Studies, English Tagalog Bible, Tagalog Bible app, free Bible study app, Bible reader, Bible studies, daily devotionals, kids Bible lessons, Christian prayer library, guided reading plans, Ang Dating Biblia, World English Bible">
   <link rel="canonical" href="https://romerdemayo.github.io/de-mayo-bible-study/">
+  <link rel="alternate" hreflang="en" href="https://romerdemayo.github.io/de-mayo-bible-study/">
+  <link rel="alternate" hreflang="tl" href="https://romerdemayo.github.io/de-mayo-bible-study/">
+  <link rel="alternate" hreflang="x-default" href="https://romerdemayo.github.io/de-mayo-bible-study/">
+  <meta name="application-name" content="De Mayo Bible Studies">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="icon" href="icon-192.png" sizes="192x192">
@@ -31,6 +37,7 @@
   <meta name="twitter:title" content="De Mayo Bible Studies | Free English & Tagalog Bible App">
   <meta name="twitter:description" content="Free bilingual Bible study app with devotionals, lessons, prayers and Christian ministry resources.">
   <meta name="twitter:image" content="https://romerdemayo.github.io/de-mayo-bible-study/social-preview.png">
+  <meta name="twitter:image:alt" content="De Mayo Bible Studies English and Tagalog Bible app">
 
   <title>De Mayo Bible Studies | Free English & Tagalog Bible App</title>
   <script type="application/ld+json">
@@ -40,10 +47,10 @@
       {
         "@type": "WebSite",
         "@id": "https://romerdemayo.github.io/de-mayo-bible-study/#website",
-        "name": "De Mayo Bible Studies",
-        "alternateName": "De Mayo Bible Ministry",
         "url": "https://romerdemayo.github.io/de-mayo-bible-study/",
-        "description": "Free bilingual English and Tagalog Bible study app and Christian ministry resource.",
+        "name": "De Mayo Bible Studies",
+        "alternateName": ["De Mayo Bible Study", "De Mayo Bible Ministry"],
+        "description": "A free bilingual English and Tagalog Bible reader and study app with devotionals, guided reading plans, Bible studies, kids lessons, prayers and ministry tools.",
         "inLanguage": ["en", "tl"],
         "publisher": {"@id": "https://romerdemayo.github.io/de-mayo-bible-study/#organization"}
       },
@@ -54,24 +61,63 @@
         "url": "https://romerdemayo.github.io/de-mayo-bible-study/",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://romerdemayo.github.io/de-mayo-bible-study/icon-512.png"
+          "url": "https://romerdemayo.github.io/de-mayo-bible-study/icon-512.png",
+          "width": 512,
+          "height": 512
         },
         "founder": {"@type": "Person", "name": "Romer Sadio De Mayo"}
       },
       {
-        "@type": "WebApplication",
+        "@type": ["WebApplication", "SoftwareApplication"],
+        "@id": "https://romerdemayo.github.io/de-mayo-bible-study/#app",
         "name": "De Mayo Bible Studies",
+        "alternateName": "De Mayo Bible",
         "url": "https://romerdemayo.github.io/de-mayo-bible-study/",
         "applicationCategory": "EducationalApplication",
-        "operatingSystem": "Any",
+        "applicationSubCategory": "Bible study and Bible reader",
+        "operatingSystem": "Android, iOS, macOS, Windows, ChromeOS and any modern web browser",
+        "browserRequirements": "Requires JavaScript and a modern browser",
+        "softwareVersion": "76",
         "isAccessibleForFree": true,
+        "offers": {"@type": "Offer", "price": "0", "priceCurrency": "NZD"},
         "inLanguage": ["en", "tl"],
-        "description": "A free English and Tagalog Bible study web app with devotionals, Bible studies, kids lessons, prayers and ministry tools."
+        "image": "https://romerdemayo.github.io/de-mayo-bible-study/social-preview.png",
+        "screenshot": "https://romerdemayo.github.io/de-mayo-bible-study/social-preview.png",
+        "author": {"@type": "Person", "name": "Romer Sadio De Mayo"},
+        "publisher": {"@id": "https://romerdemayo.github.io/de-mayo-bible-study/#organization"},
+        "description": "Free professional Bible reader and study app in English and Tagalog with chapter tracking, highlights, notes, guided reading plans, devotionals, Bible studies, kids lessons, prayers and ministry tools.",
+        "featureList": [
+          "English World English Bible reader",
+          "Tagalog Ang Dating Biblia reader",
+          "Professional chapter and verse navigation",
+          "Verse highlights, notes and favourites",
+          "Guided Bible reading plans",
+          "Daily Bible verse",
+          "Devotionals and Bible studies",
+          "Kids Bible lessons",
+          "Prayer library",
+          "Offline progressive web app support"
+        ]
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://romerdemayo.github.io/de-mayo-bible-study/#webpage",
+        "url": "https://romerdemayo.github.io/de-mayo-bible-study/",
+        "name": "De Mayo Bible Studies | Free English & Tagalog Bible App",
+        "isPartOf": {"@id": "https://romerdemayo.github.io/de-mayo-bible-study/#website"},
+        "about": {"@id": "https://romerdemayo.github.io/de-mayo-bible-study/#app"},
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://romerdemayo.github.io/de-mayo-bible-study/social-preview.png",
+          "width": 1200,
+          "height": 630
+        },
+        "inLanguage": ["en", "tl"]
       }
     ]
   }
   </script>
-  <link rel="stylesheet" href="styles.css?v=75">
+  <link rel="stylesheet" href="styles.css?v=77">
 </head>
 <body>
 <a class="skip-link" href="#view">Skip to content</a>
@@ -116,7 +162,7 @@
 <script src="data/kids-lessons.js?v=50"></script>
 <script src="data/prayers.js?v=50"></script>
 <script src="data/v20-tools.js?v=50"></script>
-<script src="app.js?v=60"></script>
+<script src="app.js?v=77"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js', { scope: './' }));

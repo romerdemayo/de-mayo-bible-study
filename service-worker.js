@@ -1,5 +1,5 @@
-/* De Mayo Bible Ministry | Version 65 PWA */
-const CACHE = 'de-mayo-bible-v75-responsive-presentation';
+/* De Mayo Bible Ministry | Version 77 SEO Enhanced from Version 76 */
+const CACHE = 'de-mayo-bible-v77-seo-from-v76';
 const OFFLINE_URL = './index.html';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./bible-data.js',

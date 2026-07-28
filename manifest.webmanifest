@@ -34,7 +34,7 @@
     }
   ],
   "author": "Romer Sadio De Mayo",
-  "version": "50",
+  "version": "77",
   "id": "./",
   "display_override": [
     "window-controls-overlay",
@@ -54,7 +54,7 @@
     {
       "name": "Read the Bible",
       "short_name": "Bible",
-      "url": "./?view=bible",
+      "url": "./#bible",
       "icons": [
         {
           "src": "icon-192.png",
@@ -65,7 +65,7 @@
     {
       "name": "Prayer Library",
       "short_name": "Prayers",
-      "url": "./?view=prayers",
+      "url": "./#prayers",
       "icons": [
         {
           "src": "icon-192.png",
@@ -76,7 +76,7 @@
     {
       "name": "Kids Bible Lessons",
       "short_name": "Kids Lessons",
-      "url": "./?view=kids",
+      "url": "./#kids",
       "icons": [
         {
           "src": "icon-192.png",
