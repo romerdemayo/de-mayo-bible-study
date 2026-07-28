@@ -1,4 +1,4 @@
-DE MAYO BIBLE MINISTRY — VERSION 20
+DE MAYO BIBLE STUDIES — VERSION 20
 
 New in this release:
 - Guided reading plans with saved progress

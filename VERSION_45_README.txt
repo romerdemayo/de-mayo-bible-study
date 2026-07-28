@@ -1,6 +1,6 @@
-DE MAYO BIBLE MINISTRY — VERSION 45
+DE MAYO BIBLE STUDIES — VERSION 45
 
-Added a visible Support De Mayo Bible Ministry card to the Home page.
+Added a visible Support De Mayo Bible Studies card to the Home page.
 The Sponsor on GitHub button opens:
 https://github.com/sponsors/romerdemayo
 
