@@ -1,0 +1,11 @@
+BUILD THE ANDROID PROJECT
+
+Requirements: Node.js and Android Studio.
+
+Open Terminal in this project folder and run:
+  npm install
+  npm run build:web
+  npx cap add android
+  npm run android
+
+Use Android Studio to test, create a signed app bundle, and submit it to Google Play when ready. Google Play registration may also involve a developer fee.

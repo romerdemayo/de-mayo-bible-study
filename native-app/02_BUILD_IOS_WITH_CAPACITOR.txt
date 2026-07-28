@@ -1,0 +1,19 @@
+BUILD THE IOS PROJECT ON A MAC
+
+Requirements: Node.js, Xcode, and an Apple ID.
+
+Open Terminal in this project folder and run:
+  npm install
+  npm run build:web
+  npx cap add ios
+  npm run ios
+
+Xcode will open the generated iOS project. Select your development team under Signing & Capabilities, choose an iPhone simulator or connected device, and press Run.
+
+Before App Store submission:
+- Replace temporary screenshots with screenshots from the working app.
+- Review the privacy details and app description.
+- Test every feature, especially offline use, external links, storage, and AI-related functions.
+- Archive in Xcode and upload through Organizer.
+
+Apple can reject apps that are only a thin website wrapper. The app should provide reliable offline content, polished navigation, and clear app-specific value. This project includes offline Bible and ministry content, but final acceptance is always Apple's decision.

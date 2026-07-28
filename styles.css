@@ -138,3 +138,22 @@ nav button:focus-visible,.icon-btn:focus-visible,.mobile-nav button:focus-visibl
 .home-support-actions .sponsor-button{margin:0;white-space:nowrap}
 @media(max-width:800px){.home-support-card{grid-template-columns:auto 1fr}.home-support-actions{grid-column:1/-1;justify-content:stretch}.home-support-actions>*{flex:1}.home-support-actions .sponsor-button{width:auto}}
 @media(max-width:520px){.home-support-card{grid-template-columns:1fr;text-align:center}.home-support-icon{font-size:38px}.home-support-actions{grid-column:auto;flex-direction:column}.home-support-actions>*{width:100%}}
+
+
+/* Version 51: clickable home dashboard cards */
+.dashboard-card{width:100%;text-align:left;color:var(--text);font:inherit;cursor:pointer;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;position:relative;min-height:150px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start}
+.dashboard-card:hover,.dashboard-card:focus-visible{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--brand2)}
+.dashboard-card:active{transform:translateY(0) scale(.99)}
+.dashboard-open{display:block;margin-top:auto;padding-top:16px;color:var(--brand2);font-size:13px;font-weight:800}
+.dashboard-card:focus-visible{outline:3px solid #e4b84d;outline-offset:3px}
+@media(max-width:640px){.dashboard-card{min-height:150px;padding:16px}.dashboard-open{font-size:12px;padding-top:12px}}
+
+
+/* Version 52: app-style return navigation and page transitions */
+.page-back{flex:0 0 auto;font-size:24px;font-weight:800;display:grid;place-items:center;cursor:pointer}
+.page-back[hidden]{display:none!important}
+.page-back:hover,.page-back:focus-visible{border-color:var(--brand2);color:var(--brand2);transform:translateX(-1px)}
+.page-enter{animation:dmPageEnter .22s ease both}
+@keyframes dmPageEnter{from{opacity:.35;transform:translateX(10px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.page-enter{animation:none}}
+@media(max-width:640px){.page-back{width:40px;height:40px;border-radius:12px}.topbar:has(.page-back:not([hidden])) .menu-btn{display:none}}

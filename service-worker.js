@@ -1,30 +1,12 @@
-/* De Mayo Bible Ministry | Copyright © 2026 Romer Sadio De Mayo | All Rights Reserved */
-const CACHE = 'de-mayo-bible-v46-google-search-ready';
+/* De Mayo Bible Ministry | Version 51 PWA */
+const CACHE = 'de-mayo-bible-v52-return-navigation';
+const OFFLINE_URL = './index.html';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./bible-data.js',
-  './manifest.webmanifest','./icon-192.png','./icon-512.png','./social-preview.png',
+  './manifest.webmanifest','./icon-192.png','./icon-512.png',
+  './icon-maskable-192.png','./icon-maskable-512.png','./apple-touch-icon.png','./social-preview.png',
   './data/tagalog-bible-loader.js','./data/devotionals.js','./data/exhortations.js','./data/bible-studies.js',
-  './data/kids-lessons.js','./data/prayers.js','./data/v20-tools.js',
-  './images/abraham.svg',
-  './images/baby-moses.svg',
-  './images/creation.svg',
-  './images/daniel.svg',
-  './images/david.svg',
-  './images/elijah-widow.svg',
-  './images/esther.svg',
-  './images/five-thousand.svg',
-  './images/helping.svg',
-  './images/jericho.svg',
-  './images/jonah.svg',
-  './images/joseph.svg',
-  './images/noah.svg',
-  './images/pentecost.svg',
-  './images/red-sea.svg',
-  './images/ruth.svg',
-  './images/samaritan.svg',
-  './images/samuel.svg',
-  './images/sheep.svg',
-  './images/storm.svg'
+  './data/kids-lessons.js','./data/prayers.js','./data/v20-tools.js'
 ];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));
@@ -34,11 +16,16 @@ self.addEventListener('activate', event => {
 });
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
-  event.respondWith(
-    fetch(event.request).then(response => {
-      const copy = response.clone();
-      caches.open(CACHE).then(cache => cache.put(event.request, copy));
-      return response;
-    }).catch(() => caches.match(event.request).then(cached => cached || caches.match('./index.html')))
-  );
+  if (event.request.mode === 'navigate') {
+    event.respondWith(fetch(event.request).then(response => {
+      const copy=response.clone(); caches.open(CACHE).then(c=>c.put(event.request,copy)); return response;
+    }).catch(() => caches.match(event.request).then(r => r || caches.match(OFFLINE_URL))));
+    return;
+  }
+  event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
+    if (response && response.status === 200 && response.type !== 'opaque') {
+      const copy=response.clone(); caches.open(CACHE).then(c=>c.put(event.request,copy));
+    }
+    return response;
+  })));
 });

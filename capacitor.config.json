@@ -1,0 +1,14 @@
+{
+  "appId": "org.demayobiblestudies.app",
+  "appName": "De Mayo Bible Studies",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "ios": {
+    "contentInset": "automatic"
+  },
+  "android": {
+    "allowMixedContent": false
+  }
+}

@@ -1,0 +1,34 @@
+APP NAME
+De Mayo Bible Studies
+
+SUBTITLE
+English & Tagalog Bible Study
+
+PROMOTIONAL TEXT
+Read, study, pray, and prepare with free English and Tagalog Bible resources for individuals, families, teachers, and ministries.
+
+DESCRIPTION
+De Mayo Bible Studies is a bilingual Christian study app designed to help people read Scripture, prepare lessons, build devotionals, pray with guidance, and share biblical teaching.
+
+Features include:
+- English and Tagalog Bible reading
+- Bible studies and devotionals
+- Exhortation preparation tools
+- Kids Bible lessons
+- Prayer library
+- Reading plans and personal notes
+- Offline access to key content
+
+The app is provided as a ministry resource by De Mayo Bible Ministry.
+
+KEYWORDS
+Bible, Tagalog Bible, English Bible, Bible study, devotional, prayer, kids lessons, Christian
+
+PRIMARY CATEGORY
+Reference or Education
+
+SUPPORT URL
+https://romerdemayo.github.io/de-mayo-bible-study/contact/
+
+PRIVACY URL
+https://romerdemayo.github.io/de-mayo-bible-study/privacy/

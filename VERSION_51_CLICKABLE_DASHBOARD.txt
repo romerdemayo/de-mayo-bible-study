@@ -1,0 +1,14 @@
+DE MAYO BIBLE STUDIES — VERSION 51
+
+HOME DASHBOARD IMPROVEMENT
+
+The four statistics cards on the Home page are now clickable:
+
+• Chapters completed → Chapter Tracker
+• Favourite verses → Favourites
+• Highlighted verses → Highlights
+• Notes and prayers → Prayer Journal
+
+The cards now also include clear opening labels, keyboard focus support, and mobile tap feedback.
+
+Upload all files in this package to the root of the GitHub repository and replace the existing files.

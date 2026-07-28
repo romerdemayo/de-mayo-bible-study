@@ -1,0 +1,15 @@
+RELEASE CHECKLIST
+
+[ ] Website works correctly on Safari and Chrome
+[ ] Add to Home Screen shows the correct icon and name
+[ ] English and Tagalog Bible content loads
+[ ] Offline mode has been tested after the first complete load
+[ ] All navigation buttons work
+[ ] Privacy page accurately describes collected and stored data
+[ ] Donation links comply with the store's current rules
+[ ] AI features disclose any internet connection or third-party service used
+[ ] App icon contains no transparency for App Store upload
+[ ] iPhone and iPad screenshots have been created
+[ ] Support and privacy URLs are publicly accessible
+[ ] Version and build numbers are set in Xcode/Android Studio
+[ ] App has been tested on a physical phone

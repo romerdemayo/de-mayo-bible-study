@@ -48,7 +48,7 @@ const pages=navGroups.flatMap(g=>g[1]);
 const internalPages=['resource'];
 const validPages=new Set([...pages.map(x=>x[0]),...internalPages]);
 const mobilePages=[['home','⌂','Home'],['read','📖','Read'],['search','🔎','Search'],['prayer','🙏','Prayer']];
-let state={page:'home',book:store.get('lastBook','John'),chapter:store.get('lastChapter',3),font:store.get('fontSize',19)};
+let state={page:'home',previousPage:'home',book:store.get('lastBook','John'),chapter:store.get('lastChapter',3),font:store.get('fontSize',19)};
 function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function parseBibleReference(input=''){
  const text=String(input).replace(/[–—]/g,'-').trim();
@@ -101,16 +101,18 @@ function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show'
 function closeMenu(){const side=$('#sidebar'),overlay=$('#sidebarOverlay'),menu=$('#menu');side.classList.remove('open');overlay.classList.remove('open');document.body.classList.remove('menu-open');menu.setAttribute('aria-expanded','false')}
 function openMenu(){const side=$('#sidebar'),overlay=$('#sidebarOverlay'),menu=$('#menu');side.classList.add('open');overlay.classList.add('open');document.body.classList.add('menu-open');menu.setAttribute('aria-expanded','true')}
 function toggleMenu(){const open=$('#sidebar').classList.contains('open');open?closeMenu():openMenu()}
-function route(p,updateHash=true){if(!validPages.has(p))p='home';state.page=p;document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===p));closeMenu();if(updateHash&&location.hash!==`#${p}`)history.pushState(null,'',`#${p}`);render();window.scrollTo({top:0,behavior:'smooth'})}
+function route(p,updateHash=true){if(!validPages.has(p))p='home';if(p!==state.page)state.previousPage=state.page||'home';state.page=p;document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===p));closeMenu();if(updateHash&&location.hash!==`#${p}`)history.pushState(null,'',`#${p}`);render();const back=$('#pageBack');if(back)back.hidden=p==='home';view.classList.remove('page-enter');void view.offsetWidth;view.classList.add('page-enter');window.scrollTo({top:0,behavior:'smooth'})}
+function goBack(){const target=state.previousPage&&state.previousPage!==state.page?state.previousPage:'home';route(target)}
 buildNavigation();
 $('#menu').onclick=toggleMenu;
+$('#pageBack').onclick=goBack;
 $('#sidebarOverlay').onclick=closeMenu;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
 window.addEventListener('popstate',()=>route(location.hash.slice(1)||'home',false));
 $('#language').onclick=()=>setLanguage(appLanguage==='en'?'tl':'en');
 $('#theme').onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('dm_theme',document.body.classList.contains('dark')?'dark':'light')};
 if(localStorage.getItem('dm_theme')==='dark')document.body.classList.add('dark');
-function title(t,s){$('#pageTitle').textContent=t;$('#pageSub').textContent=s}
+function title(t,s){$('#pageTitle').textContent=t;$('#pageSub').textContent=s;const back=$('#pageBack');if(back)back.setAttribute('aria-label',ui('Return to previous page','Bumalik sa nakaraang pahina'))}
 function localizeResource(x){return appLanguage==='tl'&&x&&x.tl?{...x,...x.tl}:x}
 function ui(en,tl){return appLanguage==='tl'?tl:en}
 function ref(v){return `${v.b} ${v.c}:${v.v}`}
@@ -129,7 +131,7 @@ function home(){
  const f=favs().length,n=store.get('notes').length,p=store.get('prayers').length,h=Object.keys(highlights()).length,d=store.get('reading',{}),done=Object.keys(d).length,av=activeVerses(),tv=av[Math.abs(new Date().getDate())%av.length]||todayVerse();
  view.innerHTML=`<div class="hero"><div><span class="badge light">VERSION 44 • AI-ASSISTED BIBLE TOOLS</span><h2>${ui('Read Scripture. Grow in faith. Prepare to serve.','Basahin ang Salita. Lumago sa pananampalataya. Maglingkod.')}</h2><p>${ui('A professional bilingual Bible app with the WEB English Bible and Ang Dating Biblia (1905) in Tagalog.','Isang propesyonal na bilingual Bible app na may WEB English Bible at Ang Dating Biblia (1905) sa Tagalog.')}</p><div class="hero-actions"><button class="primary" id="continue">${ui('Continue','Magpatuloy')} ${esc(state.book)} ${state.chapter}</button><button class="ghost light-btn" onclick="route('search')">${ui('Search Bible','Maghanap sa Bibliya')}</button></div></div><div class="verse-card"><span class="small-light">${ui('VERSE OF THE DAY','TALATA NG ARAW')}</span><br>“${esc(tv.x)}”<br><small>${ref(tv)}</small></div></div>
  <section class="card home-support-card"><div class="home-support-icon">❤️</div><div class="home-support-copy"><h3>${ui('Support De Mayo Bible Ministry','Suportahan ang De Mayo Bible Ministry')}</h3><p>${ui('Help us keep this Bible ministry free for churches, families, teachers, and believers around the world.','Tulungan kaming panatilihing libre ang Bible ministry na ito para sa mga iglesya, pamilya, guro, at mananampalataya sa buong mundo.')}</p><small>${ui('Giving is completely optional.','Ganap na opsyonal ang pagbibigay.')}</small></div><div class="home-support-actions"><a class="primary sponsor-button" href="https://github.com/sponsors/romerdemayo" target="_blank" rel="noopener noreferrer">❤️ ${ui('Sponsor on GitHub','Mag-sponsor sa GitHub')}</a><button class="ghost" id="learnSupport">${ui('Learn more','Alamin pa')}</button></div></section>
- <div class="grid"><div class="card"><div class="metric">${done}</div><div>${ui('Chapters completed','Natapos na kabanata')}</div></div><div class="card"><div class="metric">${f}</div><div>${ui('Favourite verses','Paboritong talata')}</div></div><div class="card"><div class="metric">${h}</div><div>${ui('Highlighted verses','Na-highlight na talata')}</div></div><div class="card"><div class="metric">${n+p}</div><div>${ui('Notes and prayers','Mga tala at panalangin')}</div></div></div>`;
+ <div class="grid dashboard-grid"><button type="button" class="card dashboard-card" onclick="route('reading')" aria-label="${ui('Open chapter tracker','Buksan ang talaan ng kabanata')}"><div class="metric">${done}</div><div>${ui('Chapters completed','Natapos na kabanata')}</div><span class="dashboard-open">${ui('Open tracker →','Buksan →')}</span></button><button type="button" class="card dashboard-card" onclick="route('favourites')" aria-label="${ui('Open favourite verses','Buksan ang mga paboritong talata')}"><div class="metric">${f}</div><div>${ui('Favourite verses','Paboritong talata')}</div><span class="dashboard-open">${ui('View favourites →','Tingnan →')}</span></button><button type="button" class="card dashboard-card" onclick="route('highlights')" aria-label="${ui('Open highlighted verses','Buksan ang mga na-highlight na talata')}"><div class="metric">${h}</div><div>${ui('Highlighted verses','Na-highlight na talata')}</div><span class="dashboard-open">${ui('View highlights →','Tingnan →')}</span></button><button type="button" class="card dashboard-card" onclick="route('prayer')" aria-label="${ui('Open notes and prayer journal','Buksan ang mga tala at prayer journal')}"><div class="metric">${n+p}</div><div>${ui('Notes and prayers','Mga tala at panalangin')}</div><span class="dashboard-open">${ui('Open journal →','Buksan →')}</span></button></div>`;
  $('#continue').onclick=()=>route('read');
  $('#learnSupport').onclick=()=>route('support');
 }
