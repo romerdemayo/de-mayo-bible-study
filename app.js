@@ -8,7 +8,7 @@ const store={get:(k,d=[])=>{try{return JSON.parse(localStorage.getItem('dm_'+k)|
 const I18N={
  en:{code:'EN',html:'en',
   navGroups:['Bible','Public Library','My Resources','Ministry Tools','Settings'],
-  pages:{home:'⌂ Home',read:'📖 Read Bible',search:'🔎 Search',devotionals:'🌅 Devotionals',exhortations:'🎤 Exhortations',studies:'📚 Bible Studies',kidslibrary:'👧 Kids Lessons',prayerlibrary:'🙏 Prayer Library',favourites:'★ Favourites',highlights:'🖍 Highlights',verseNotes:'🗒 Verse Notes',notes:'📝 Study Notes',prayer:'🙏 Prayer Journal',myresources:'📁 Created Resources',sermon:'🎤 Sermon Studio',kids:'🧒 Kids Ministry Studio',reading:'📅 Chapter Tracker',plans:'🗓 Guided Reading Plans',salvation:'❤️ Salvation Guide',characters:'👥 Bible Characters',dictionary:'📘 Bible Dictionary',creator:'✨ Create Resource',help:'❓ Help & User Guide',about:'ℹ️ About & Copyright',backup:'🔒 Backup & Restore'},
+  pages:{home:'⌂ Home',read:'📖 Read Bible',search:'🔎 Search',devotionals:'🌅 Devotionals',exhortations:'🎤 Exhortations',studies:'📚 Bible Studies',kidslibrary:'👧 Kids Lessons',prayerlibrary:'🙏 Prayer Library',favourites:'★ Favourites',highlights:'🖍 Highlights',verseNotes:'🗒 Verse Notes',notes:'📝 Study Notes',prayer:'🙏 Prayer Journal',myresources:'📁 Created Resources',sermon:'🎤 Sermon Studio',kids:'🧒 Kids Ministry Studio',reading:'📅 Chapter Tracker',plans:'🗓 Guided Reading Plans',salvation:'❤️ Salvation Guide',characters:'👥 Bible Characters',dictionary:'📘 Bible Dictionary',creator:'✨ Create Resource',support:'❤️ Support the Ministry',help:'❓ Help & User Guide',about:'ℹ️ About & Copyright',backup:'🔒 Backup & Restore'},
   mobile:{home:'Home',read:'Read',search:'Search',prayer:'Prayer',more:'More'},
   footer:'Easy-English WEB Bible',privacy:'Your personal content stays on this device.',
   homeTitle:'Home',homeSub:'Read, study, pray, and prepare.',
@@ -16,7 +16,7 @@ const I18N={
   switched:'Language changed to English'},
  tl:{code:'TL',html:'tl',
   navGroups:['Bibliya','Pampublikong Aklatan','Aking mga Materyales','Mga Gamit sa Ministeryo','Mga Setting'],
-  pages:{home:'⌂ Tahanan',read:'📖 Basahin ang Bibliya',search:'🔎 Maghanap',devotionals:'🌅 Mga Debosyonal',exhortations:'🎤 Mga Exhortation',studies:'📚 Pag-aaral ng Bibliya',kidslibrary:'👧 Aralin para sa Bata',prayerlibrary:'🙏 Aklatan ng Panalangin',favourites:'★ Mga Paborito',highlights:'🖍 Mga Highlight',verseNotes:'🗒 Tala sa Talata',notes:'📝 Tala sa Pag-aaral',prayer:'🙏 Prayer Journal',myresources:'📁 Ginawang Materyales',sermon:'🎤 Sermon Studio',kids:'🧒 Kids Ministry Studio',reading:'📅 Talaan ng Kabanata',plans:'🗓 Mga Gabay sa Pagbasa',salvation:'❤️ Gabay sa Kaligtasan',characters:'👥 Mga Tauhan sa Bibliya',dictionary:'📘 Diksyunaryo ng Bibliya',creator:'✨ Gumawa ng Materyales',help:'❓ Tulong at Gabay',about:'ℹ️ Tungkol at Copyright',backup:'🔒 Backup at Restore'},
+  pages:{home:'⌂ Tahanan',read:'📖 Basahin ang Bibliya',search:'🔎 Maghanap',devotionals:'🌅 Mga Debosyonal',exhortations:'🎤 Mga Exhortation',studies:'📚 Pag-aaral ng Bibliya',kidslibrary:'👧 Aralin para sa Bata',prayerlibrary:'🙏 Aklatan ng Panalangin',favourites:'★ Mga Paborito',highlights:'🖍 Mga Highlight',verseNotes:'🗒 Tala sa Talata',notes:'📝 Tala sa Pag-aaral',prayer:'🙏 Prayer Journal',myresources:'📁 Ginawang Materyales',sermon:'🎤 Sermon Studio',kids:'🧒 Kids Ministry Studio',reading:'📅 Talaan ng Kabanata',plans:'🗓 Mga Gabay sa Pagbasa',salvation:'❤️ Gabay sa Kaligtasan',characters:'👥 Mga Tauhan sa Bibliya',dictionary:'📘 Diksyunaryo ng Bibliya',creator:'✨ Gumawa ng Materyales',support:'❤️ Suportahan ang Ministeryo',help:'❓ Tulong at Gabay',about:'ℹ️ Tungkol at Copyright',backup:'🔒 Backup at Restore'},
   mobile:{home:'Tahanan',read:'Basahin',search:'Hanapin',prayer:'Panalangin',more:'Iba pa'},
   footer:'Ang Dating Biblia (1905)',privacy:'Ang personal mong nilalaman ay nananatili sa device na ito.',
   homeTitle:'Tahanan',homeSub:'Magbasa, mag-aral, manalangin, at maghanda.',
@@ -42,7 +42,7 @@ const navGroups=[
  ['Public Library',[['devotionals','🌅 Devotionals'],['exhortations','🎤 Exhortations'],['studies','📚 Bible Studies'],['kidslibrary','👧 Kids Lessons'],['prayerlibrary','🙏 Prayer Library']]],
  ['My Resources',[['favourites','★ Favourites'],['highlights','🖍 Highlights'],['verseNotes','🗒 Verse Notes'],['notes','📝 Study Notes'],['prayer','🙏 Prayer Journal'],['myresources','📁 Created Resources']]],
  ['Ministry Tools',[['sermon','🎤 Sermon Studio'],['kids','🧒 Kids Ministry Studio'],['reading','📅 Chapter Tracker'],['plans','🗓 Guided Reading Plans'],['salvation','❤️ Salvation Guide'],['characters','👥 Bible Characters'],['dictionary','📘 Bible Dictionary'],['creator','✨ Create Resource']]],
- ['Settings',[['help','❓ Help & User Guide'],['about','ℹ️ About & Copyright'],['backup','🔒 Backup & Restore']]]
+ ['Settings',[['support','❤️ Support the Ministry'],['help','❓ Help & User Guide'],['about','ℹ️ About & Copyright'],['backup','🔒 Backup & Restore']]]
 ];
 const pages=navGroups.flatMap(g=>g[1]);
 const internalPages=['resource'];
@@ -1262,6 +1262,33 @@ function salvationGuide(){
 function charactersPage(){title(ui('Bible Characters','Mga Tauhan sa Bibliya'),ui('Meet people in Scripture and learn from their faith, failures, and God’s work in their lives.','Kilalanin ang mga tao sa Kasulatan at matuto sa kanilang pananampalataya, pagkukulang, at pagkilos ng Diyos sa kanilang buhay.'));let a=window.DM_BIBLE_CHARACTERS||[];view.innerHTML=`<input id="toolSearch" class="searchbox" placeholder="${ui('Search a character...','Maghanap ng tauhan...')}"><div id="toolResults" class="tool-grid"></div>`;const draw=()=>{let q=$('#toolSearch').value.toLowerCase();$('#toolResults').innerHTML=a.filter(x=>JSON.stringify(x).toLowerCase().includes(q)).map(x=>`<article class="card tool-card"><h2>${esc(appLanguage==='tl'?x.tlName:x.name)}</h2><p>${esc(appLanguage==='tl'?x.tl:x.summary)}</p><button class="scripture-link" data-bible-ref="${esc(x.ref)}">${esc(x.ref)}</button></article>`).join('');wireScriptureLinks()};$('#toolSearch').oninput=draw;draw()}
 function dictionaryPage(){title(ui('Bible Dictionary','Diksyunaryo ng Bibliya'),ui('Simple explanations of important Bible words.','Payak na paliwanag ng mahahalagang salita sa Bibliya.'));let a=window.DM_BIBLE_DICTIONARY||[];view.innerHTML=`<input id="toolSearch" class="searchbox" placeholder="${ui('Search a word...','Maghanap ng salita...')}"><div id="toolResults" class="tool-grid"></div>`;const draw=()=>{let q=$('#toolSearch').value.toLowerCase();$('#toolResults').innerHTML=a.filter(x=>JSON.stringify(x).toLowerCase().includes(q)).map(x=>`<article class="card tool-card"><h2>${esc(appLanguage==='tl'?x.tlTerm:x.term)}</h2><p>${esc(appLanguage==='tl'?x.tl:x.definition)}</p><button class="scripture-link" data-bible-ref="${esc(x.ref)}">${esc(x.ref)}</button></article>`).join('');wireScriptureLinks()};$('#toolSearch').oninput=draw;draw()}
 
+
+function support(){
+ title(ui('Support the Ministry','Suportahan ang Ministeryo'),ui('Help keep De Mayo Bible Ministry free and growing.','Tumulong upang manatiling libre at patuloy na lumago ang De Mayo Bible Ministry.'));
+ view.innerHTML=`<section class="support-hero card">
+   <div class="support-heart">❤️</div>
+   <span class="pill">${ui('GITHUB SPONSORS','GITHUB SPONSORS')}</span>
+   <h2>${ui('Support De Mayo Bible Ministry','Suportahan ang De Mayo Bible Ministry')}</h2>
+   <p>${ui('This Bible ministry app is provided free of charge for individuals, families, churches, teachers, and ministry leaders. Your sponsorship helps support continued development, maintenance, and the creation of more free Bible resources.','Ang Bible ministry app na ito ay ibinibigay nang libre para sa mga indibidwal, pamilya, iglesya, guro, at ministry leaders. Ang iyong sponsorship ay tumutulong sa patuloy na development, maintenance, at paggawa ng mas marami pang libreng Bible resources.')}</p>
+   <blockquote>“${ui('Each one must give as he has decided in his heart, not reluctantly or under compulsion, for God loves a cheerful giver.','Magbigay ang bawat isa ayon sa ipinasiya ng kaniyang puso, hindi mabigat sa loob o sapilitan, sapagkat iniibig ng Diyos ang nagbibigay nang masaya.')}”<br><strong>2 Corinthians 9:7</strong></blockquote>
+   <a class="primary sponsor-button" href="https://github.com/sponsors/romerdemayo" target="_blank" rel="noopener noreferrer">❤️ ${ui('Become a GitHub Sponsor','Maging GitHub Sponsor')}</a>
+   <p class="small-note">${ui('The button opens GitHub securely in a new tab. You may choose any available one-time or monthly sponsorship tier.','Bubuksan ng button ang GitHub nang ligtas sa bagong tab. Maaari kang pumili ng available na one-time o monthly sponsorship tier.')}</p>
+ </section>
+ <section class="card support-benefits">
+   <h3>${ui('Your support helps with','Ang iyong suporta ay tumutulong sa')}</h3>
+   <div class="support-grid">
+    <div><span>📖</span><b>${ui('Bible study resources','Mga Bible study resource')}</b></div>
+    <div><span>🙏</span><b>${ui('Prayer and devotional tools','Prayer at devotional tools')}</b></div>
+    <div><span>🎤</span><b>${ui('Sermon preparation features','Sermon preparation features')}</b></div>
+    <div><span>👧</span><b>${ui('Children’s ministry lessons','Mga aralin para sa bata')}</b></div>
+    <div><span>🤖</span><b>${ui('AI ministry assistance','AI ministry assistance')}</b></div>
+    <div><span>🛠️</span><b>${ui('Maintenance and improvements','Maintenance at improvements')}</b></div>
+   </div>
+   <p>${ui('Financial sponsorship is completely optional. You can also help by sharing the app, reporting problems, suggesting improvements, contributing documentation, and praying for the ministry.','Ganap na opsyonal ang financial sponsorship. Maaari ka ring tumulong sa pag-share ng app, pag-report ng problema, pagmungkahi ng improvements, pag-contribute sa documentation, at pananalangin para sa ministeryo.')}</p>
+   <p><strong>${ui('Thank you for helping us continue sharing free Bible resources. God bless you.','Salamat sa pagtulong upang maipagpatuloy ang pagbabahagi ng libreng Bible resources. Pagpalain ka ng Diyos.')}</strong></p>
+ </section>`;
+}
+
 function help(){
  title('Help & User Guide','A simple guide to using De Mayo Bible Ministry on any device.');
  view.innerHTML=`
@@ -1305,5 +1332,5 @@ function about(){
  </section>`;
 }
 
-function render(){({home,read,search,devotionals,exhortations,studies,kidslibrary,prayerlibrary,resource,creator,myresources,favourites,highlights:highlightsPage,verseNotes,notes,prayer,sermon,kids,reading,plans:guidedPlans,salvation:salvationGuide,characters:charactersPage,dictionary:dictionaryPage,help,about,backup}[state.page]||home)()}
+function render(){({home,read,search,devotionals,exhortations,studies,kidslibrary,prayerlibrary,resource,creator,myresources,favourites,highlights:highlightsPage,verseNotes,notes,prayer,sermon,kids,reading,plans:guidedPlans,salvation:salvationGuide,characters:charactersPage,dictionary:dictionaryPage,support,help,about,backup}[state.page]||home)()}
 route(location.hash.slice(1)||'home',false);

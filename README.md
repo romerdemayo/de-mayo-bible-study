@@ -29,3 +29,10 @@ Upload the **contents inside** the `de-mayo-bible-study-main` folder to the root
 In GitHub, open **Settings → Pages**, select the `main` branch and `/root`, then save.
 
 Live site: `https://romerdemayo.github.io/de-mayo-bible-study/`
+
+
+## ❤️ Support De Mayo Bible Ministry
+
+De Mayo Bible Ministry is provided free of charge. Sponsorship helps support continued development, maintenance, and free Bible resources.
+
+[**Become a GitHub Sponsor**](https://github.com/sponsors/romerdemayo)
