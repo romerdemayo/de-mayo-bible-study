@@ -95,7 +95,7 @@ function showBibleLoading(){title(ui('Loading Bible…','Nilo-load ang Bibliya�
 function home(){
  title(lang().homeTitle,lang().homeSub);
  const f=favs().length,n=store.get('notes').length,p=store.get('prayers').length,h=Object.keys(highlights()).length,d=store.get('reading',{}),done=Object.keys(d).length,av=activeVerses(),tv=av[Math.abs(new Date().getDate())%av.length]||todayVerse();
- view.innerHTML=`<div class="hero"><div><span class="badge light">VERSION 21 • BILINGUAL BIBLE</span><h2>${ui('Read Scripture. Grow in faith. Prepare to serve.','Basahin ang Salita. Lumago sa pananampalataya. Maglingkod.')}</h2><p>${ui('A professional bilingual Bible app with the WEB English Bible and Ang Dating Biblia (1905) in Tagalog.','Isang propesyonal na bilingual Bible app na may WEB English Bible at Ang Dating Biblia (1905) sa Tagalog.')}</p><div class="hero-actions"><button class="primary" id="continue">Continue ${esc(state.book)} ${state.chapter}</button><button class="ghost light-btn" onclick="route('search')">Search Bible</button></div></div><div class="verse-card"><span class="small-light">VERSE OF THE DAY</span><br>“${esc(tv.x)}”<br><small>${ref(tv)}</small></div></div>
+ view.innerHTML=`<div class="hero"><div><span class="badge light">VERSION 31 • AI-ASSISTED BIBLE TOOLS</span><h2>${ui('Read Scripture. Grow in faith. Prepare to serve.','Basahin ang Salita. Lumago sa pananampalataya. Maglingkod.')}</h2><p>${ui('A professional bilingual Bible app with the WEB English Bible and Ang Dating Biblia (1905) in Tagalog.','Isang propesyonal na bilingual Bible app na may WEB English Bible at Ang Dating Biblia (1905) sa Tagalog.')}</p><div class="hero-actions"><button class="primary" id="continue">Continue ${esc(state.book)} ${state.chapter}</button><button class="ghost light-btn" onclick="route('search')">Search Bible</button></div></div><div class="verse-card"><span class="small-light">VERSE OF THE DAY</span><br>“${esc(tv.x)}”<br><small>${ref(tv)}</small></div></div>
  <div class="grid"><div class="card"><div class="metric">${done}</div><div>Chapters completed</div></div><div class="card"><div class="metric">${f}</div><div>Favourite verses</div></div><div class="card"><div class="metric">${h}</div><div>Highlighted verses</div></div><div class="card"><div class="metric">${n+p}</div><div>Notes and prayers</div></div></div>`;
  $('#continue').onclick=()=>route('read');
 }
@@ -115,10 +115,62 @@ async function read(){
  $('#smaller').onclick=()=>{state.font=Math.max(15,state.font-1);store.set('fontSize',state.font);read()};
  $('#larger').onclick=()=>{state.font=Math.min(28,state.font+1);store.set('fontSize',state.font);read()};
 }
-function openVerseSheet(v){const r=ref(v),hm=highlights(),nm=notesMap(),sheet=$('#verseSheet');sheet.className='verse-sheet open';sheet.innerHTML=`<div class="sheet-card"><button class="sheet-close" id="closeSheet">×</button><b>${r}</b><p>${esc(v.x)}</p><div class="colour-row"><button data-colour="yellow">Yellow</button><button data-colour="green">Green</button><button data-colour="blue">Blue</button><button data-colour="pink">Pink</button><button data-colour="">Clear</button></div><textarea id="verseNote" placeholder="Add your personal note...">${esc(nm[r]||'')}</textarea><div class="sheet-actions"><button class="ghost" id="sheetFav">${isFav(r)?'★ Remove favourite':'☆ Add favourite'}</button><button class="primary" id="saveVerseNote">Save note</button></div></div>`;
+function verseNoteDraft(v){const r=ref(v);return appLanguage==='tl'?`TALATA: ${r}
+
+PAGMAMASID:
+Basahing mabuti ang talata: “${v.x}” Tukuyin ang mahahalagang salita, utos, pangako, babala, o katotohanan.
+
+ANO ANG IPINAPAKITA NITO TUNGKOL SA DIYOS:
+Ipinapaalala ng talatang ito na ang Diyos ay tapat at ang Kanyang Salita ay karapat-dapat sundin.
+
+PANGUNAHING KATOTOHANAN:
+Ang pananampalatayang biblikal ay hindi lamang kaalaman; humahantong ito sa pagtitiwala at pagsunod.
+
+PERSONAL NA APLIKASYON:
+Anong pag-iisip, ugali, desisyon, o relasyon ang kailangang iayon sa talatang ito? Isulat ang isang tiyak na hakbang na gagawin mo.
+
+PANALANGIN:
+Panginoon, tulungan Mo akong maunawaan at isabuhay ang katotohanan ng ${r}. Bigyan Mo ako ng karunungan, pananampalataya, at lakas na sumunod. Amen.
+
+KONKLUSYON:
+Ang ${r} ay paanyaya na tanggapin ang katotohanan ng Diyos at tumugon nang may pananampalataya.
+
+MGA IMINUMUNGKAHING MATUTUHAN:
+• Basahin ang buong kabanata para sa tamang konteksto.
+• Hanapin ang mga kaugnay na talata.
+• Isulat ang isang praktikal na pagsunod para sa linggong ito.
+• Balikan ang tala at idagdag kung paano kumilos ang Diyos.`:`VERSE: ${r}
+
+OBSERVATION:
+Read the verse carefully: “${v.x}” Identify key words, commands, promises, warnings, or truths.
+
+WHAT THIS REVEALS ABOUT GOD:
+This verse reminds us that God is faithful and that His Word deserves our trust and obedience.
+
+KEY TRUTH:
+Biblical faith is not merely information; it leads to trust and obedient living.
+
+PERSONAL APPLICATION:
+What thought, habit, decision, or relationship should be brought into line with this verse? Record one specific action you will take.
+
+PRAYER:
+Lord, help me understand and live the truth of ${r}. Give me wisdom, faith, and strength to obey You. Amen.
+
+CONCLUSION:
+${r} invites us to receive God’s truth and respond with active faith.
+
+SUGGESTED LEARNINGS:
+• Read the whole chapter for context.
+• Find related Scriptures.
+• Record one practical act of obedience for this week.
+• Revisit this note and add how God worked.`}
+function verseNotePrompt(v){return `Create a careful, editable Bible verse study note for ${ref(v)} using this verse text: “${v.x}”. Use the ${appLanguage==='tl'?'Tagalog':'English'} language. Include: passage context, observation, important words, what the verse reveals about God, central biblical truth, supporting Scriptures, personal application, reflection questions, prayer, conclusion, and suggested learnings or next study steps. Clearly distinguish Scripture from commentary. Do not invent historical facts, Greek/Hebrew meanings, quotations, or cross-references. Encourage reading the whole chapter and reviewing the draft against Scripture.`}
+function openVerseSheet(v){const r=ref(v),hm=highlights(),nm=notesMap(),sheet=$('#verseSheet');sheet.className='verse-sheet open';sheet.innerHTML=`<div class="sheet-card"><button class="sheet-close" id="closeSheet">×</button><b>${r}</b><p>${esc(v.x)}</p><div class="colour-row"><button data-colour="yellow">Yellow</button><button data-colour="green">Green</button><button data-colour="blue">Blue</button><button data-colour="pink">Pink</button><button data-colour="">Clear</button></div><textarea id="verseNote" placeholder="${ui('Add your personal note...','Idagdag ang iyong personal na tala...')}">${esc(nm[r]||'')}</textarea><div class="ai-assist-row"><button class="ghost" id="verseAIDraft">✨ ${ui('Create Study Note','Gumawa ng Study Note')}</button><button class="ghost" id="verseAIPrompt">🤖 ${ui('Prepare AI Prompt','Ihanda ang AI Prompt')}</button></div><div class="notice small-note">${ui('The built-in draft works offline. The AI prompt is copied for use in ChatGPT and should be reviewed against Scripture.','Gumagana offline ang built-in draft. Kokopyahin ang AI prompt para gamitin sa ChatGPT at dapat suriin ayon sa Kasulatan.')}</div><div class="sheet-actions"><button class="ghost" id="sheetFav">${isFav(r)?'★ Remove favourite':'☆ Add favourite'}</button><button class="primary" id="saveVerseNote">${ui('Save note','I-save ang tala')}</button></div></div>`;
  $('#closeSheet').onclick=()=>sheet.classList.remove('open');
  document.querySelectorAll('[data-colour]').forEach(b=>b.onclick=()=>{let x=highlights(),c=b.dataset.colour;if(c)x[r]=c;else delete x[r];store.set('highlights',x);toast(c?'Verse highlighted':'Highlight cleared');read()});
  $('#sheetFav').onclick=()=>toggleFav(v);
+ $('#verseAIDraft').onclick=()=>{$('#verseNote').value=verseNoteDraft(v);toast(ui('Study note draft created','Nagawa ang study note draft'))};
+ $('#verseAIPrompt').onclick=async()=>{let prompt=verseNotePrompt(v);$('#verseNote').value=prompt;try{await navigator.clipboard.writeText(prompt)}catch{}toast(ui('AI prompt prepared and copied','Naihanda at nakopya ang AI prompt'))};
  $('#saveVerseNote').onclick=()=>{let x=notesMap(),val=$('#verseNote').value.trim();if(val)x[r]=val;else delete x[r];store.set('verseNotes',x);toast('Verse note saved');read()};
 }
 function move(d){let bi=B.findIndex(x=>x.name===state.book),c=state.chapter+d;if(c<1&&bi>0){bi--;state.book=B[bi].name;c=B[bi].chapters}else if(c>B[bi].chapters&&bi<B.length-1){bi++;state.book=B[bi].name;c=1}state.chapter=c;read();window.scrollTo(0,0)}
@@ -133,8 +185,161 @@ function favourites(){title('Favourites','Verses you have starred for quick acce
 function highlightsPage(){title('Highlights','All verses you have colour-highlighted.');let hm=highlights(),items=Object.entries(hm).map(([r,c])=>{let v=V.find(x=>ref(x)===r);return v&&{v,c}}).filter(Boolean);view.innerHTML=items.length?`<div class="results">${items.map(x=>`<div class="result highlight ${x.c}"><b>${ref(x.v)}</b><p>${esc(x.v.x)}</p></div>`).join('')}</div>`:`<div class="empty">No highlighted verses yet. Tap a verse while reading.</div>`}
 function verseNotes(){title('Verse Notes','Personal notes attached directly to Scripture.');let nm=notesMap(),items=Object.entries(nm);view.innerHTML=items.length?`<div class="results">${items.map(([r,n])=>{let v=V.find(x=>ref(x)===r);return `<div class="result"><b>${r}</b>${v?`<p>${esc(v.x)}</p>`:''}<div class="note-box">${esc(n)}</div></div>`}).join('')}</div>`:`<div class="empty">No verse notes yet. Tap a verse while reading.</div>`}
 function generic(type,label,fields){let arr=store.get(type);title(label,'Saved privately in this browser on this device.');view.innerHTML=`<div class="card"><div class="form-grid">${fields.map(f=>f.kind==='textarea'?`<textarea class="wide" id="${f.id}" placeholder="${f.label}"></textarea>`:`<input id="${f.id}" placeholder="${f.label}">`).join('')}<button class="primary wide" id="save">Save Entry</button></div></div><div class="entries">${arr.length?arr.map((x,i)=>`<div class="entry"><button class="danger" style="float:right" data-del="${i}">Delete</button><h3>${esc(x[fields[0].id]||'Untitled')}</h3>${fields.slice(1).map(f=>x[f.id]?`<p><b>${f.label}:</b> ${esc(x[f.id])}</p>`:'').join('')}<div class="meta">${x.date}</div></div>`).join(''):`<div class="empty">No entries yet.</div>`}</div>`;$('#save').onclick=()=>{let x={date:new Date().toLocaleString()};fields.forEach(f=>x[f.id]=$('#'+f.id).value.trim());if(!x[fields[0].id])return;arr.unshift(x);store.set(type,arr);generic(type,label,fields)};document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{arr.splice(+b.dataset.del,1);store.set(type,arr);generic(type,label,fields)})}
-function notes(){generic('notes','Study Notes',[{id:'title',label:'Study title or reference'},{id:'topic',label:'Topic'},{id:'body',label:'Observations, interpretation, and application',kind:'textarea'}])}
-function prayer(){generic('prayers','Prayer Journal',[{id:'title',label:'Prayer request'},{id:'person',label:'Person or ministry'},{id:'body',label:'Details, Scripture, and updates',kind:'textarea'}])}
+function ministryAssistDraft(type,data){const t=data.title||ui('Untitled Study','Pag-aaral'),topic=data.topic||data.person||ui('Faith and obedience','Pananampalataya at pagsunod'),refx=data.scripture||data.reference||ui('Add the main Bible passage','Idagdag ang pangunahing talata');if(type==='study')return appLanguage==='tl'?`PAMAGAT: ${t}
+PAKSA: ${topic}
+PANGUNAHING TALATA: ${refx}
+
+LAYUNIN:
+Maunawaan ang itinuturo ng talata tungkol sa Diyos, sa tao, at sa tapat na pamumuhay.
+
+KONTEKSTO:
+Basahin ang buong kabanata. Isulat kung sino ang nagsasalita, kanino ito sinabi, ano ang pangyayari, at bakit ito mahalaga.
+
+PAGMAMASID:
+• Mahahalagang salita o parirala:
+• Mga utos, pangako, babala, o halimbawa:
+• Mga inuulit na ideya:
+
+PALIWANAG:
+Ipaliwanag ang pangunahing mensahe ayon sa konteksto. Ihiwalay nang malinaw ang sinasabi ng Kasulatan sa personal na komentaryo.
+
+ANO ANG IPINAPAKITA TUNGKOL SA DIYOS:
+Isulat ang katotohanan tungkol sa karakter, gawain, o kalooban ng Diyos.
+
+MGA TANONG SA PAG-AARAL:
+1. Ano ang malinaw na sinasabi ng talata?
+2. Ano ang ipinapakita nito tungkol sa Diyos?
+3. Anong maling pag-iisip o gawain ang itinutuwid nito?
+4. Anong pangako o utos ang dapat tugunan?
+5. Paano ito isasabuhay ngayong linggo?
+
+APLIKASYON:
+Isulat ang isang tiyak, makatotohanan, at nasusukat na hakbang ng pagsunod.
+
+PANALANGIN:
+Panginoon, buksan Mo ang aming isip at puso upang maunawaan at sundin ang Iyong Salita. Amen.
+
+KONKLUSYON:
+Ibuod ang pangunahing katotohanan sa dalawa o tatlong pangungusap at magbigay ng malinaw na hamon.
+
+MGA IMINUMUNGKAHING MATUTUHAN:
+• Basahin ang talata sa iba pang salin.
+• Suriin ang mga kaugnay na talata.
+• Tukuyin ang isang katotohanang dapat tandaan.
+• Magplano ng follow-up reflection sa susunod na linggo.`:`TITLE: ${t}
+TOPIC: ${topic}
+MAIN PASSAGE: ${refx}
+
+OBJECTIVE:
+Understand what the passage teaches about God, people, and faithful living.
+
+CONTEXT:
+Read the whole chapter. Record who is speaking, who is addressed, what is happening, and why it matters.
+
+OBSERVATION:
+• Important words or phrases:
+• Commands, promises, warnings, or examples:
+• Repeated ideas:
+
+INTERPRETATION:
+Explain the main message in context. Clearly separate what Scripture says from personal commentary.
+
+WHAT THIS REVEALS ABOUT GOD:
+Record the truth shown about God’s character, work, or will.
+
+STUDY QUESTIONS:
+1. What does the passage clearly say?
+2. What does it reveal about God?
+3. What wrong belief or behaviour does it correct?
+4. What promise or command requires a response?
+5. How should this be lived this week?
+
+APPLICATION:
+Write one specific, realistic, and measurable act of obedience.
+
+PRAYER:
+Lord, open our minds and hearts to understand and obey Your Word. Amen.
+
+CONCLUSION:
+Summarise the central truth in two or three sentences and give a clear closing challenge.
+
+SUGGESTED LEARNINGS:
+• Read the passage in another translation.
+• Examine related Scriptures.
+• Identify one truth to remember.
+• Schedule a follow-up reflection next week.`;return appLanguage==='tl'?`PAKSA NG PANALANGIN: ${t}
+TAO / MINISTRY: ${data.person||''}
+KAUGNAY NA TALATA: ${refx}
+
+KASALUKUYANG KALAGAYAN:
+${data.body||'Isulat ang sitwasyon, pangangailangan, at mahahalagang detalye.'}
+
+PASASALAMAT:
+Ama, salamat sa Iyong kabutihan, katapatan, at presensya sa bawat panahon.
+
+PAGSUKO:
+Inilalagay namin sa Iyo ang kahilingang ito. Tulungan Mo kaming magtiwala sa Iyong karunungan at kalooban.
+
+TIYAK NA KAHILINGAN:
+• Magbigay ng karunungan at malinaw na patnubay.
+• Maglaan ng lakas, kapayapaan, at kinakailangang tulong.
+• Kumilos sa paraang magbibigay-luwalhati kay Cristo.
+
+PANALANGING AYON SA KASULATAN:
+Gamitin ang ${refx} bilang gabay, nang hindi inilalayo ang talata sa tamang konteksto.
+
+PANANAMPALATAYA AT PAGSUNOD:
+Ipakita kung may praktikal na hakbang, pakikipagkasundo, paghihintay, o paglilingkod na dapat gawin.
+
+BUONG PANALANGIN:
+Panginoon, alam Mo ang aming pangangailangan tungkol sa ${t.toLowerCase()}. Bigyan Mo kami ng karunungan, kapayapaan, lakas, at pananampalatayang sumunod. Kumilos Ka ayon sa Iyong mabuting kalooban, at gamitin ang sitwasyong ito para sa Iyong kaluwalhatian. Sa pangalan ni Jesus, amen.
+
+UPDATE / SAGOT SA PANALANGIN:
+Petsa:
+Ano ang nagbago:
+Paano kumilos ang Diyos:
+Susunod na panalangin:
+
+KONKLUSYON AT NATUTUHAN:
+Isulat kung ano ang itinuturo ng Diyos tungkol sa pagtitiwala, paghihintay, pasasalamat, o pagsunod.`:`PRAYER TOPIC: ${t}
+PERSON / MINISTRY: ${data.person||''}
+RELATED SCRIPTURE: ${refx}
+
+CURRENT SITUATION:
+${data.body||'Record the situation, need, and important details.'}
+
+THANKSGIVING:
+Father, thank You for Your goodness, faithfulness, and presence in every season.
+
+SURRENDER:
+We place this request in Your hands. Help us trust Your wisdom and will.
+
+SPECIFIC REQUESTS:
+• Provide wisdom and clear guidance.
+• Give strength, peace, and the help that is needed.
+• Work in a way that brings honour to Christ.
+
+SCRIPTURE-GUIDED PRAYER:
+Use ${refx} as a guide without removing the verse from its proper context.
+
+FAITH AND OBEDIENCE:
+Record any practical step, reconciliation, waiting, or service that should follow.
+
+COMPLETE PRAYER:
+Lord, You know our need concerning ${t.toLowerCase()}. Give us wisdom, peace, strength, and faith to obey You. Work according to Your good will, and use this situation for Your glory. In Jesus’ name, amen.
+
+UPDATE / ANSWER TO PRAYER:
+Date:
+What changed:
+How God worked:
+Next prayer:
+
+CONCLUSION AND LEARNING:
+Record what God is teaching about trust, waiting, gratitude, or obedience.`}
+function ministryAssistPrompt(type,data){const kind=type==='study'?'Bible study notes':'prayer journal entry';return `Create a complete, editable ${kind} in ${appLanguage==='tl'?'Tagalog':'English'}. Title/request: “${data.title||''}”. Topic/person: “${data.topic||data.person||''}”. Main Scripture: “${data.scripture||''}”. Existing details: “${data.body||''}”. ${type==='study'?'Include objective, passage context, observation, careful interpretation, what it reveals about God, key doctrine or truth, supporting Scriptures, discussion questions, practical application, prayer, conclusion, and suggested learnings or next study steps.':'Include thanksgiving, surrender, specific requests, Scripture-guided prayer, a complete pastoral prayer, practical faith response, an update/answered-prayer section, conclusion, and spiritual learnings.'} Clearly distinguish Scripture from commentary. Do not invent Bible quotations, historical details, original-language meanings, promises, or claims that God guaranteed a particular outcome. Keep the content Christ-centred, biblically careful, compassionate, and ready for the user to edit.`}
+function assistedGeneric(type,label,fields,assistType){let arr=store.get(type);title(label,ui('Create an assisted draft, edit it, then save it privately on this device.','Gumawa ng assisted draft, i-edit, at i-save nang pribado sa device na ito.'));view.innerHTML=`<div class="card"><div class="form-grid">${fields.map(f=>f.kind==='textarea'?`<textarea class="wide" id="${f.id}" placeholder="${f.label}"></textarea>`:`<input id="${f.id}" placeholder="${f.label}">`).join('')}<div class="wide ai-assist-row"><button class="ghost" id="assistDraft">✨ ${ui('Create Assisted Draft','Gumawa ng Assisted Draft')}</button><button class="ghost" id="assistPrompt">🤖 ${ui('Prepare ChatGPT Prompt','Ihanda ang ChatGPT Prompt')}</button><button class="ghost" id="assistClear">${ui('Clear','Burahin')}</button></div><div class="notice small-note wide">${ui('Built-in drafts work offline. ChatGPT prompts are copied for optional use and all generated content should be reviewed against Scripture.','Gumagana offline ang built-in drafts. Kokopyahin ang ChatGPT prompt para sa opsyonal na paggamit at dapat suriin ang lahat ng nilikhang content ayon sa Kasulatan.')}</div><button class="primary wide" id="save">${ui('Save Entry','I-save ang Entry')}</button></div></div><div class="entries">${arr.length?arr.map((x,i)=>`<div class="entry"><button class="danger" style="float:right" data-del="${i}">Delete</button><h3>${esc(x[fields[0].id]||'Untitled')}</h3>${fields.slice(1).map(f=>x[f.id]?`<p><b>${f.label}:</b> ${esc(x[f.id])}</p>`:'').join('')}<div class="meta">${x.date}</div></div>`).join(''):`<div class="empty">No entries yet.</div>`}</div>`;const values=()=>Object.fromEntries(fields.map(f=>[f.id,$('#'+f.id).value.trim()]));$('#assistDraft').onclick=()=>{$('#body').value=ministryAssistDraft(assistType,values());toast(ui('Assisted draft created','Nagawa ang assisted draft'))};$('#assistPrompt').onclick=async()=>{let prompt=ministryAssistPrompt(assistType,values());$('#body').value=prompt;try{await navigator.clipboard.writeText(prompt)}catch{}toast(ui('ChatGPT prompt prepared and copied','Naihanda at nakopya ang ChatGPT prompt'))};$('#assistClear').onclick=()=>fields.forEach(f=>$('#'+f.id).value='');$('#save').onclick=()=>{let x={date:new Date().toLocaleString(),...values()};if(!x[fields[0].id])return toast(ui('Add a title or prayer request first','Maglagay muna ng pamagat o prayer request'));arr.unshift(x);store.set(type,arr);assistedGeneric(type,label,fields,assistType)};document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{arr.splice(+b.dataset.del,1);store.set(type,arr);assistedGeneric(type,label,fields,assistType)})}
+function notes(){assistedGeneric('notes',ui('Study Notes','Tala sa Pag-aaral'),[{id:'title',label:ui('Study title or reference','Pamagat o reference')},{id:'topic',label:ui('Topic or main truth','Paksa o pangunahing katotohanan')},{id:'scripture',label:ui('Main Bible passage','Pangunahing talata')},{id:'body',label:ui('Editable study notes, conclusion, and learnings','Editable study notes, konklusyon, at mga natutuhan'),kind:'textarea'}],'study')}
+function prayer(){assistedGeneric('prayers',ui('Prayer Journal','Prayer Journal'),[{id:'title',label:ui('Prayer request','Kahilingan sa panalangin')},{id:'person',label:ui('Person, family, or ministry','Tao, pamilya, o ministry')},{id:'scripture',label:ui('Related Scripture','Kaugnay na talata')},{id:'body',label:ui('Details, prayer, updates, conclusion, and learnings','Detalye, panalangin, updates, konklusyon, at natutuhan'),kind:'textarea'}],'prayer')}
 function sermon(){generic('sermons','Sermon Builder',[{id:'title',label:'Sermon title'},{id:'text',label:'Main Bible passage'},{id:'audience',label:'Audience or occasion'},{id:'body',label:'Main idea, outline, illustrations, and application',kind:'textarea'}])}
 function kids(){generic('kids','Kids Ministry',[{id:'title',label:'Lesson title'},{id:'verse',label:'Memory verse'},{id:'age',label:'Age group'},{id:'body',label:'Opening prayer, Bible story, questions, activity, and closing prayer',kind:'textarea'}])}
 function reading(){title('Reading Plan','Mark chapters complete as you read.');let done=store.get('reading',{}),total=Object.keys(done).length,pct=Math.round(total/1189*100);view.innerHTML=`<div class="card"><h3>Progress: ${total} of 1,189 chapters (${pct}%)</h3><progress value="${total}" max="1189"></progress></div><div class="grid book-progress">${B.map(b=>{let n=Array.from({length:b.chapters},(_,i)=>done[b.name+' '+(i+1)]).filter(Boolean).length;return `<div class="card"><h3>${b.name}</h3><p>${n} / ${b.chapters} chapters</p><select data-book="${b.name}"><option>Choose chapter</option>${Array.from({length:b.chapters},(_,i)=>`<option>${i+1}</option>`).join('')}</select><button class="primary" data-mark="${b.name}">Mark complete</button></div>`}).join('')}</div>`;document.querySelectorAll('[data-mark]').forEach(btn=>btn.onclick=()=>{let b=btn.dataset.mark,s=document.querySelector(`select[data-book="${CSS.escape(b)}"]`),c=+s.value;if(!c)return;done[b+' '+c]=true;store.set('reading',done);reading()})}

@@ -1,4 +1,4 @@
-const CACHE = 'de-mayo-bible-v21-bilingual-bible';
+const CACHE = 'de-mayo-bible-v31-ai-notes';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./bible-data.js',
   './manifest.webmanifest','./icon-192.png','./icon-512.png',
