@@ -8,7 +8,7 @@ const store={get:(k,d=[])=>{try{return JSON.parse(localStorage.getItem('dm_'+k)|
 const I18N={
  en:{code:'EN',html:'en',
   navGroups:['Bible','Public Library','My Resources','Ministry Tools','Settings'],
-  pages:{home:'⌂ Home',read:'📖 Read Bible',search:'🔎 Search',devotionals:'🌅 Devotionals',exhortations:'🎤 Exhortations',studies:'📚 Bible Studies',kidslibrary:'👧 Kids Lessons',prayerlibrary:'🙏 Prayer Library',favourites:'★ Favourites',highlights:'🖍 Highlights',verseNotes:'🗒 Verse Notes',notes:'📝 Bible Study Creator',prayer:'🙏 Prayer Creator',myresources:'📁 Created Resources',sermon:'🎤 Sermon Studio',kids:'🧒 Kids Ministry Studio',reading:'📅 Chapter Tracker',plans:'🗓 Guided Reading Plans',salvation:'❤️ Salvation Guide',characters:'👥 Bible Characters',dictionary:'📘 Bible Dictionary',creator:'✨ Create Resource',support:'❤️ Support the Ministry',help:'❓ Help & User Guide',about:'ℹ️ About & Copyright',backup:'🔒 Backup & Restore'},
+  pages:{home:'⌂ Home',read:'📖 Read Bible',search:'🔎 Search',devotionals:'🌅 Devotionals',exhortations:'🎤 Exhortations',studies:'📚 Bible Studies',kidslibrary:'👧 Kids Lessons',prayerlibrary:'🙏 Prayer Library',favourites:'★ Favourites',highlights:'🖍 Highlights',verseNotes:'🗒 Verse Notes',notes:'📝 Bible Study Creator',prayer:'🙏 Prayer Creator',myresources:'📁 Created Resources',sermon:'🎤 Sermon Studio',kids:'🧒 Kids Ministry Studio',reading:'📅 Chapter Tracker',plans:'🗓 Guided Reading Plans',salvation:'❤️ Salvation Guide',characters:'👥 Bible Characters',dictionary:'📘 Bible Dictionary',creator:'✨ Create Resource',support:'❤️ Support the Ministry',feedback:'💬 Feedback & Contact',help:'❓ Help & User Guide',about:'ℹ️ About & Copyright',backup:'🔒 Backup & Restore'},
   mobile:{home:'Home',read:'Read',search:'Search',prayer:'Prayer',more:'More'},
   footer:'Easy-English WEB Bible',privacy:'Your personal content stays on this device.',
   homeTitle:'Home',homeSub:'Read, study, pray, and prepare.',
@@ -16,7 +16,7 @@ const I18N={
   switched:'Language changed to English'},
  tl:{code:'TL',html:'tl',
   navGroups:['Bibliya','Pampublikong Aklatan','Aking mga Materyales','Mga Gamit sa Ministeryo','Mga Setting'],
-  pages:{home:'⌂ Tahanan',read:'📖 Basahin ang Bibliya',search:'🔎 Maghanap',devotionals:'🌅 Mga Debosyonal',exhortations:'🎤 Mga Exhortation',studies:'📚 Pag-aaral ng Bibliya',kidslibrary:'👧 Aralin para sa Bata',prayerlibrary:'🙏 Aklatan ng Panalangin',favourites:'★ Mga Paborito',highlights:'🖍 Mga Highlight',verseNotes:'🗒 Tala sa Talata',notes:'📝 Gumawa ng Bible Study',prayer:'🙏 Prayer Creator',myresources:'📁 Ginawang Materyales',sermon:'🎤 Sermon Studio',kids:'🧒 Kids Ministry Studio',reading:'📅 Talaan ng Kabanata',plans:'🗓 Mga Gabay sa Pagbasa',salvation:'❤️ Gabay sa Kaligtasan',characters:'👥 Mga Tauhan sa Bibliya',dictionary:'📘 Diksyunaryo ng Bibliya',creator:'✨ Gumawa ng Materyales',support:'❤️ Suportahan ang Ministeryo',help:'❓ Tulong at Gabay',about:'ℹ️ Tungkol at Copyright',backup:'🔒 Backup at Restore'},
+  pages:{home:'⌂ Tahanan',read:'📖 Basahin ang Bibliya',search:'🔎 Maghanap',devotionals:'🌅 Mga Debosyonal',exhortations:'🎤 Mga Exhortation',studies:'📚 Pag-aaral ng Bibliya',kidslibrary:'👧 Aralin para sa Bata',prayerlibrary:'🙏 Aklatan ng Panalangin',favourites:'★ Mga Paborito',highlights:'🖍 Mga Highlight',verseNotes:'🗒 Tala sa Talata',notes:'📝 Gumawa ng Bible Study',prayer:'🙏 Prayer Creator',myresources:'📁 Ginawang Materyales',sermon:'🎤 Sermon Studio',kids:'🧒 Kids Ministry Studio',reading:'📅 Talaan ng Kabanata',plans:'🗓 Mga Gabay sa Pagbasa',salvation:'❤️ Gabay sa Kaligtasan',characters:'👥 Mga Tauhan sa Bibliya',dictionary:'📘 Diksyunaryo ng Bibliya',creator:'✨ Gumawa ng Materyales',support:'❤️ Suportahan ang Ministeryo',feedback:'💬 Feedback at Contact',help:'❓ Tulong at Gabay',about:'ℹ️ Tungkol at Copyright',backup:'🔒 Backup at Restore'},
   mobile:{home:'Tahanan',read:'Basahin',search:'Hanapin',prayer:'Panalangin',more:'Iba pa'},
   footer:'Ang Dating Biblia (1905)',privacy:'Ang personal mong nilalaman ay nananatili sa device na ito.',
   homeTitle:'Tahanan',homeSub:'Magbasa, mag-aral, manalangin, at maghanda.',
@@ -42,7 +42,7 @@ const navGroups=[
  ['Public Library',[['devotionals','🌅 Devotionals'],['exhortations','🎤 Exhortations'],['studies','📚 Bible Studies'],['kidslibrary','👧 Kids Lessons'],['prayerlibrary','🙏 Prayer Library']]],
  ['My Resources',[['favourites','★ Favourites'],['highlights','🖍 Highlights'],['verseNotes','🗒 Verse Notes'],['notes','📝 Bible Study Creator'],['prayer','🙏 Prayer Creator'],['myresources','📁 Created Resources']]],
  ['Ministry Tools',[['sermon','🎤 Sermon Studio'],['kids','🧒 Kids Ministry Studio'],['reading','📅 Chapter Tracker'],['plans','🗓 Guided Reading Plans'],['salvation','❤️ Salvation Guide'],['characters','👥 Bible Characters'],['dictionary','📘 Bible Dictionary'],['creator','✨ Create Resource']]],
- ['Settings',[['support','❤️ Support the Ministry'],['help','❓ Help & User Guide'],['about','ℹ️ About & Copyright'],['backup','🔒 Backup & Restore']]]
+ ['Settings',[['support','❤️ Support the Ministry'],['feedback','💬 Feedback & Contact'],['help','❓ Help & User Guide'],['about','ℹ️ About & Copyright'],['backup','🔒 Backup & Restore']]]
 ];
 const pages=navGroups.flatMap(g=>g[1]);
 const internalPages=['resource'];
@@ -2016,6 +2016,43 @@ function support(){
  </section>`;
 }
 
+function feedback(){
+ const email='Romer.DeMayo@gmail.com';
+ const subject=ui('De Mayo Bible Studies – Feedback','De Mayo Bible Studies – Feedback');
+ const body=ui(
+  'Hello Romer,\n\nI would like to share the following feedback about De Mayo Bible Studies.\n\nType: Suggestion / Improvement / Bug report / General message\nFeature or page:\nDevice and browser:\nMessage:\n\nThank you.',
+  'Hello Romer,\n\nNais kong magbahagi ng feedback tungkol sa De Mayo Bible Studies.\n\nUri: Mungkahi / Improvement / Bug report / Pangkalahatang mensahe\nFeature o page:\nDevice at browser:\nMensahe:\n\nSalamat.'
+ );
+ const mailto=`mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+ title(ui('Feedback & Contact','Feedback at Contact'),ui('Share suggestions, report a problem, or send a general message.','Magbahagi ng mungkahi, mag-report ng problema, o magpadala ng pangkalahatang mensahe.'));
+ view.innerHTML=`
+ <section class="card feedback-hero">
+   <div class="feedback-icon">💬</div>
+   <span class="pill">${ui('HELP US IMPROVE','TULUNGAN KAMING UMUNLAD')}</span>
+   <h2>${ui('Your feedback can help improve this ministry app','Makakatulong ang iyong feedback upang mapaganda ang ministry app na ito')}</h2>
+   <p>${ui('You are welcome to send feature suggestions, improvement ideas, bug reports, Bible resource ideas, questions, or any general message.','Maaari kang magpadala ng feature suggestions, improvement ideas, bug reports, Bible resource ideas, mga tanong, o anumang pangkalahatang mensahe.')}</p>
+   <div class="feedback-email"><span>📧</span><a href="${mailto}">${email}</a></div>
+   <div class="creator-buttons feedback-actions">
+     <a class="primary feedback-mail-button" href="${mailto}">✉️ ${ui('Send Feedback by Email','Magpadala ng Feedback sa Email')}</a>
+     <button class="ghost" id="copyFeedbackEmail">📋 ${ui('Copy Email Address','Kopyahin ang Email Address')}</button>
+   </div>
+   <p class="small-note">${ui('The email button opens your device’s default email app with a helpful template. Please do not include passwords or other sensitive personal information.','Bubuksan ng email button ang default email app ng iyong device na may nakahandang template. Huwag magsama ng password o sensitibong personal na impormasyon.')}</p>
+ </section>
+ <section class="card feedback-types">
+   <h3>${ui('Messages are welcome about','Tinatanggap ang mga mensahe tungkol sa')}</h3>
+   <div class="support-grid">
+     <div><span>✨</span><b>${ui('New feature ideas','Mga bagong feature')}</b></div>
+     <div><span>🛠️</span><b>${ui('Improvements','Mga improvement')}</b></div>
+     <div><span>🐞</span><b>${ui('Problems or bugs','Mga problema o bug')}</b></div>
+     <div><span>📖</span><b>${ui('Bible resource ideas','Bible resource ideas')}</b></div>
+     <div><span>❓</span><b>${ui('Questions','Mga tanong')}</b></div>
+     <div><span>🙏</span><b>${ui('General messages','Pangkalahatang mensahe')}</b></div>
+   </div>
+   <blockquote>“${ui('As iron sharpens iron, so one person sharpens another.','Kung paanong bakal ang nagpapatalim sa bakal, gayon pinatatalim ng tao ang mukha ng kaniyang kaibigan.')}”<br><strong>Proverbs 27:17</strong></blockquote>
+ </section>`;
+ $('#copyFeedbackEmail').onclick=async()=>{try{await navigator.clipboard.writeText(email);toast(ui('Email address copied','Nakopya ang email address'))}catch{toast(email)}};
+}
+
 function help(){
  title('Help & User Guide','A simple guide to using De Mayo Bible Ministry on any device.');
  view.innerHTML=`
@@ -2059,5 +2096,5 @@ function about(){
  </section>`;
 }
 
-function render(){({home,read,search,devotionals,exhortations,studies,kidslibrary,prayerlibrary,resource,creator,myresources,favourites,highlights:highlightsPage,verseNotes,notes,prayer,sermon,kids,reading,plans:guidedPlans,salvation:salvationGuide,characters:charactersPage,dictionary:dictionaryPage,support,help,about,backup}[state.page]||home)()}
+function render(){({home,read,search,devotionals,exhortations,studies,kidslibrary,prayerlibrary,resource,creator,myresources,favourites,highlights:highlightsPage,verseNotes,notes,prayer,sermon,kids,reading,plans:guidedPlans,salvation:salvationGuide,characters:charactersPage,dictionary:dictionaryPage,support,feedback,help,about,backup}[state.page]||home)()}
 route(location.hash.slice(1)||'home',false);
