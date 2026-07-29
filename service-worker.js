@@ -1,5 +1,5 @@
-/* De Mayo Bible Ministry | Version 77 SEO Enhanced from Version 76 */
-const CACHE = 'de-mayo-bible-v77-seo-from-v76';
+/* De Mayo Bible Ministry | Version 82 Presentation Return Fix */
+const CACHE = 'de-mayo-bible-v85-durable-presentation-return';
 const OFFLINE_URL = './index.html';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./bible-data.js',
@@ -22,10 +22,10 @@ self.addEventListener('fetch', event => {
     }).catch(() => caches.match(event.request).then(r => r || caches.match(OFFLINE_URL))));
     return;
   }
-  event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
+  event.respondWith(fetch(event.request).then(response => {
     if (response && response.status === 200 && response.type !== 'opaque') {
       const copy=response.clone(); caches.open(CACHE).then(c=>c.put(event.request,copy));
     }
     return response;
-  })));
+  }).catch(() => caches.match(event.request)));
 });

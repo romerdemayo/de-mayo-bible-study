@@ -354,3 +354,9 @@ body.resource-presentation-active{overflow:hidden!important}
 .verse-sheet.inline-verse-sheet textarea{min-height:140px;resize:vertical}
 @media(min-width:981px){.scripture{max-width:1000px}.verse-sheet.inline-verse-sheet .sheet-card{padding:18px 22px 20px}}
 @media(max-width:640px){.verse-sheet.inline-verse-sheet{padding-bottom:10px}.verse-sheet.inline-verse-sheet .sheet-card{max-height:none;overflow:visible;padding:14px 12px 16px}.verse-note-text{margin-right:28px}.verse-sheet.inline-verse-sheet textarea{min-height:180px}.verse-sheet.inline-verse-sheet .sheet-actions{display:grid;grid-template-columns:1fr}.verse-sheet.inline-verse-sheet .sheet-actions button{width:100%}}
+
+/* Version 79: make the return-to-presentation action obvious in the Bible reader */
+.back-to-presentation{font-weight:800;white-space:nowrap}
+
+/* Version 85: Read Bible presentation */
+.bible-chapter-presentation{max-width:1050px;margin:0 auto}.presentation-bible-verse{font-size:clamp(1.25rem,2.3vw,2rem);line-height:1.65;margin:0 0 1rem}.presentation-bible-verse sup{font-weight:800;color:#28735e;margin-right:.45rem}.presentation-bible-verse.reference-focus{background:#fff3c4;border:2px solid #d8a700;border-radius:14px;padding:.5rem .75rem}

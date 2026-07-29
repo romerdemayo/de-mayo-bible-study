@@ -99,22 +99,59 @@ function presentationBodyHtml(text=''){
  }
  return html;
 }
-function startResourcePresentation({title='',passage='',body='',image='',html=''}){
+let activePresentationSnapshot=null;
+const PRESENTATION_SESSION_KEY='dm_active_presentation_v85';
+const PRESENTATION_RETURN_KEY='presentationReturnPayloadV85';
+let pendingPresentationReturn=null;
+function savePresentationReturn(snapshot){
+ const payload=snapshot?{...snapshot,active:true}:null;
+ pendingPresentationReturn=payload;
+ store.set(PRESENTATION_RETURN_KEY,payload);
+}
+function getPresentationReturn(){
+ if(pendingPresentationReturn&&pendingPresentationReturn.active)return pendingPresentationReturn;
+ const payload=store.get(PRESENTATION_RETURN_KEY,null);
+ if(payload&&payload.active){pendingPresentationReturn=payload;return payload}
+ return null;
+}
+function clearPresentationReturn(){pendingPresentationReturn=null;store.set(PRESENTATION_RETURN_KEY,null)}
+function savePresentationSnapshot(snapshot){
+ activePresentationSnapshot=snapshot?{...snapshot}:null;
+ try{if(snapshot)sessionStorage.setItem(PRESENTATION_SESSION_KEY,JSON.stringify(snapshot));else sessionStorage.removeItem(PRESENTATION_SESSION_KEY)}catch{}
+}
+function getPresentationSnapshot(){
+ if(activePresentationSnapshot)return activePresentationSnapshot;
+ try{const raw=sessionStorage.getItem(PRESENTATION_SESSION_KEY);if(raw){activePresentationSnapshot=JSON.parse(raw);return activePresentationSnapshot}}catch{}
+ return null;
+}
+function clearPresentationSnapshot(){savePresentationSnapshot(null)}
+function presentationOriginPage(explicit=''){
+ const valid=new Set(['read','devotionals','exhortations','studies','kidslibrary','sermon','resource','myresources']);
+ if(valid.has(explicit))return explicit;
+ if(state.page==='resource'&&valid.has(state.previousPage))return state.previousPage;
+ return valid.has(state.page)?state.page:'home';
+}
+function startResourcePresentation({title='',passage='',body='',image='',html='',restoreScroll=0,originPage=''}){
  document.getElementById('resourcePresentationOverlay')?.remove();
+ const initialSnapshot={title,passage,body,image,html,scrollTop:Number(restoreScroll)||0,originPage:presentationOriginPage(originPage)};
+ savePresentationSnapshot(initialSnapshot);
+ pendingPresentationReturn={...initialSnapshot,active:true};
  const overlay=document.createElement('section');
  overlay.id='resourcePresentationOverlay';
  overlay.className='resource-presentation-overlay';
  overlay.setAttribute('role','dialog');
  overlay.setAttribute('aria-modal','true');
+ overlay._presentationSnapshot=initialSnapshot;
+ overlay.dataset.presentationActive='true';
  overlay.innerHTML=`<div class="presentation-toolbar"><button type="button" class="primary" id="exitResourcePresentation">✕ ${ui('Exit Presentation','Isara ang Presentation')}</button></div><article class="presentation-document">${image?`<img class="presentation-hero" src="${esc(image)}" alt="${esc(title||ui('Lesson illustration','Larawan ng aralin'))}">`:''}${title?`<h1>${esc(title)}</h1>`:''}${passage?`<div class="presentation-passage">${scriptureLink(passage)}</div>`:''}<div class="presentation-content">${html||presentationBodyHtml(body)}</div></article>`;
  document.body.appendChild(overlay);
  document.body.classList.add('resource-presentation-active');
- const close=()=>{overlay.remove();document.body.classList.remove('resource-presentation-active');if(document.fullscreenElement)document.exitFullscreen().catch(()=>{})};
+ const close=()=>{const destination=initialSnapshot.originPage||'home';overlay.remove();document.body.classList.remove('resource-presentation-active');clearPresentationSnapshot();clearPresentationReturn();store.set('returnToPresentation',false);store.set('returnToResource',false);if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});route(destination)};
  overlay.querySelector('#exitResourcePresentation').onclick=close;
  overlay.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
- wireScriptureLinks();
+ makePresentationScripturesClickable(overlay);
  try{if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(()=>{})}catch{}
- overlay.scrollTop=0;
+ overlay.scrollTop=Number(restoreScroll)||0;
 }
 
 function userLibraryKey(kind){return ({study:'userBibleStudies',prayer:'userPrayers',kids:'userKidsLessons',devotional:'userDevotionals',exhortation:'userExhortations',sermon:'sermons'})[kind]||('user'+kind)}
@@ -150,11 +187,94 @@ function collectResourceEdit(kind){let g=id=>$('#ed_'+id)?.value.trim()||'',o={}
  if(kind==='kids')o={title:g('title'),age:g('age'),story:g('story'),image:g('image'),opening:g('opening'),lesson:g('lesson'),questions:lines(g('questions')),activity:g('activity'),craft:g('craft'),memory:g('memory'),closing:g('closing')};
  if(kind==='prayer')o={title:g('title'),category:g('category'),text:g('text')};return o}
 
-function openBibleReference(reference){
+function openBibleReference(reference,sourceElement=null){
  const r=parseBibleReference(reference);if(!r)return toast('Bible reference was not recognised');
- state.book=r.book;state.chapter=r.chapter;state.focusVerse=r.verse;store.set('returnToResource',true);route('read');
+ const sourceOverlay=sourceElement?.closest?.('#resourcePresentationOverlay');
+ const presentationOverlay=sourceOverlay||document.getElementById('resourcePresentationOverlay');
+ const attachedSnapshot=presentationOverlay?._presentationSnapshot||null;
+ const savedPresentation=attachedSnapshot||getPresentationReturn()||getPresentationSnapshot()||pendingPresentationReturn;
+ const explicitlyFromPresentation=!!sourceOverlay||sourceElement?.dataset?.fromPresentation==='true'||document.body.classList.contains('resource-presentation-active')||!!presentationOverlay||!!pendingPresentationReturn;
+ if(explicitlyFromPresentation&&savedPresentation){
+  const payload={...savedPresentation,scrollTop:presentationOverlay?.scrollTop||savedPresentation.scrollTop||0,active:true};
+  savePresentationSnapshot(payload);
+  savePresentationReturn(payload);
+  store.set('returnToPresentation',true);
+  store.set('returnToResource',false);
+ }else{
+  clearPresentationReturn();
+  store.set('returnToPresentation',false);
+  store.set('returnToResource',true);
+ }
+ document.getElementById('resourcePresentationOverlay')?.remove();
+ document.body.classList.remove('resource-presentation-active');
+ document.getElementById('exitResourcePresentation')?.remove();
+ state.book=r.book;state.chapter=r.chapter;state.focusVerse=r.verse;route('read');
 }
-function wireScriptureLinks(){document.querySelectorAll('[data-bible-ref]').forEach(el=>el.onclick=e=>{e.preventDefault();e.stopPropagation();openBibleReference(el.dataset.bibleRef)})}
+function returnToPresentation(){
+ const snapshot=getPresentationReturn()||getPresentationSnapshot();
+ store.set('returnToPresentation',false);
+ store.set('returnToResource',false);
+ state.focusVerse=null;
+ if(!snapshot){route('resource');return}
+ clearPresentationReturn();
+ startResourcePresentation({...snapshot,restoreScroll:snapshot.scrollTop||0});
+}
+function exitPresentationKeepBible(){
+ const snapshot=getPresentationReturn()||getPresentationSnapshot();
+ const destination=snapshot?.originPage||'home';
+ document.getElementById('resourcePresentationOverlay')?.remove();
+ document.getElementById('exitResourcePresentation')?.remove();
+ document.body.classList.remove('resource-presentation-active');
+ clearPresentationSnapshot();
+ clearPresentationReturn();
+ store.set('returnToPresentation',false);
+ store.set('returnToResource',false);
+ if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});
+ route(destination);
+}
+function wireScriptureLinks(root=document){
+ root.querySelectorAll('[data-bible-ref]').forEach(el=>{
+  el.type='button';
+  el.style.pointerEvents='auto';
+  if(el.closest('#resourcePresentationOverlay'))el.dataset.fromPresentation='true';
+  el.onclick=e=>{e.preventDefault();e.stopPropagation();openBibleReference(el.dataset.bibleRef,el)};
+ });
+}
+function makePresentationScripturesClickable(root){
+ if(!root)return;
+ const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+ const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+ nodes.forEach(node=>{
+  const parent=node.parentElement;
+  if(!parent||parent.closest('button,a,script,style,textarea,input'))return;
+  const text=node.nodeValue||'',refs=extractBibleReferences(text);
+  if(!refs.length)return;
+  let cursor=0,frag=document.createDocumentFragment();
+  const matches=[];
+  refs.forEach(ref=>{let start=text.indexOf(ref,cursor);if(start<0)start=text.indexOf(ref);if(start>=0)matches.push({ref,start,end:start+ref.length})});
+  matches.sort((a,b)=>a.start-b.start);
+  matches.forEach(m=>{if(m.start<cursor)return;if(m.start>cursor)frag.appendChild(document.createTextNode(text.slice(cursor,m.start)));const b=document.createElement('button');b.type='button';b.className='scripture-link inline-scripture';b.dataset.bibleRef=m.ref;b.textContent=m.ref;b.setAttribute('aria-label','Open '+m.ref+' in Bible reader');frag.appendChild(b);cursor=m.end});
+  if(cursor<text.length)frag.appendChild(document.createTextNode(text.slice(cursor)));
+  if(matches.length)node.replaceWith(frag);
+ });
+ wireScriptureLinks(root);
+}
+// Capture presentation context before any scripture button handler runs.
+// This is deliberately independent of GitHub, service workers, and online status.
+document.addEventListener('click',e=>{
+ const target=e.target?.closest?.('[data-bible-ref]');
+ if(!target)return;
+ const overlay=document.getElementById('resourcePresentationOverlay');
+ if(!overlay&&!document.body.classList.contains('resource-presentation-active'))return;
+ const snapshot=overlay?._presentationSnapshot||getPresentationSnapshot()||pendingPresentationReturn;
+ if(!snapshot)return;
+ const payload={...snapshot,scrollTop:overlay?.scrollTop||snapshot.scrollTop||0,active:true};
+ target.dataset.fromPresentation='true';
+ savePresentationSnapshot(payload);
+ savePresentationReturn(payload);
+ store.set('returnToPresentation',true);
+ store.set('returnToResource',false);
+},true);
 function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(window._toast);window._toast=setTimeout(()=>t.classList.remove('show'),1800)}
 function closeMenu(){const side=$('#sidebar'),overlay=$('#sidebarOverlay'),menu=$('#menu');side.classList.remove('open');overlay.classList.remove('open');document.body.classList.remove('menu-open');menu.setAttribute('aria-expanded','false')}
 function openMenu(){const side=$('#sidebar'),overlay=$('#sidebarOverlay'),menu=$('#menu');side.classList.add('open');overlay.classList.add('open');document.body.classList.add('menu-open');menu.setAttribute('aria-expanded','true')}
@@ -211,14 +331,23 @@ function home(){
  $('#continue').onclick=()=>route('read');$('#learnSupport').onclick=()=>route('support');
 }
 
-function readerToolbar(){const back=store.get('returnToResource',false)?`<button class="ghost" id="backToResource">← ${ui('Back to resource','Bumalik sa materyales')}</button>`:'';return `<div class="toolbar reader-tools">${back}<span class="translation-pill">${bibleName()}</span><select id="book">${B.map(x=>`<option ${x.name===state.book?'selected':''}>${x.name}</option>`).join('')}</select><button class="ghost" id="prev">←</button><button class="ghost" id="next">→</button><button class="ghost" id="smaller">A−</button><button class="ghost" id="larger">A+</button></div>`}
+function readerToolbar(){const inPresentation=store.get('returnToPresentation',false)||!!getPresentationReturn()||!!pendingPresentationReturn,back=inPresentation?`<button class="primary back-to-presentation" id="backToPresentation">← ${ui('Back to Presentation','Bumalik sa Presentation')}</button><button class="ghost exit-presentation-reader" id="exitPresentationKeepBible">✕ ${ui('Exit Presentation','Isara ang Presentation')}</button>`:(store.get('returnToResource',false)?`<button class="ghost" id="backToResource">← ${ui('Back to resource','Bumalik sa materyales')}</button>`:'');return `<div class="toolbar reader-tools">${back}<span class="translation-pill">${bibleName()}</span><select id="book">${B.map(x=>`<option ${x.name===state.book?'selected':''}>${x.name}</option>`).join('')}</select><button class="ghost" id="prev">←</button><button class="ghost" id="next">→</button><button class="ghost" id="smaller">A−</button><button class="ghost" id="larger">A+</button><button class="primary" id="presentBibleChapter">🖥️ ${ui('Present Chapter','I-present ang Kabanata')}</button></div>`}
+function presentCurrentBibleChapter(){
+ const verses=activeVerses().filter(x=>x.b===state.book&&x.c===state.chapter);
+ const chapterTitle=`${state.book} ${state.chapter}`;
+ const html=`<div class="bible-chapter-presentation">${verses.map(v=>`<p class="presentation-bible-verse${state.focusVerse===v.v?' reference-focus':''}"><sup>${v.v}</sup> ${esc(v.x)}</p>`).join('')}</div>`;
+ startResourcePresentation({title:chapterTitle,html,originPage:'read'});
+}
 async function read(){
  title(ui('Read Bible','Basahin ang Bibliya'),ui('Tap a verse for highlight, note, or favourite options.','I-tap ang talata upang i-highlight, lagyan ng tala, o gawing paborito.'));
  if(appLanguage==='tl'&&!window.TAGALOG_VERSES){showBibleLoading();try{await window.DM_TAGALOG_BIBLE.load()}catch(e){view.innerHTML=`<div class="empty"><h2>Hindi ma-load ang Tagalog Bible</h2><p>Kumonekta sa internet sa unang paggamit, pagkatapos ay subukan muli.</p><button class="primary" onclick="read()">Subukan muli</button></div>`;return}}
  let AV=activeVerses(),book=B.find(x=>x.name===state.book)||B[0],vv=AV.filter(x=>x.b===state.book&&x.c===state.chapter),hm=highlights(),nm=notesMap();saveLast();recordReadingActivity();
  view.innerHTML=`${readerToolbar()}<div class="reader"><div class="card chapter-list"><h3>${book.name}</h3>${Array.from({length:book.chapters},(_,i)=>`<button class="${i+1===state.chapter?'active':''}" data-ch="${i+1}">${i+1}</button>`).join('')}</div><article class="card scripture" style="font-size:${state.font}px"><h2>${state.book} ${state.chapter}</h2>${vv.map((v,i)=>{let r=ref(v),c=hm[r]||'';return `<div class="verse ${c?'highlight '+c:''} ${state.focusVerse===v.v?'reference-focus':''}" data-verse="${i}" id="v${v.v}"><sup>${v.v}</sup><span>${esc(v.x)}</span><div class="verse-actions"><button class="icon" title="Favourite" data-fav="${i}">${isFav(r)?'★':'☆'}</button>${nm[r]?'<span class="note-dot" title="Has note">●</span>':''}</div></div>`}).join('')}</article></div><div class="verse-sheet" id="verseSheet"></div>`;
- $('#book').onchange=e=>{state.book=e.target.value;state.chapter=1;state.focusVerse=null;store.set('returnToResource',false);read()};
+ $('#book').onchange=e=>{state.book=e.target.value;state.chapter=1;state.focusVerse=null;read()};
+ if($('#backToPresentation'))$('#backToPresentation').onclick=returnToPresentation;
+ if($('#exitPresentationKeepBible'))$('#exitPresentationKeepBible').onclick=exitPresentationKeepBible;
  if($('#backToResource'))$('#backToResource').onclick=()=>{store.set('returnToResource',false);state.focusVerse=null;route('resource')};
+ if($('#presentBibleChapter'))$('#presentBibleChapter').onclick=presentCurrentBibleChapter;
  if(state.focusVerse){setTimeout(()=>{const target=document.getElementById('v'+state.focusVerse);target?.scrollIntoView({behavior:'smooth',block:'center'})},120)}
  document.querySelectorAll('[data-ch]').forEach(b=>b.onclick=()=>{state.chapter=+b.dataset.ch;read()});
  document.querySelectorAll('[data-fav]').forEach(b=>b.onclick=e=>{e.stopPropagation();toggleFav(vv[+b.dataset.fav])});
@@ -901,7 +1030,7 @@ function sermon(){
    <div class="creator-buttons"><button class="primary" data-save-edit="${i}">${ui('Save Changes','I-save ang Pagbabago')}</button><button class="ghost" data-cancel-edit="${i}">${ui('Cancel','Kanselahin')}</button></div>
   </div>
  </article>`).join(''):`<div class="empty">${ui('No saved sermons yet.','Wala pang naka-save na sermon.')}</div>`;
- view.innerHTML=`<div class="creator-layout"><section class="card"><div class="form-grid"><input id="title" placeholder="${ui('Sermon title','Pamagat ng sermon')}"><input id="text" placeholder="${ui('Main Bible passage','Pangunahing talata')}"><input id="theme" placeholder="${ui('Central theme or main truth','Pangunahing tema o katotohanan')}"><input id="audience" placeholder="${ui('Audience or occasion','Tagapakinig o okasyon')}"><input class="wide" id="purpose" placeholder="${ui('Purpose or desired response','Layunin o nais na tugon')}"><label class="field-label wide">${ui('Message format','Uri ng mensahe')}<select id="depth"><option value="devotion">${ui('Devotional','Debosyonal')}</option><option value="short">${ui('Short Message','Maikling Mensahe')}</option><option value="standard">${ui('Standard Sermon','Karaniwang Sermon')}</option><option value="full" selected>${ui('Full Sermon','Buong Sermon')}</option><option value="extended">${ui('Extended Teaching','Mas Malalim na Pagtuturo')}</option></select></label><textarea class="wide sermon-notes" id="testimony" placeholder="${ui('Your personal testimony (optional)','Iyong personal na patotoo (optional)')}"></textarea><textarea class="wide sermon-notes" id="additional" placeholder="${ui('Additional notes, illustrations, local church application, or extra points','Karagdagang tala, illustrations, local church application, o extra points')}"></textarea><textarea class="wide sermon-notes" id="notes" placeholder="${ui('Speaker notes and delivery reminders','Speaker notes at delivery reminders')}"></textarea><div class="wide ai-assist-row"><button class="primary" id="sermonDraft">✨ ${ui('Create Sermon by Points','Gumawa ng Sermon ayon sa Points')}</button><button class="ghost" id="sermonPrompt">🤖 ${ui('Prepare Detailed AI Prompt','Ihanda ang Detalyadong AI Prompt')}</button><button class="ghost" id="sermonPpt">📊 ${ui('PowerPoint Outline','PowerPoint Outline')}</button><button class="ghost" id="sermonClear">${ui('Clear','Burahin')}</button></div><div class="notice small-note wide">${ui('Leave all fields blank for a fresh complete sermon. You can edit the whole message, add your testimony, and add extra notes before or after saving.','Iwanang blanko ang lahat para sa bagong kumpletong sermon. Maaari mong i-edit ang buong mensahe at idagdag ang patotoo at extra notes bago o pagkatapos i-save.')}</div></div></section><section class="card"><div class="draft-head"><h3>${ui('Editable Sermon Workspace','Editable Sermon Workspace')}</h3><span class="pill">${ui('Point-Based','Ayon sa Points')}</span></div><textarea id="body" class="draft-area sermon-draft-area" placeholder="${ui('Your sermon workspace will appear here...','Lalabas dito ang sermon workspace...')}"></textarea><div class="creator-buttons"><button class="primary" id="sermonSave">${ui('Save Sermon','I-save ang Sermon')}</button><button class="ghost" id="sermonCopy">${ui('Copy Draft','Kopyahin ang Draft')}</button></div><div id="pptPanel" class="notice" style="display:none;margin-top:14px"><div class="draft-head"><h3>📊 ${ui('PowerPoint Slide Outline','PowerPoint Slide Outline')}</h3><span class="pill">${ui('Suggestion only','Suggestion lamang')}</span></div><textarea id="pptBody" class="draft-area" style="min-height:360px"></textarea><div class="creator-buttons"><button class="primary" id="pptCopy">${ui('Copy PowerPoint Outline','Kopyahin ang PowerPoint Outline')}</button></div></div></section></div><div class="entries sermon-entries">${saved}</div>`;
+ view.innerHTML=`<div class="creator-layout"><section class="card"><div class="form-grid"><input id="title" placeholder="${ui('Sermon title','Pamagat ng sermon')}"><input id="text" placeholder="${ui('Main Bible passage','Pangunahing talata')}"><input id="theme" placeholder="${ui('Central theme or main truth','Pangunahing tema o katotohanan')}"><input id="audience" placeholder="${ui('Audience or occasion','Tagapakinig o okasyon')}"><input class="wide" id="purpose" placeholder="${ui('Purpose or desired response','Layunin o nais na tugon')}"><label class="field-label wide">${ui('Message format','Uri ng mensahe')}<select id="depth"><option value="devotion">${ui('Devotional','Debosyonal')}</option><option value="short">${ui('Short Message','Maikling Mensahe')}</option><option value="standard">${ui('Standard Sermon','Karaniwang Sermon')}</option><option value="full" selected>${ui('Full Sermon','Buong Sermon')}</option><option value="extended">${ui('Extended Teaching','Mas Malalim na Pagtuturo')}</option></select></label><textarea class="wide sermon-notes" id="testimony" placeholder="${ui('Your personal testimony (optional)','Iyong personal na patotoo (optional)')}"></textarea><textarea class="wide sermon-notes" id="additional" placeholder="${ui('Additional notes, illustrations, local church application, or extra points','Karagdagang tala, illustrations, local church application, o extra points')}"></textarea><textarea class="wide sermon-notes" id="notes" placeholder="${ui('Speaker notes and delivery reminders','Speaker notes at delivery reminders')}"></textarea><div class="wide ai-assist-row"><button class="primary" id="sermonDraft">✨ ${ui('Create Sermon by Points','Gumawa ng Sermon ayon sa Points')}</button><button class="ghost" id="sermonPrompt">🤖 ${ui('Prepare Detailed AI Prompt','Ihanda ang Detalyadong AI Prompt')}</button><button class="ghost" id="sermonPpt">📊 ${ui('PowerPoint Outline','PowerPoint Outline')}</button><button class="ghost" id="sermonClear">${ui('Clear','Burahin')}</button></div><div class="notice small-note wide">${ui('Leave all fields blank for a fresh complete sermon. You can edit the whole message, add your testimony, and add extra notes before or after saving.','Iwanang blanko ang lahat para sa bagong kumpletong sermon. Maaari mong i-edit ang buong mensahe at idagdag ang patotoo at extra notes bago o pagkatapos i-save.')}</div></div></section><section class="card"><div class="draft-head"><h3>${ui('Editable Sermon Workspace','Editable Sermon Workspace')}</h3><span class="pill">${ui('Point-Based','Ayon sa Points')}</span></div><textarea id="body" class="draft-area sermon-draft-area" placeholder="${ui('Your sermon workspace will appear here...','Lalabas dito ang sermon workspace...')}"></textarea><div class="creator-buttons"><button class="primary" id="sermonSave">${ui('Save Sermon','I-save ang Sermon')}</button><button class="primary" id="sermonPresentDraft">🖥️ ${ui('Present Sermon','I-present ang Sermon')}</button><button class="ghost" id="sermonCopy">${ui('Copy Draft','Kopyahin ang Draft')}</button></div><div id="pptPanel" class="notice" style="display:none;margin-top:14px"><div class="draft-head"><h3>📊 ${ui('PowerPoint Slide Outline','PowerPoint Slide Outline')}</h3><span class="pill">${ui('Suggestion only','Suggestion lamang')}</span></div><textarea id="pptBody" class="draft-area" style="min-height:360px"></textarea><div class="creator-buttons"><button class="primary" id="pptCopy">${ui('Copy PowerPoint Outline','Kopyahin ang PowerPoint Outline')}</button></div></div></section></div><div class="entries sermon-entries">${saved}</div>`;
  const values=()=>({title:$('#title').value.trim(),text:$('#text').value.trim(),theme:$('#theme').value.trim(),audience:$('#audience').value.trim(),purpose:$('#purpose').value.trim(),depth:$('#depth').value,testimony:$('#testimony').value.trim(),additional:$('#additional').value.trim(),notes:$('#notes').value.trim(),body:$('#body').value.trim()});
  $('#sermonDraft').onclick=()=>{let v=values(),blank=!v.title&&!v.text&&!v.theme&&!v.audience&&!v.purpose&&!v.testimony&&!v.additional&&!v.notes,idea=blank?randomSermonIdea(arr):null,d=idea||simpleResourceDefaults('sermon',v);if(!v.title)$('#title').value=d.title;if(!v.text)$('#text').value=d.text||d.scripture;if(!v.theme)$('#theme').value=d.theme;if(!v.purpose&&d.purpose)$('#purpose').value=d.purpose;$('#body').value=completeSermonDraft({...values(),idea});toast(blank?ui('A fresh complete sermon was selected and created','Pumili at gumawa ng bagong kumpletong sermon'):ui('Complete sermon created','Nagawa ang kumpletong sermon'))};
  $('#sermonPrompt').onclick=async()=>{let v=values(),d=simpleResourceDefaults('sermon',v);if(!v.title)$('#title').value=d.title;if(!v.text)$('#text').value=d.scripture;if(!v.theme)$('#theme').value=d.theme;let prompt=sermonPrompt(values());$('#body').value=prompt;try{await navigator.clipboard.writeText(prompt)}catch{}toast(ui('Detailed AI prompt prepared and copied','Naihanda at nakopya ang detalyadong AI prompt'))};
@@ -909,8 +1038,9 @@ function sermon(){
  $('#pptCopy').onclick=async()=>{if(!$('#pptBody').value.trim())return;try{await navigator.clipboard.writeText($('#pptBody').value);toast(ui('PowerPoint outline copied','Nakopya ang PowerPoint outline'))}catch{toast(ui('Select the outline and copy it manually','Piliin ang outline at kopyahin nang manual'))}};
  $('#sermonClear').onclick=()=>{['title','text','theme','audience','purpose','testimony','additional','notes','body'].forEach(id=>$('#'+id).value='');$('#depth').value='full'};
  $('#sermonCopy').onclick=async()=>{if(!$('#body').value.trim())return toast(ui('Create or write a sermon first','Gumawa o sumulat muna ng sermon'));try{await navigator.clipboard.writeText($('#body').value);toast(ui('Sermon copied','Nakopya ang sermon'))}catch{toast(ui('Select the sermon and copy it manually','Piliin ang sermon at kopyahin nang manual'))}};
+ $('#sermonPresentDraft').onclick=()=>{const v=values();if(!v.body&&!v.title&&!v.text)return toast(ui('Create or write a sermon first','Gumawa o sumulat muna ng sermon'));startResourcePresentation({title:v.title||ui('Sermon','Sermon'),passage:v.text||'',body:[v.body,v.testimony,v.additional,v.notes].filter(Boolean).join('\n\n'),originPage:'sermon'})};
  $('#sermonSave').onclick=()=>{let x={date:new Date().toLocaleString(),...values()};if(!x.title){let d=simpleResourceDefaults('sermon',x);x.title=d.title;x.text=x.text||d.scripture;x.theme=x.theme||d.theme}if(!x.body){let idea=randomSermonIdea(arr);if(!x.title)x.title=idea.title;if(!x.text)x.text=idea.text;if(!x.theme)x.theme=idea.theme;x.body=completeSermonDraft({...x,idea})}arr.unshift(x);store.set('sermons',arr);sermon()};
- document.querySelectorAll('[data-present]').forEach(b=>b.onclick=async()=>{const i=+b.dataset.present,card=document.querySelector(`[data-sermon-card="${i}"]`);if(!card)return;document.body.classList.add('sermon-presentation-mode');document.querySelectorAll('[data-sermon-card]').forEach(c=>c.classList.toggle('sermon-presenting',c===card));const details=card.querySelector('details');if(details)details.open=true;let exit=document.createElement('button');exit.type='button';exit.id='exitSermonPresentation';exit.className='primary sermon-presentation-exit';exit.textContent='✕ '+ui('Exit Presentation','Isara ang Presentation');document.body.appendChild(exit);exit.onclick=()=>{document.body.classList.remove('sermon-presentation-mode');document.querySelectorAll('[data-sermon-card]').forEach(c=>c.classList.remove('sermon-presenting'));exit.remove();if(document.fullscreenElement)document.exitFullscreen().catch(()=>{})};try{if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen()}catch{}card.scrollIntoView({block:'start'});});
+ document.querySelectorAll('[data-present]').forEach(b=>b.onclick=()=>{const i=+b.dataset.present,x=arr[i];if(!x)return;startResourcePresentation({title:x.title||ui('Sermon','Sermon'),passage:x.text||'',body:[x.body,x.testimony,x.additional,x.notes].filter(Boolean).join('\n\n'),originPage:'sermon'})});
  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{if(confirm(ui('Delete this saved sermon?','Burahin ang saved sermon na ito?'))){arr.splice(+b.dataset.del,1);store.set('sermons',arr);sermon()}});
  document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>{const panel=$('#sermonEdit_'+b.dataset.edit);panel.hidden=false;panel.scrollIntoView({behavior:'smooth',block:'start'})});
  document.querySelectorAll('[data-cancel-edit]').forEach(b=>b.onclick=()=>{$('#sermonEdit_'+b.dataset.cancelEdit).hidden=true});
