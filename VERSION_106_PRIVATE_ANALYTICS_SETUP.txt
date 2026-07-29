@@ -1,0 +1,63 @@
+ANALYTICS STATUS: ACTIVATED FOR romerdemayo.github.io
+
+DE MAYO BIBLE STUDIES — VERSION 106
+PRIVATE CLOUDFLARE WEB ANALYTICS
+
+WHAT THIS VERSION DOES
+----------------------
+• Adds support for free Cloudflare Web Analytics.
+• Analytics are visible only inside Romer's Cloudflare account.
+• No public visitor counter is shown in the app.
+• Analytics do not run during offline file testing.
+• Analytics remain disabled until a real Cloudflare token is added.
+• Existing notes, prayers, favourites, highlights, plans and settings are untouched.
+
+WHAT CLOUDFLARE CAN SHOW
+------------------------
+• Visitors and page views
+• Countries/regions
+• Device and browser categories
+• Referring websites
+• Popular URLs and usage trends
+• Website performance information
+
+IMPORTANT LIMITATION
+--------------------
+Cloudflare Web Analytics does not currently support custom app events.
+It can measure visits and page views, but it cannot directly count actions
+such as "Presentation started" or "Prayer added" using custom events.
+
+FREE PRIVATE SETUP
+------------------
+1. Go to Cloudflare and create a free account.
+2. In the Cloudflare dashboard, open Web Analytics.
+3. Select Add a site.
+4. Enter the hostname:
+      romerdemayo.github.io
+5. Open Manage site and copy the JavaScript snippet Cloudflare provides.
+6. Inside that snippet, locate the token value.
+7. Open analytics-config.js in this Version 106 folder.
+8. Replace:
+      e7206f8725674a47be161746576c305b
+   with your real token, keeping the quotation marks.
+9. Save the file and upload all Version 106 files to GitHub.
+10. Visit the live app once, then check Cloudflare Web Analytics.
+
+EXAMPLE ONLY
+------------
+Before:
+  token: 'e7206f8725674a47be161746576c305b'
+
+After:
+  token: 'your-real-token-from-cloudflare'
+
+PRIVACY
+-------
+The Cloudflare beacon does not receive the user's locally saved Bible notes,
+prayers, favourites, highlights, reading-plan records, generated lessons,
+email address, or name from this app.
+
+OFFLINE TESTING
+---------------
+Opening index.html directly from a downloaded folder will not send analytics.
+Analytics activate only on the configured live GitHub hostname over HTTP/HTTPS.
