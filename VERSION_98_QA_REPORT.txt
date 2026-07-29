@@ -1,0 +1,17 @@
+DE MAYO BIBLE STUDIES — VERSION 98 SCRIPTURE LINK QA
+
+Files scanned: 95
+Valid Scripture references detected: 478 occurrences / 247 unique
+Invalid or out-of-range detected references: 0
+
+Checks completed:
+- Canonical 66-book names
+- Psalm/Psalms and Song of Songs/Song of Solomon aliases
+- Common Bible book abbreviations
+- Numbered books such as 1 John and 2 Corinthians
+- Chapter-only references
+- Single verses and verse ranges
+- Chapter and verse bounds against the bundled WEB Bible
+- Shared clickable-reference parser used by normal pages and Presentation Mode
+
+RESULT: No invalid detected Scripture references remain in the bundled app content.

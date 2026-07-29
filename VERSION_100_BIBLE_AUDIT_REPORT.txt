@@ -1,0 +1,23 @@
+VERSION 100 COMPLETE BIBLE AUDIT REPORT
+Generated: 2026-07-29
+Translation: World English Bible (WEB)
+Books: 66
+Expected chapters from metadata: 1189
+Actual chapters: 1189
+Verse records: 31102
+Duplicate verse keys: 0
+Missing chapters / sequence issues: 0
+Records containing section-heading markers: 117
+Empty translation placeholders: 7
+Required application files present: YES
+
+Empty translation placeholders preserved and labelled by the app:
+- Luke 17 36
+- Acts 8 37
+- Acts 15 34
+- Acts 24 7
+- Romans 16 25
+- Romans 16 26
+- Romans 16 27
+
+RESULT: PASS
