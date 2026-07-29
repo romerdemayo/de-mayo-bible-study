@@ -8,7 +8,7 @@ const store={get:(k,d=[])=>{try{return JSON.parse(localStorage.getItem('dm_'+k)|
 const I18N={
  en:{code:'EN',html:'en',
   navGroups:['Bible','Public Library','My Resources','Ministry Tools','Settings'],
-  pages:{home:'⌂ Home',read:'📖 Read Bible',search:'🔎 Search',devotionals:'🌅 Devotionals',exhortations:'🎤 Exhortations',studies:'📚 Bible Studies',kidslibrary:'👧 Kids Lessons',prayerlibrary:'🙏 Prayer Library',favourites:'★ Favourites',highlights:'🖍 Highlights',verseNotes:'🗒 Verse Notes',notes:'📝 Bible Study Creator',prayer:'🙏 Prayer Creator',myresources:'📁 Created Resources',sermon:'🎤 Sermon Studio',kids:'🧒 Kids Ministry Studio',reading:'📅 Chapter Tracker',plans:'🗓 Guided Reading Plans',salvation:'❤️ Salvation Guide',characters:'👥 Bible Characters',dictionary:'📘 Bible Dictionary',creator:'✨ Create Resource',support:'❤️ Support the Ministry',feedback:'💬 Feedback & Contact',help:'❓ Help & User Guide',about:'ℹ️ About & Copyright',backup:'🔒 Backup & Restore'},
+  pages:{home:'⌂ Home',read:'📖 Read Bible',search:'🔎 Search',devotionals:'🌅 Devotionals',exhortations:'🎤 Exhortations',studies:'📚 Bible Studies',kidslibrary:'👧 Kids Lessons',prayerlibrary:'🙏 Prayer Library',favourites:'★ Favourites',highlights:'🖍 Highlights',verseNotes:'🗒 Verse Notes',notes:'📝 Bible Study Creator',prayer:'🙏 Prayer Creator',myresources:'📁 Created Resources',sermon:'🎤 Sermon Studio',kids:'🧒 Kids Ministry Studio',reading:'📅 Chapter Tracker',plans:'🗓 Guided Reading Plans',salvation:'❤️ Salvation Guide',characters:'👥 Bible Characters',dictionary:'📘 Bible Dictionary',creator:'✨ Create Resource',support:'❤️ Support the Ministry',feedback:'💬 Feedback & Contact',help:'❓ Help & User Guide',about:'ℹ️ About & Copyright',analytics:'📊 Ministry Insights',backup:'🔒 Backup & Restore'},
   mobile:{home:'Home',read:'Read',search:'Search',prayer:'Prayer',more:'More'},
   footer:'Easy-English WEB Bible',privacy:'Your personal content stays on this device.',
   homeTitle:'Home',homeSub:'Read, study, pray, and prepare.',
@@ -16,7 +16,7 @@ const I18N={
   switched:'Language changed to English'},
  tl:{code:'TL',html:'tl',
   navGroups:['Bibliya','Pampublikong Aklatan','Aking mga Materyales','Mga Gamit sa Ministeryo','Mga Setting'],
-  pages:{home:'⌂ Tahanan',read:'📖 Basahin ang Bibliya',search:'🔎 Maghanap',devotionals:'🌅 Mga Debosyonal',exhortations:'🎤 Mga Exhortation',studies:'📚 Pag-aaral ng Bibliya',kidslibrary:'👧 Aralin para sa Bata',prayerlibrary:'🙏 Aklatan ng Panalangin',favourites:'★ Mga Paborito',highlights:'🖍 Mga Highlight',verseNotes:'🗒 Tala sa Talata',notes:'📝 Gumawa ng Bible Study',prayer:'🙏 Prayer Creator',myresources:'📁 Ginawang Materyales',sermon:'🎤 Sermon Studio',kids:'🧒 Kids Ministry Studio',reading:'📅 Talaan ng Kabanata',plans:'🗓 Mga Gabay sa Pagbasa',salvation:'❤️ Gabay sa Kaligtasan',characters:'👥 Mga Tauhan sa Bibliya',dictionary:'📘 Diksyunaryo ng Bibliya',creator:'✨ Gumawa ng Materyales',support:'❤️ Suportahan ang Ministeryo',feedback:'💬 Feedback at Contact',help:'❓ Tulong at Gabay',about:'ℹ️ Tungkol at Copyright',backup:'🔒 Backup at Restore'},
+  pages:{home:'⌂ Tahanan',read:'📖 Basahin ang Bibliya',search:'🔎 Maghanap',devotionals:'🌅 Mga Debosyonal',exhortations:'🎤 Mga Exhortation',studies:'📚 Pag-aaral ng Bibliya',kidslibrary:'👧 Aralin para sa Bata',prayerlibrary:'🙏 Aklatan ng Panalangin',favourites:'★ Mga Paborito',highlights:'🖍 Mga Highlight',verseNotes:'🗒 Tala sa Talata',notes:'📝 Gumawa ng Bible Study',prayer:'🙏 Prayer Creator',myresources:'📁 Ginawang Materyales',sermon:'🎤 Sermon Studio',kids:'🧒 Kids Ministry Studio',reading:'📅 Talaan ng Kabanata',plans:'🗓 Mga Gabay sa Pagbasa',salvation:'❤️ Gabay sa Kaligtasan',characters:'👥 Mga Tauhan sa Bibliya',dictionary:'📘 Diksyunaryo ng Bibliya',creator:'✨ Gumawa ng Materyales',support:'❤️ Suportahan ang Ministeryo',feedback:'💬 Feedback at Contact',help:'❓ Tulong at Gabay',about:'ℹ️ Tungkol at Copyright',analytics:'📊 Ministry Insights',backup:'🔒 Backup at Restore'},
   mobile:{home:'Tahanan',read:'Basahin',search:'Hanapin',prayer:'Panalangin',more:'Iba pa'},
   footer:'Ang Dating Biblia (1905)',privacy:'Ang personal mong nilalaman ay nananatili sa device na ito.',
   homeTitle:'Tahanan',homeSub:'Magbasa, mag-aral, manalangin, at maghanda.',
@@ -42,7 +42,7 @@ const navGroups=[
  ['Public Library',[['devotionals','🌅 Devotionals'],['exhortations','🎤 Exhortations'],['studies','📚 Bible Studies'],['kidslibrary','👧 Kids Lessons'],['prayerlibrary','🙏 Prayer Library']]],
  ['My Resources',[['favourites','★ Favourites'],['highlights','🖍 Highlights'],['verseNotes','🗒 Verse Notes'],['notes','📝 Bible Study Creator'],['prayer','🙏 Prayer Creator'],['myresources','📁 Created Resources']]],
  ['Ministry Tools',[['sermon','🎤 Sermon Studio'],['kids','🧒 Kids Ministry Studio'],['reading','📅 Chapter Tracker'],['plans','🗓 Guided Reading Plans'],['salvation','❤️ Salvation Guide'],['characters','👥 Bible Characters'],['dictionary','📘 Bible Dictionary'],['creator','✨ Create Resource']]],
- ['Settings',[['support','❤️ Support the Ministry'],['feedback','💬 Feedback & Contact'],['help','❓ Help & User Guide'],['about','ℹ️ About & Copyright'],['backup','🔒 Backup & Restore']]]
+ ['Settings',[['support','❤️ Support the Ministry'],['feedback','💬 Feedback & Contact'],['help','❓ Help & User Guide'],['about','ℹ️ About & Copyright'],['analytics','📊 Ministry Insights'],['backup','🔒 Backup & Restore']]]
 ];
 const pages=navGroups.flatMap(g=>g[1]);
 const internalPages=['resource'];
@@ -407,7 +407,35 @@ function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show'
 function closeMenu(){const side=$('#sidebar'),overlay=$('#sidebarOverlay'),menu=$('#menu');side.classList.remove('open');overlay.classList.remove('open');document.body.classList.remove('menu-open');menu.setAttribute('aria-expanded','false')}
 function openMenu(){const side=$('#sidebar'),overlay=$('#sidebarOverlay'),menu=$('#menu');side.classList.add('open');overlay.classList.add('open');document.body.classList.add('menu-open');menu.setAttribute('aria-expanded','true')}
 function toggleMenu(){const open=$('#sidebar').classList.contains('open');open?closeMenu():openMenu()}
-function route(p,updateHash=true){if(!validPages.has(p))p='home';if(p!==state.page)state.previousPage=state.page||'home';state.page=p;document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===p));closeMenu();if(updateHash&&location.hash!==`#${p}`)history.pushState(null,'',`#${p}`);render();const back=$('#pageBack');if(back)back.hidden=p==='home';view.classList.remove('page-enter');void view.offsetWidth;view.classList.add('page-enter');window.scrollTo({top:0,behavior:'smooth'})}
+
+const ANALYTICS_KEY='ministryInsightsV107';
+function analyticsData(){return store.get(ANALYTICS_KEY,{started:new Date().toISOString(),pageViews:{},daily:{},features:{},chapters:{},sessions:0,lastSession:''})}
+function saveAnalytics(a){store.set(ANALYTICS_KEY,a)}
+function analyticsDay(){return new Date().toISOString().slice(0,10)}
+function recordInsight(type,name){
+ const a=analyticsData(),day=analyticsDay();
+ a.daily[day]=(a.daily[day]||0)+1;
+ if(type==='page')a.pageViews[name]=(a.pageViews[name]||0)+1;
+ if(type==='feature')a.features[name]=(a.features[name]||0)+1;
+ if(type==='chapter')a.chapters[name]=(a.chapters[name]||0)+1;
+ const sessionKey=day+'-'+Math.floor(Date.now()/1800000);
+ if(a.lastSession!==sessionKey){a.sessions=(a.sessions||0)+1;a.lastSession=sessionKey}
+ saveAnalytics(a);
+}
+function topInsight(obj,limit=6){return Object.entries(obj||{}).sort((a,b)=>b[1]-a[1]).slice(0,limit)}
+function insightBars(items,total){return items.length?items.map(([name,count])=>`<div class="insight-row"><div><b>${esc(name)}</b><span>${count}</span></div><div class="insight-bar"><i style="width:${Math.max(5,Math.round(count/Math.max(1,total)*100))}%"></i></div></div>`).join(''):`<p class="empty-state">${ui('No activity recorded on this device yet.','Wala pang naitalang activity sa device na ito.')}</p>`}
+function ministryInsights(){
+ title(ui('Ministry Insights','Ministry Insights'),ui('Private activity dashboard for this device, with quick access to Cloudflare Web Analytics.','Pribadong activity dashboard para sa device na ito, kasama ang mabilis na access sa Cloudflare Web Analytics.'));
+ const a=analyticsData(),views=Object.values(a.pageViews||{}).reduce((x,y)=>x+y,0),features=Object.values(a.features||{}).reduce((x,y)=>x+y,0),chapters=Object.values(a.chapters||{}).reduce((x,y)=>x+y,0);
+ const days=Object.entries(a.daily||{}).sort().slice(-7),maxDay=Math.max(1,...days.map(x=>x[1]));
+ const dayBars=days.length?days.map(([d,n])=>`<div class="day-column"><b>${n}</b><i style="height:${Math.max(8,Math.round(n/maxDay*100))}%"></i><span>${new Date(d+'T00:00:00').toLocaleDateString('en-NZ',{weekday:'short'})}</span></div>`).join(''):`<p class="empty-state">${ui('Your seven-day chart will appear after the app is used.','Lalabas ang seven-day chart kapag nagamit na ang app.')}</p>`;
+ view.innerHTML=`<section class="insights-notice card"><div><span class="pill">PRIVATE ON THIS DEVICE</span><h2>📊 ${ui('Ministry Insights','Ministry Insights')}</h2><p>${ui('This dashboard shows anonymous feature activity saved only in this browser. Cloudflare provides the overall visitors, countries, devices, and page views for your public website.','Ipinapakita ng dashboard na ito ang anonymous feature activity na naka-save lamang sa browser na ito. Ang Cloudflare ang nagpapakita ng kabuuang visitors, countries, devices, at page views ng website.')}</p></div><a class="primary button-link" href="https://dash.cloudflare.com/" target="_blank" rel="noopener">☁️ ${ui('Open Cloudflare Analytics','Buksan ang Cloudflare Analytics')}</a></section>
+ <section class="insight-stats"><article class="card"><span>👁️</span><b>${views}</b><small>${ui('app page opens','app page opens')}</small></article><article class="card"><span>⚡</span><b>${features}</b><small>${ui('feature uses','feature uses')}</small></article><article class="card"><span>📖</span><b>${chapters}</b><small>${ui('chapters opened','chapters opened')}</small></article><article class="card"><span>🕒</span><b>${a.sessions||0}</b><small>${ui('local sessions','local sessions')}</small></article></section>
+ <section class="insight-grid"><article class="card"><h3>${ui('Last 7 days','Huling 7 araw')}</h3><div class="day-chart">${dayBars}</div></article><article class="card"><h3>${ui('Most-used sections','Pinakaginagamit na sections')}</h3>${insightBars(topInsight(a.pageViews),Math.max(1,views))}</article><article class="card"><h3>${ui('Popular features','Popular na features')}</h3>${insightBars(topInsight(a.features),Math.max(1,features))}</article><article class="card"><h3>${ui('Most-opened chapters','Pinakamadalas buksang chapters')}</h3>${insightBars(topInsight(a.chapters),Math.max(1,chapters))}</article></section>
+ <section class="card privacy-panel"><h3>🔒 ${ui('What stays private','Ano ang nananatiling pribado')}</h3><p>${ui('No names, emails, prayers, notes, favourites, or verse text are recorded here. This local dashboard cannot show all visitors across different devices; use the Cloudflare button above for the complete website totals.','Walang pangalan, email, panalangin, notes, favourites, o verse text na nire-record dito. Hindi makikita ng local dashboard na ito ang lahat ng visitors mula sa iba’t ibang device; gamitin ang Cloudflare button sa itaas para sa kumpletong website totals.')}</p><button class="ghost" id="resetInsights">${ui('Reset this device’s insights','I-reset ang insights ng device na ito')}</button></section>`;
+ $('#resetInsights').onclick=()=>{if(confirm(ui('Reset the anonymous activity saved on this device?','I-reset ang anonymous activity na naka-save sa device na ito?'))){localStorage.removeItem('dm_'+ANALYTICS_KEY);ministryInsights();toast(ui('Insights reset','Na-reset ang insights'))}};
+}
+function route(p,updateHash=true){if(!validPages.has(p))p='home';if(p!==state.page)state.previousPage=state.page||'home';state.page=p;recordInsight('page',p);if(p==='read')recordInsight('chapter',state.book+' '+state.chapter);if(['search','devotionals','exhortations','studies','kidslibrary','prayerlibrary','sermon','kids','plans','creator'].includes(p))recordInsight('feature',p);document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===p));closeMenu();if(updateHash&&location.hash!==`#${p}`)history.pushState(null,'',`#${p}`);render();const back=$('#pageBack');if(back)back.hidden=p==='home';view.classList.remove('page-enter');void view.offsetWidth;view.classList.add('page-enter');window.scrollTo({top:0,behavior:'smooth'})}
 function goBack(){const target=state.previousPage&&state.previousPage!==state.page?state.previousPage:'home';route(target)}
 buildNavigation();
 $('#menu').onclick=toggleMenu;
@@ -2168,5 +2196,5 @@ function about(){
  </section>`;
 }
 
-function render(){({home,read,search,devotionals,exhortations,studies,kidslibrary,prayerlibrary,resource,creator,myresources,favourites,highlights:highlightsPage,verseNotes,notes,prayer,sermon,kids,reading,plans:guidedPlans,salvation:salvationGuide,characters:charactersPage,dictionary:dictionaryPage,support,feedback,help,about,backup}[state.page]||home)()}
+function render(){({home,read,search,devotionals,exhortations,studies,kidslibrary,prayerlibrary,resource,creator,myresources,favourites,highlights:highlightsPage,verseNotes,notes,prayer,sermon,kids,reading,plans:guidedPlans,salvation:salvationGuide,characters:charactersPage,dictionary:dictionaryPage,support,feedback,help,about,analytics:ministryInsights,backup}[state.page]||home)()}
 route(location.hash.slice(1)||'home',false);

@@ -1,5 +1,5 @@
 /* De Mayo Bible Ministry | Version 86 Bilingual Responsive Presentations */
-const CACHE='de-mayo-bible-v106-private-cloudflare-analytics';
+const CACHE='de-mayo-bible-v107-ministry-insights';
 const OFFLINE_URL = './index.html';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./bible-data.js','./analytics-config.js','./analytics-loader.js',
