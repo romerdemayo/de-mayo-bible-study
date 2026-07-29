@@ -100,8 +100,8 @@ function presentationBodyHtml(text=''){
  return html;
 }
 let activePresentationSnapshot=null;
-const PRESENTATION_SESSION_KEY='dm_active_presentation_v85';
-const PRESENTATION_RETURN_KEY='presentationReturnPayloadV85';
+const PRESENTATION_SESSION_KEY='dm_active_presentation_v94';
+const PRESENTATION_RETURN_KEY='presentationReturnPayloadV94';
 let pendingPresentationReturn=null;
 function savePresentationReturn(snapshot){
  const payload=snapshot?{...snapshot,active:true}:null;
@@ -131,9 +131,97 @@ function presentationOriginPage(explicit=''){
  if(state.page==='resource'&&valid.has(state.previousPage))return state.previousPage;
  return valid.has(state.page)?state.page:'home';
 }
-function startResourcePresentation({title='',passage='',body='',image='',html='',restoreScroll=0,originPage=''}){
+
+function presentationLanguageOptions(language=appLanguage){const selected=language==='tl'?'tl':'en';return `<label class="presentation-language-control"><span>${ui('Language','Wika')}</span><select id="presentationLanguage" aria-label="${ui('Presentation language','Wika ng presentation')}"><option value="en" ${selected==='en'?'selected':''}>English</option><option value="tl" ${selected==='tl'?'selected':''}>Tagalog</option></select></label>`}
+function builtInSource(kind,index,language=appLanguage){
+ const sets={devotional:window.DEVOTIONALS||DEVOTIONALS,exhortation:window.EXHORTATIONS||EXHORTATIONS,study:window.BIBLE_STUDIES||BIBLE_STUDIES,kids:window.KIDS_LESSONS||KIDS_LESSONS};
+ const i=Number(index);
+ const raw=Number.isFinite(i)?sets[kind]?.[i]:null;
+ if(!raw)return null;
+ // Use the same direct bilingual-source method as Devotionals for every built-in presentation.
+ const localized=language==='tl'&&raw.tl?{...raw,...raw.tl}:raw;
+ const over=resourceOverrides()[kind+':'+i+':'+language];
+ return over?{...localized,...over}:localized;
+}
+function presentationResourceText(kind,x,language=appLanguage){
+ if(!x)return {title:'',passage:'',body:''};
+ const previousLanguage=appLanguage;
+ appLanguage=language==='tl'?'tl':'en';
+ const rows=[]; const add=(heading,value)=>{if(value==null||value==='')return;rows.push(String(heading).toUpperCase());if(Array.isArray(value)){value.forEach(v=>rows.push(Array.isArray(v)?v.join(' — '):String(v)))}else rows.push(String(value));rows.push('')};
+ if(kind==='devotional'){add(ui('Reflection','Pagninilay'),x.reflection);add(ui('Application','Aplikasyon'),x.application);add(ui('Reflection Questions','Mga Tanong sa Pagninilay'),x.questions);add(ui('Prayer','Panalangin'),x.prayer);add(ui('Memory Verse','Talatang Isasaulo'),x.memory);add(ui('Suggested Reading','Iminungkahing Pagbasa'),x.reading)}
+ else if(kind==='exhortation'){add(ui('Introduction','Panimula'),x.intro);add(ui('Teaching Points','Mga Punto ng Pagtuturo'),x.points);add(ui('Supporting Scriptures','Mga Kaugnay na Talata'),x.support);add(ui('Application','Aplikasyon'),x.application);add(ui('Challenge','Hamon'),x.challenge);add(ui('Prayer','Panalangin'),x.prayer)}
+ else if(kind==='study'){add(ui('Objective','Layunin'),x.objective);add(ui('Background and Context','Konteksto'),x.background);add(ui('Discussion Questions','Mga Tanong sa Talakayan'),x.questions);add(ui('Leader Notes','Tala para sa Leader'),x.leader_notes);add(ui('Application','Aplikasyon'),x.application);add(ui('Prayer','Panalangin'),x.prayer)}
+ else if(kind==='kids'){add(ui('Lesson Truth','Katotohanan ng Aralin'),x.lesson);add(ui('Opening Prayer','Pambungad na Panalangin'),x.opening_prayer);add(ui('Bible Story','Kuwento sa Biblia'),x.story_guide||x.story);add(ui('Teaching Points','Mga Punto ng Pagtuturo'),x.points);add(ui('Questions','Mga Tanong'),x.questions);add(ui('Memory Verse','Talatang Isasaulo'),x.memory);add(ui('Activity','Gawain'),x.activity);add(ui('Closing Prayer','Pangwakas na Panalangin'),x.closing_prayer)}
+ const result={title:x.title||'',passage:x.scripture||x.passage||x.main||x.story||'',body:rows.join('\n')};
+ appLanguage=previousLanguage;
+ return result;
+}
+function builtInPresentationVariants(kind,index){
+ const enSource=builtInSource(kind,index,'en');
+ const tlSource=builtInSource(kind,index,'tl');
+ return {
+  en:enSource?presentationResourceText(kind,enSource,'en'):null,
+  tl:tlSource?presentationResourceText(kind,tlSource,'tl'):null
+ };
+}
+async function changePresentationLanguage(code){
+ const overlay=document.getElementById('resourcePresentationOverlay');
+ const snapshot=overlay?._presentationSnapshot||getPresentationSnapshot()||getPresentationReturn();
+ if(!snapshot)return;
+ const requestedLanguage=code==='tl'?'tl':'en';
+ const previousLanguage=appLanguage;
+
+ // Read Bible needs the actual Tagalog Bible dataset. A brand-new offline copy cannot
+ // switch to Tagalog until that dataset has been downloaded once.
+ if(requestedLanguage==='tl'&&snapshot.presentationType==='bibleChapter'&&!window.TAGALOG_VERSES){
+  try{await window.DM_TAGALOG_BIBLE.load()}
+  catch(e){
+   if(overlay?.querySelector('#presentationLanguage'))overlay.querySelector('#presentationLanguage').value=previousLanguage;
+   toast(previousLanguage==='tl'?'Hindi available offline ang Tagalog Bible sa unang paggamit. Kumonekta sa internet nang isang beses.':'Tagalog Bible is not available in a brand-new offline copy. Connect once to download it.');
+   return;
+  }
+ }
+
+ appLanguage=requestedLanguage;
+ store.set('language',appLanguage);
+ buildNavigation();
+ const scrollTop=overlay?.scrollTop||snapshot.scrollTop||0;
+ let next={...snapshot,language:appLanguage,scrollTop};
+
+ if(snapshot.presentationType==='bibleChapter'){
+  const verses=activeVerses().filter(v=>(v.b||v.book)===snapshot.book&&Number(v.c||v.chapter)===Number(snapshot.chapter));
+  next={...next,title:`${snapshot.book} ${snapshot.chapter}`,html:`<div class="bible-chapter-presentation">${verses.map(v=>`<p class="presentation-bible-verse${Number(snapshot.focusVerse)===Number(v.v)?' reference-focus':''}"><sup>${v.v}</sup> ${esc(v.x)}</p>`).join('')}</div>`,body:''};
+ }else if(snapshot.source?.type==='builtIn'){
+  // Rebuild from the exact same bilingual source used by the normal resource page.
+  // This avoids stale/copy-only presentation HTML.
+  const sets={devotional:window.DEVOTIONALS||DEVOTIONALS,exhortation:window.EXHORTATIONS||EXHORTATIONS,study:window.BIBLE_STUDIES||BIBLE_STUDIES,kids:window.KIDS_LESSONS||KIDS_LESSONS};
+  const raw=sets[snapshot.source.kind]?.[Number(snapshot.source.index)];
+  if(raw){
+   let localized=requestedLanguage==='tl'&&raw.tl?{...raw,...raw.tl}:{...raw};
+   const langOverride=resourceOverrides()[snapshot.source.kind+':'+Number(snapshot.source.index)+':'+requestedLanguage];
+   const generalOverride=resourceOverrides()[resourceKey(snapshot.source.kind,Number(snapshot.source.index))];
+   if(generalOverride)localized={...localized,...generalOverride};
+   if(langOverride)localized={...localized,...langOverride};
+   const data=presentationResourceText(snapshot.source.kind,localized,requestedLanguage);
+   next={...next,title:data.title||localized.title||'',passage:data.passage||localized.scripture||localized.passage||localized.main||localized.story||'',body:data.body||'',html:'',image:snapshot.source.kind==='kids'?(localized.image||snapshot.image||''):snapshot.image};
+  }
+ }else if(snapshot.variants?.[requestedLanguage]){
+  const variant=snapshot.variants[requestedLanguage];
+  next={...next,title:variant.title||'',passage:variant.passage||'',body:variant.body||'',html:variant.html||'',image:variant.image||snapshot.image||''};
+ }else{
+  // Custom resources and Sermon Studio have only the language the user wrote.
+  // Keep the authored text visible and change the presentation controls/Bible language.
+  const authoredNote=snapshot.source?.type==='sermonStudio'||snapshot.source?.type==='savedSermon'
+   ? (requestedLanguage==='tl'?'\n\nPAALALA: Ang sermon text ay nananatili sa wikang ginamit noong ito ay ginawa. Gumawa o mag-save ng hiwalay na Tagalog sermon para sa buong Tagalog presentation.':'\n\nNOTE: The sermon text remains in the language used when it was created. Create or save a separate English sermon for a fully English presentation.')
+   : '';
+  next={...next,title:snapshot.title||'',passage:snapshot.passage||'',body:(snapshot.body||'')+authoredNote,html:snapshot.html||''};
+ }
+ startResourcePresentation(next);
+}
+
+function startResourcePresentation({title='',passage='',body='',image='',html='',restoreScroll=0,originPage='',source=null,presentationType='',book='',chapter=0,focusVerse=0,language=appLanguage,variants=null}){
  document.getElementById('resourcePresentationOverlay')?.remove();
- const initialSnapshot={title,passage,body,image,html,scrollTop:Number(restoreScroll)||0,originPage:presentationOriginPage(originPage)};
+ const initialSnapshot={title,passage,body,image,html,scrollTop:Number(restoreScroll)||0,originPage:presentationOriginPage(originPage),source,presentationType,book,chapter,focusVerse,language,variants};
  savePresentationSnapshot(initialSnapshot);
  pendingPresentationReturn={...initialSnapshot,active:true};
  const overlay=document.createElement('section');
@@ -143,11 +231,11 @@ function startResourcePresentation({title='',passage='',body='',image='',html=''
  overlay.setAttribute('aria-modal','true');
  overlay._presentationSnapshot=initialSnapshot;
  overlay.dataset.presentationActive='true';
- overlay.innerHTML=`<div class="presentation-toolbar"><button type="button" class="primary" id="exitResourcePresentation">✕ ${ui('Exit Presentation','Isara ang Presentation')}</button></div><article class="presentation-document">${image?`<img class="presentation-hero" src="${esc(image)}" alt="${esc(title||ui('Lesson illustration','Larawan ng aralin'))}">`:''}${title?`<h1>${esc(title)}</h1>`:''}${passage?`<div class="presentation-passage">${scriptureLink(passage)}</div>`:''}<div class="presentation-content">${html||presentationBodyHtml(body)}</div></article>`;
+ overlay.innerHTML=`<div class="presentation-toolbar">${presentationLanguageOptions(language)}<button type="button" class="primary" id="exitResourcePresentation">✕ ${ui('Exit Presentation','Isara ang Presentation')}</button></div><article class="presentation-document">${image?`<img class="presentation-hero" src="${esc(image)}" alt="${esc(title||ui('Lesson illustration','Larawan ng aralin'))}">`:''}${title?`<h1>${esc(title)}</h1>`:''}${passage?`<div class="presentation-passage">${scriptureLink(passage)}</div>`:''}<div class="presentation-content">${html||presentationBodyHtml(body)}</div></article>`;
  document.body.appendChild(overlay);
  document.body.classList.add('resource-presentation-active');
  const close=()=>{const destination=initialSnapshot.originPage||'home';overlay.remove();document.body.classList.remove('resource-presentation-active');clearPresentationSnapshot();clearPresentationReturn();store.set('returnToPresentation',false);store.set('returnToResource',false);if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});route(destination)};
- overlay.querySelector('#exitResourcePresentation').onclick=close;
+ overlay.querySelector('#exitResourcePresentation').onclick=close;overlay.querySelector('#presentationLanguage').onchange=e=>changePresentationLanguage(e.target.value);
  overlay.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
  makePresentationScripturesClickable(overlay);
  try{if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(()=>{})}catch{}
@@ -336,7 +424,7 @@ function presentCurrentBibleChapter(){
  const verses=activeVerses().filter(x=>x.b===state.book&&x.c===state.chapter);
  const chapterTitle=`${state.book} ${state.chapter}`;
  const html=`<div class="bible-chapter-presentation">${verses.map(v=>`<p class="presentation-bible-verse${state.focusVerse===v.v?' reference-focus':''}"><sup>${v.v}</sup> ${esc(v.x)}</p>`).join('')}</div>`;
- startResourcePresentation({title:chapterTitle,html,originPage:'read'});
+ startResourcePresentation({title:chapterTitle,html,originPage:'read',presentationType:'bibleChapter',book:state.book,chapter:state.chapter,focusVerse:state.focusVerse||0});
 }
 async function read(){
  title(ui('Read Bible','Basahin ang Bibliya'),ui('Tap a verse for highlight, note, or favourite options.','I-tap ang talata upang i-highlight, lagyan ng tala, o gawing paborito.'));
@@ -848,6 +936,118 @@ SUGGESTED LEARNINGS / NEXT STUDY
 SPEAKER NOTES
 ${n}`}
 
+
+function sermonPresentationVariant(data,language){
+ const previous=appLanguage;
+ appLanguage=language==='tl'?'tl':'en';
+ // Sermons are generated teaching content, not Bible text. Re-create the sermon
+ // from its saved structure in the selected language instead of merely changing labels.
+ let body='';
+ try{body=sermonDraft({...data})}catch{body=data.body||''}
+ const personal=[];
+ if(data.testimony)personal.push((language==='tl'?'PERSONAL NA PATOTOO':'PERSONAL TESTIMONY')+'\n'+data.testimony);
+ if(data.additional)personal.push((language==='tl'?'KARAGDAGANG TALA':'ADDITIONAL NOTES')+'\n'+data.additional);
+ if(data.notes)personal.push((language==='tl'?'SPEAKER NOTES':'SPEAKER NOTES')+'\n'+data.notes);
+ const result={title:data.title||ui('Sermon','Sermon'),passage:data.text||'',body:[body,...personal].filter(Boolean).join('\n\n')};
+ appLanguage=previous;
+ return result;
+}
+function sermonPresentationVariants(data){return {en:sermonPresentationVariant(data,'en'),tl:sermonPresentationVariant(data,'tl')}}
+
+function generatedStudyPresentationVariant(data,language){
+ const tl=language==='tl';
+ const title=data.title||data.topic||(tl?'Pag-aaral ng Biblia':'Bible Study');
+ const passage=data.scripture||data.passage||data.main||'';
+ const audience=data.audience||(tl?'Lahat':'Everyone');
+ const body=tl?`PAMAGAT: ${title}
+PANGUNAHING TALATA: ${passage}
+TAGAPAKINIG: ${audience}
+
+LAYUNIN
+Maunawaan ang itinuturo ng talata tungkol sa Diyos, sa tao, sa pananampalataya, at sa tapat na pamumuhay, at pagkatapos ay pumili ng malinaw na personal at panggrupong tugon.
+
+BACKGROUND AT CONTEXT
+Basahin ang mga talata bago at pagkatapos ng ${passage}. Tukuyin ang aklat, may-akda, unang audience, at sitwasyong tinutugunan upang manatiling tapat sa konteksto ang pag-aaral.
+
+OBSERVATION
+1. Ano ang nangyayari o itinuturo sa passage?
+2. Anong mga salita o ideya ang inuulit?
+3. Anong mga utos, pangako, babala, contrast, o halimbawa ang makikita?
+
+PANGUNAHING PUNTOS
+1. Ipinapakita ng Diyos ang Kanyang character at layunin.
+2. Inilalantad ng Kasulatan ang kalagayan at pangangailangan ng puso ng tao.
+3. Ang pananampalataya ay tumutugon sa pamamagitan ng pagtitiwala, pagsisisi, pagsamba, at pagsunod.
+
+MGA KAUGNAY NA TALATA
+Awit 119:105; Roma 12:1–2; 2 Timoteo 3:16–17; Santiago 1:22–25
+
+MGA TANONG SA TALAKAYAN
+1. Ano ang pangunahing mensahe ng passage?
+2. Ano ang ipinapakita nito tungkol sa Diyos?
+3. Ano ang ipinapakita nito tungkol sa tao?
+4. May utos bang susundin, pangakong pagtitiwalaan, kasalanang iiwasan, o halimbawang tutularan?
+5. Paano ito konektado kay Jesus at sa ebanghelyo?
+6. Paano maisasabuhay ng grupo ang katotohanang ito ngayong linggo?
+
+APLIKASYON
+Isulat ang isang katotohanang paniniwalaan, isang ugaling babaguhin, isang taong hihikayatin, at isang gawain na gagawin ngayong linggo.
+
+TALA PARA SA LEADER
+Hayaan munang magbahagi ang ilan bago ibigay ang suggested answer. Paulit-ulit na ibalik ang talakayan sa pangunahing passage.
+
+KONKLUSYON
+Nagiging ganap ang pag-aaral ng Biblia kapag ang pagkaunawa ay nauuwi sa tapat na pamumuhay.
+
+PANGWAKAS NA PANALANGIN
+Ama, bigyan Mo kami ng pagkaunawa sa pamamagitan ng Iyong Salita at biyayang sundin ang aming natutuhan. Hubugin Mo ang aming isip, pasya, at relasyon sa pamamagitan ng katotohanang ito. Sa pangalan ni Jesus, amen.`:`TITLE: ${title}
+MAIN PASSAGE: ${passage}
+AUDIENCE: ${audience}
+
+OBJECTIVE
+Understand what the passage teaches about God, people, faith, and obedient living, then identify a clear personal and group response.
+
+BACKGROUND AND CONTEXT
+Read the verses before and after ${passage}. Identify the book, writer, original audience, and situation so the study remains faithful to context.
+
+OBSERVATION
+1. What happens or is taught in the passage?
+2. Which words or ideas are repeated?
+3. What commands, promises, warnings, contrasts, or examples appear?
+
+MAIN TEACHING POINTS
+1. God reveals His character and purposes.
+2. Scripture exposes the condition and need of the human heart.
+3. Faith responds through trust, repentance, worship, and obedience.
+
+SUPPORTING SCRIPTURES
+Psalm 119:105; Romans 12:1–2; 2 Timothy 3:16–17; James 1:22–25
+
+DISCUSSION QUESTIONS
+1. What is the main message of the passage?
+2. What does it reveal about God?
+3. What does it reveal about people?
+4. Is there a command to obey, promise to trust, sin to avoid, or example to follow?
+5. How does this passage connect to Jesus and the gospel?
+6. How can the group live this truth this week?
+
+APPLICATION
+Write one truth to believe, one behaviour to change, one person to encourage, and one action to complete this week.
+
+LEADER NOTES
+Invite several answers before offering a suggested response. Keep returning the discussion to the main passage.
+
+CONCLUSION
+Bible study is complete when understanding becomes faithful living.
+
+CLOSING PRAYER
+Father, give us understanding through Your Word and grace to obey what we have learned. Shape our minds, choices, and relationships through this truth. In Jesus’ name, amen.`;
+ return {title,passage,body};
+}
+function generatedStudyPresentationVariants(data){
+ return {en:generatedStudyPresentationVariant(data,'en'),tl:generatedStudyPresentationVariant(data,'tl')};
+}
+
 function sermonPowerPointOutline(data){
  const title=data.title||ui('Sermon Title','Pamagat ng Sermon');
  const passage=data.text||ui('Main Bible Passage','Pangunahing Talata');
@@ -1038,9 +1238,9 @@ function sermon(){
  $('#pptCopy').onclick=async()=>{if(!$('#pptBody').value.trim())return;try{await navigator.clipboard.writeText($('#pptBody').value);toast(ui('PowerPoint outline copied','Nakopya ang PowerPoint outline'))}catch{toast(ui('Select the outline and copy it manually','Piliin ang outline at kopyahin nang manual'))}};
  $('#sermonClear').onclick=()=>{['title','text','theme','audience','purpose','testimony','additional','notes','body'].forEach(id=>$('#'+id).value='');$('#depth').value='full'};
  $('#sermonCopy').onclick=async()=>{if(!$('#body').value.trim())return toast(ui('Create or write a sermon first','Gumawa o sumulat muna ng sermon'));try{await navigator.clipboard.writeText($('#body').value);toast(ui('Sermon copied','Nakopya ang sermon'))}catch{toast(ui('Select the sermon and copy it manually','Piliin ang sermon at kopyahin nang manual'))}};
- $('#sermonPresentDraft').onclick=()=>{const v=values();if(!v.body&&!v.title&&!v.text)return toast(ui('Create or write a sermon first','Gumawa o sumulat muna ng sermon'));startResourcePresentation({title:v.title||ui('Sermon','Sermon'),passage:v.text||'',body:[v.body,v.testimony,v.additional,v.notes].filter(Boolean).join('\n\n'),originPage:'sermon'})};
+ $('#sermonPresentDraft').onclick=()=>{const v=values();if(!v.body&&!v.title&&!v.text)return toast(ui('Create or write a sermon first','Gumawa o sumulat muna ng sermon'));const variants=sermonPresentationVariants(v);const current=variants[appLanguage==='tl'?'tl':'en'];startResourcePresentation({...current,originPage:'sermon',source:{type:'sermonStudio'},variants})};
  $('#sermonSave').onclick=()=>{let x={date:new Date().toLocaleString(),...values()};if(!x.title){let d=simpleResourceDefaults('sermon',x);x.title=d.title;x.text=x.text||d.scripture;x.theme=x.theme||d.theme}if(!x.body){let idea=randomSermonIdea(arr);if(!x.title)x.title=idea.title;if(!x.text)x.text=idea.text;if(!x.theme)x.theme=idea.theme;x.body=completeSermonDraft({...x,idea})}arr.unshift(x);store.set('sermons',arr);sermon()};
- document.querySelectorAll('[data-present]').forEach(b=>b.onclick=()=>{const i=+b.dataset.present,x=arr[i];if(!x)return;startResourcePresentation({title:x.title||ui('Sermon','Sermon'),passage:x.text||'',body:[x.body,x.testimony,x.additional,x.notes].filter(Boolean).join('\n\n'),originPage:'sermon'})});
+ document.querySelectorAll('[data-present]').forEach(b=>b.onclick=()=>{const i=+b.dataset.present,x=arr[i];if(!x)return;const variants=sermonPresentationVariants(x);const current=variants[appLanguage==='tl'?'tl':'en'];startResourcePresentation({...current,originPage:'sermon',source:{type:'savedSermon',id:x.id},variants})});
  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{if(confirm(ui('Delete this saved sermon?','Burahin ang saved sermon na ito?'))){arr.splice(+b.dataset.del,1);store.set('sermons',arr);sermon()}});
  document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>{const panel=$('#sermonEdit_'+b.dataset.edit);panel.hidden=false;panel.scrollIntoView({behavior:'smooth',block:'start'})});
  document.querySelectorAll('[data-cancel-edit]').forEach(b=>b.onclick=()=>{$('#sermonEdit_'+b.dataset.cancelEdit).hidden=true});
@@ -1643,7 +1843,12 @@ function openResource(kind,index){store.set('openResource',{kind,index});route('
 function improvedLibraryPrayer(x,details={}){const topic=details.topic||x.title||ui('this need','ang pangangailangang ito'),person=details.person||ui('the person or group concerned','ang taong o grupong ipinapanalangin'),scripture=details.scripture||ui('a suitable Bible passage','angkop na talata sa Biblia'),extra=details.extra||'',tone=details.tone||ui('warm, faith-filled, and pastoral','mainit, puno ng pananampalataya, at pastoral');if(appLanguage==='tl')return `PAMAGAT: ${x.title}\nKATEGORYA: ${x.category}\nPOKUS: ${topic}\nKAUGNAY NA KASULATAN: ${scripture}\nTONO: ${tone}\n\nPAGSAMBA AT PASASALAMAT\nAming Ama sa langit, lumalapit kami sa Iyo nang may pagpapakumbaba at pasasalamat. Ikaw ay mabuti, tapat, mahabagin, at makapangyarihan. Salamat sapagkat nakikinig Ka sa Iyong mga anak at inaanyayahan Mo kaming ilagak sa Iyo ang aming mga alalahanin.\n\nPAGSUKO\nIsinusuko namin sa Iyo ang ${topic.toLowerCase()}. Inaamin naming hindi namin kayang kontrolin ang lahat, kaya nagtitiwala kami sa Iyong karunungan, panahon, at banal na kalooban. Linisin Mo ang aming mga puso sa takot, pag-aalala, pagmamataas, at kawalan ng pananampalataya.\n\nTIYAK NA PANALANGIN\nPanginoon, aming itinataas si/ang ${person}. ${x.text} ${extra}\nIbigay Mo ang karunungang kailangan, lakas para sa bawat araw, kapayapaang nagmumula sa Iyo, at lakas ng loob na sumunod sa Iyong Salita. Magbukas Ka ng tamang mga pintuan at isara ang mga hindi naaayon sa Iyong kalooban.\n\nPANANAMPALATAYA AT PAGSUNOD\nTulungan Mo kaming hindi lamang humingi ng sagot kundi hanapin Ka mismo. Turuan Mo kaming maghintay nang may pananampalataya, kumilos nang may karunungan, magpatawad kung kailangan, at manatiling tapat habang hinihintay ang Iyong sagot.\n\nPAGTATAPOS\nNaniniwala kaming kaya Mong gumawa nang higit sa aming nauunawaan, ngunit higit sa lahat ay nais naming mangyari ang Iyong mabuti at banal na kalooban. Ingatan Mo ang aming puso at isip kay Cristo Jesus. Sa pangalan ni Jesus, Amen.\n\nPANSARILING TALA / SAGOT SA PANALANGIN\n• Ano ang ginawa ng Diyos?\n• Ano ang itinuro Niya sa akin?\n• Ano ang susunod kong hakbang ng pananampalataya?`;return `TITLE: ${x.title}\nCATEGORY: ${x.category}\nFOCUS: ${topic}\nRELATED SCRIPTURE: ${scripture}\nTONE: ${tone}\n\nADORATION AND THANKSGIVING\nHeavenly Father, we come before You with humility and gratitude. You are good, faithful, compassionate, and powerful. Thank You for hearing Your children and inviting us to bring every concern to You.\n\nSURRENDER\nWe surrender ${topic.toLowerCase()} to You. We acknowledge that we cannot control every outcome, so we trust Your wisdom, timing, and holy will. Cleanse our hearts from fear, anxiety, pride, and unbelief.\n\nSPECIFIC PRAYER\nLord, we lift up ${person}. ${x.text} ${extra}\nPlease provide the wisdom that is needed, strength for each day, peace that comes from You, and courage to obey Your Word. Open the right doors and close those that are not aligned with Your will.\n\nFAITH AND OBEDIENCE\nHelp us not only to seek an answer, but to seek You. Teach us to wait faithfully, act wisely, forgive when necessary, and remain obedient while we wait for Your response.\n\nCONCLUSION\nWe believe You are able to do more than we understand, yet above all we ask for Your good and holy will to be done. Guard our hearts and minds in Christ Jesus. In Jesus' name, Amen.\n\nPERSONAL NOTES / ANSWERED PRAYER\n• What has God done?\n• What has He taught me?\n• What is my next step of faith?`}
 function libraryPrayerPrompt(x,details={}){return `Create a complete, editable Christian prayer in ${appLanguage==='tl'?'Tagalog':'English'} using the following existing library prayer as the foundation. Prayer title: “${x.title}”. Category: “${x.category}”. Prayer topic: “${details.topic||x.title}”. Person or group: “${details.person||''}”. Related Scripture: “${details.scripture||''}”. Desired tone: “${details.tone||'warm, faith-filled, pastoral, and biblically careful'}”. Additional details: “${details.extra||''}”. Existing prayer: “${x.text}”. Include adoration, thanksgiving, confession or surrender where appropriate, specific requests, Scripture-guided faith, practical obedience, a strong conclusion in Jesus' name, and a short section for answered-prayer notes or spiritual learning. Do not invent Bible quotations, promises, prophecies, or guarantees. Clearly distinguish Scripture from commentary. Keep the prayer compassionate, Christ-centred, and ready for the user to edit before ministry use.`}
 function resource(){let o=store.get('openResource',null);if(!o)return route('home');
- if(o.custom){let x=userLibrary(o.kind).find(v=>String(v.id)===String(o.id));const customRoute=({study:'studies',prayer:'prayerlibrary',kids:'kidslibrary',devotional:'devotionals',exhortation:'exhortations'})[o.kind]||'myresources';if(!x)return route(customRoute);title(x.title,ui('Your saved resource','Iyong naka-save na materyales'));let passage=x.scripture||x.passage||x.main||'';let body=x.body||x.text||'';let kidsImage=o.kind==='kids'?(x.image||kidsIllustrationFor(x.title,passage)):'';view.innerHTML=`<button class="ghost" id="backLib">← ${ui('Back to library','Bumalik sa aklatan')}</button><article class="resource-page">${o.kind==='kids'?`<img id="savedKidsIllustration" src="${esc(kidsImage)}" alt="${esc(x.title||ui('Kids lesson illustration','Larawan ng kids lesson'))}" style="display:block;width:100%;max-height:420px;object-fit:contain;margin-bottom:18px">`:''}<span class="pill">${esc(x.category||x.type||ui('Personal Resource','Personal na Materyales'))}</span><label class="field-label">${ui('Title','Pamagat')}<input id="customResourceTitle" value="${esc(x.title||'')}"></label><label class="field-label">${ui('Main Bible Passage','Pangunahing Talata')}<input id="customResourcePassage" value="${esc(passage)}" placeholder="John 3:16"></label>${o.kind==='kids'?`<label class="field-label">${ui('Illustration path','Path ng larawan')}<input id="customKidsImage" value="${esc(kidsImage)}" placeholder="images/lesson-placeholder.svg"></label>`:''}${customScripturePanel(body,passage)}<label class="field-label">${ui('Editable Resource','Editable na Materyales')}<textarea id="customResourceBody" class="draft-area" style="min-height:520px">${esc(body)}</textarea></label><div class="resource-buttons"><button class="primary" id="saveCustomResource">${ui('Save Changes','I-save ang Pagbabago')}</button><button class="ghost" id="refreshScriptureLinks">📖 ${ui('Refresh Scripture Links','I-refresh ang Scripture Links')}</button>${['study','kids','exhortation','devotional'].includes(o.kind)?`<button class="primary" id="presentCustomResource">🖥️ ${ui('Present','I-present')}</button>`:''}<button class="ghost" id="copyCustomResource">${ui('Copy','Kopyahin')}</button><button class="danger" id="deleteCustomResource">${ui('Delete','Burahin')}</button></div></article>`;$('#backLib').onclick=()=>route(customRoute);$('#saveCustomResource').onclick=()=>{let body=$('#customResourceBody').value.trim(),titleValue=$('#customResourceTitle').value.trim()||x.title,passageValue=$('#customResourcePassage').value.trim();updateUserLibrary(o.kind,o.id,{title:titleValue,scripture:passageValue,passage:passageValue,main:passageValue,image:o.kind==='kids'?($('#customKidsImage')?.value.trim()||kidsIllustrationFor(titleValue,passageValue)):x.image,body,text:o.kind==='prayer'?body:x.text});toast(ui('Changes saved','Nai-save ang pagbabago'));resource()};$('#refreshScriptureLinks').onclick=()=>resource();if($('#presentCustomResource'))$('#presentCustomResource').onclick=()=>startResourcePresentation({title:$('#customResourceTitle').value.trim(),passage:$('#customResourcePassage').value.trim(),body:$('#customResourceBody').value,image:o.kind==='kids'?($('#customKidsImage')?.value.trim()||kidsImage):''});$('#copyCustomResource').onclick=async()=>{try{await navigator.clipboard.writeText($('#customResourceBody').value);toast(ui('Copied','Nakopya'))}catch{}};$('#deleteCustomResource').onclick=()=>{if(confirm(ui('Delete this saved resource?','Burahin ang naka-save na materyales?'))){deleteUserLibrary(o.kind,o.id);route(customRoute)}};wireScriptureLinks();return}
+ if(o.custom){let x=userLibrary(o.kind).find(v=>String(v.id)===String(o.id));const customRoute=({study:'studies',prayer:'prayerlibrary',kids:'kidslibrary',devotional:'devotionals',exhortation:'exhortations'})[o.kind]||'myresources';if(!x)return route(customRoute);title(x.title,ui('Your saved resource','Iyong naka-save na materyales'));let passage=x.scripture||x.passage||x.main||'';let body=x.body||x.text||'';let kidsImage=o.kind==='kids'?(x.image||kidsIllustrationFor(x.title,passage)):'';view.innerHTML=`<button class="ghost" id="backLib">← ${ui('Back to library','Bumalik sa aklatan')}</button><article class="resource-page">${o.kind==='kids'?`<img id="savedKidsIllustration" src="${esc(kidsImage)}" alt="${esc(x.title||ui('Kids lesson illustration','Larawan ng kids lesson'))}" style="display:block;width:100%;max-height:420px;object-fit:contain;margin-bottom:18px">`:''}<span class="pill">${esc(x.category||x.type||ui('Personal Resource','Personal na Materyales'))}</span><label class="field-label">${ui('Title','Pamagat')}<input id="customResourceTitle" value="${esc(x.title||'')}"></label><label class="field-label">${ui('Main Bible Passage','Pangunahing Talata')}<input id="customResourcePassage" value="${esc(passage)}" placeholder="John 3:16"></label>${o.kind==='kids'?`<label class="field-label">${ui('Illustration path','Path ng larawan')}<input id="customKidsImage" value="${esc(kidsImage)}" placeholder="images/lesson-placeholder.svg"></label>`:''}${customScripturePanel(body,passage)}<label class="field-label">${ui('Editable Resource','Editable na Materyales')}<textarea id="customResourceBody" class="draft-area" style="min-height:520px">${esc(body)}</textarea></label><div class="resource-buttons"><button class="primary" id="saveCustomResource">${ui('Save Changes','I-save ang Pagbabago')}</button><button class="ghost" id="refreshScriptureLinks">📖 ${ui('Refresh Scripture Links','I-refresh ang Scripture Links')}</button>${['study','kids','exhortation','devotional'].includes(o.kind)?`<button class="primary" id="presentCustomResource">🖥️ ${ui('Present','I-present')}</button>`:''}<button class="ghost" id="copyCustomResource">${ui('Copy','Kopyahin')}</button><button class="danger" id="deleteCustomResource">${ui('Delete','Burahin')}</button></div></article>`;$('#backLib').onclick=()=>route(customRoute);$('#saveCustomResource').onclick=()=>{let body=$('#customResourceBody').value.trim(),titleValue=$('#customResourceTitle').value.trim()||x.title,passageValue=$('#customResourcePassage').value.trim();updateUserLibrary(o.kind,o.id,{title:titleValue,scripture:passageValue,passage:passageValue,main:passageValue,image:o.kind==='kids'?($('#customKidsImage')?.value.trim()||kidsIllustrationFor(titleValue,passageValue)):x.image,body,text:o.kind==='prayer'?body:x.text});toast(ui('Changes saved','Nai-save ang pagbabago'));resource()};$('#refreshScriptureLinks').onclick=()=>resource();if($('#presentCustomResource'))$('#presentCustomResource').onclick=()=>{
+ const currentData={...x,title:$('#customResourceTitle').value.trim(),scripture:$('#customResourcePassage').value.trim(),passage:$('#customResourcePassage').value.trim(),body:$('#customResourceBody').value};
+ const variants=o.kind==='study'?generatedStudyPresentationVariants(currentData):null;
+ const current=variants?variants[appLanguage==='tl'?'tl':'en']:{title:currentData.title,passage:currentData.passage,body:currentData.body,image:o.kind==='kids'?($('#customKidsImage')?.value.trim()||kidsImage):''};
+ startResourcePresentation({...current,originPage:customRoute,source:{type:o.kind==='study'?'generatedStudy':'customResource',kind:o.kind,id:o.id},variants});
+};$('#copyCustomResource').onclick=async()=>{try{await navigator.clipboard.writeText($('#customResourceBody').value);toast(ui('Copied','Nakopya'))}catch{}};$('#deleteCustomResource').onclick=()=>{if(confirm(ui('Delete this saved resource?','Burahin ang naka-save na materyales?'))){deleteUserLibrary(o.kind,o.id);route(customRoute)}};wireScriptureLinks();return}
  let maps={devotional:DEVOTIONALS,exhortation:EXHORTATIONS,study:BIBLE_STUDIES,kids:KIDS_LESSONS,prayer:PRAYER_LIBRARY},raw=maps[o.kind]?.[o.index];if(!raw||isResourceDeleted(o.kind,o.index))return route({devotional:'devotionals',exhortation:'exhortations',study:'studies',kids:'kidslibrary',prayer:'prayerlibrary'}[o.kind]);let x=effectiveResource(o.kind,o.index,raw);title(x.title,ui('Complete resource view','Kumpletong materyales'));let body='';
  if(o.kind==='devotional')body=`<span class="pill">${esc(x.theme)}</span><h2>${esc(x.title)}</h2><div class="scripture-banner"><span>${ui('Main Scripture','Pangunahing Talata')}</span>${scriptureLink(x.scripture)}</div><h3>${ui('Reflection','Pagninilay')}</h3><p>${esc(x.reflection)}</p><h3>${ui('Application','Aplikasyon')}</h3><p>${esc(x.application)}</p><h3>${ui('Reflection Questions','Mga Tanong sa Pagninilay')}</h3><ol>${(x.questions||[]).map(q=>`<li>${esc(q)}</li>`).join('')}</ol><h3>${ui('Prayer','Panalangin')}</h3><p>${esc(x.prayer)}</p><div class="resource-foot"><b>${ui('Memory Verse','Talatang Isasaulo')}:</b> ${scriptureLink(x.memory)}<br><b>${ui('Suggested reading','Iminungkahing pagbasa')}:</b> ${scriptureLink(x.reading)}</div>`;
  if(o.kind==='exhortation')body=`<span class="pill">${esc(x.category)}</span><h2>${esc(x.title)}</h2><div class="scripture-banner"><span>${ui('Main Scripture','Pangunahing Talata')}</span>${scriptureLink(x.main)}</div><p>${esc(x.intro)}</p>${(x.points||[]).map((p,i)=>`<section><h3>${i+1}. ${esc(p[0])}</h3><p>${esc(p[1])}</p></section>`).join('')}<h3>${ui('Supporting Scriptures','Mga Kaugnay na Talata')}</h3><p>${scriptureList(x.support||[])}</p><h3>${ui('Application','Aplikasyon')}</h3><p>${esc(x.application)}</p><h3>${ui('Challenge','Hamon')}</h3><p>${esc(x.challenge)}</p><h3>${ui('Prayer','Panalangin')}</h3><p>${esc(x.prayer)}</p>`;
@@ -1651,7 +1856,7 @@ function resource(){let o=store.get('openResource',null);if(!o)return route('hom
  if(o.kind==='kids')body=`<img class="lesson-hero" src="${esc(x.image||'')}" alt="${esc(x.title)}"><span class="pill">${ui('Ages','Edad')} ${esc(x.age)}</span><h2>${esc(x.title)}</h2><div class="scripture-banner"><span>${ui('Bible Story','Kuwento sa Biblia')}</span>${scriptureLink(x.story)}</div><h3>${ui('Opening Prayer','Pambungad na Panalangin')}</h3><p>${esc(x.opening)}</p><h3>${ui('Teaching Lesson','Aralin')}</h3><p>${esc(x.lesson)}</p><h3>${ui('Questions','Mga Tanong')}</h3><ol>${(x.questions||[]).map(q=>`<li>${esc(q)}</li>`).join('')}</ol><div class="idea-grid"><div><h3>🎲 ${ui('Activity','Gawain')}</h3><p>${esc(x.activity)}</p></div><div><h3>✂️ Craft</h3><p>${esc(x.craft)}</p></div></div><h3>${ui('Memory Verse','Talatang Isasaulo')}</h3><p>${scriptureLink(x.memory)}</p><h3>${ui('Closing Prayer','Pangwakas na Panalangin')}</h3><p>${esc(x.closing)}</p><div class="resource-buttons"><button class="primary" id="libraryKidsPpt">📺 ${ui('Create Presentation Outline','Gumawa ng Presentation Outline')}</button><button class="ghost" id="libraryKidsPack">📦 ${ui('Create Resource Pack','Gumawa ng Resource Pack')}</button></div><div id="libraryKidsPanel" class="notice" style="display:none;margin-top:14px"><textarea id="libraryKidsBody" class="draft-area" style="min-height:420px"></textarea><button class="primary" id="libraryKidsCopy">${ui('Copy Resource','Kopyahin ang Resource')}</button></div>`;
  if(o.kind==='prayer')body=`<span class="pill">${esc(x.category)}</span><h2>${esc(x.title)}</h2><div class="prayer-paper"><p>${esc(x.text)}</p></div><section class="card prayer-ai-card"><h3>✨ ${ui('AI-Assisted Prayer Improvement','AI-Assisted na Pagpapahusay ng Panalangin')}</h3><p>${ui('Add optional details, then create a stronger editable prayer or prepare a prompt for ChatGPT.','Magdagdag ng opsyonal na detalye, pagkatapos ay gumawa ng mas kumpletong editable prayer o maghanda ng prompt para sa ChatGPT.')}</p><div class="form-grid"><input id="prayerAiTopic" value="${esc(x.title)}" placeholder="${ui('Prayer topic or need','Paksa o pangangailangan')}"><input id="prayerAiPerson" placeholder="${ui('Person, family, church, or group','Tao, pamilya, iglesia, o grupo')}"><input id="prayerAiScripture" placeholder="${ui('Related Scripture, optional','Kaugnay na talata, opsyonal')}"><select id="prayerAiTone"><option>${ui('Warm and pastoral','Mainit at pastoral')}</option><option>${ui('Powerful and faith-filled','Makapangyarihan at puno ng pananampalataya')}</option><option>${ui('Simple and comforting','Simple at nakaaaliw')}</option><option>${ui('Corporate church prayer','Panalangin para sa buong iglesia')}</option></select><textarea class="wide" id="prayerAiExtra" placeholder="${ui('Extra situation, requests, names, or details','Dagdag na sitwasyon, kahilingan, pangalan, o detalye')}"></textarea></div><div class="resource-buttons"><button class="primary" id="improveLibraryPrayer">✨ ${ui('Improve Prayer','Pagandahin ang Panalangin')}</button><button class="ghost" id="promptLibraryPrayer">🤖 ${ui('Prepare AI Prompt','Ihanda ang AI Prompt')}</button></div><div id="prayerAiPanel" style="display:none;margin-top:14px"><textarea id="prayerAiDraft" class="draft-area" style="min-height:520px"></textarea><div class="resource-buttons"><button class="primary" id="saveImprovedPrayer">${ui('Save as My Custom Prayer','I-save bilang Custom Prayer')}</button><button class="ghost" id="copyImprovedPrayer">${ui('Copy','Kopyahin')}</button></div><div class="notice small-note">${ui('Review generated wording and Scripture references before using it publicly.','Suriin ang generated wording at mga talata bago gamitin sa publiko.')}</div></div></section>`;
  let customised=!!resourceOverrides()[resourceKey(o.kind,o.index)];view.innerHTML=`<button class="ghost" id="backLib">← ${ui('Back to library','Bumalik sa aklatan')}</button><article class="resource-page" id="resourceDisplay">${body}<div class="resource-buttons"><button class="primary" id="editResource">✏️ ${ui('Edit','I-edit')}</button>${['devotional','exhortation','study','kids'].includes(o.kind)?`<button class="primary" id="presentBuiltInResource">🖥️ ${ui('Present','I-present')}</button>`:''}${customised?`<button class="ghost" id="resetResource">↺ ${ui('Restore Original','Ibalik ang Original')}</button>`:''}<button class="danger" id="removeResource">${ui('Remove','Alisin')}</button><button class="ghost" id="copyResource">${ui('Copy','Kopyahin')}</button><button class="ghost" id="printResource">${ui('Print','I-print')}</button></div></article><div id="resourceEditHost"></div>`;
- wireScriptureLinks();const back=()=>route({devotional:'devotionals',exhortation:'exhortations',study:'studies',kids:'kidslibrary',prayer:'prayerlibrary'}[o.kind]);$('#backLib').onclick=back;if($('#presentBuiltInResource'))$('#presentBuiltInResource').onclick=()=>{const clone=$('#resourceDisplay').cloneNode(true);clone.querySelectorAll('button:not(.scripture-link),.resource-buttons,.notice,textarea,input,select,label').forEach(el=>el.remove());startResourcePresentation({title:x.title||'',passage:x.scripture||x.story||x.text||x.main||'',image:o.kind==='kids'?(x.image||''):'',html:clone.innerHTML})};$('#copyResource').onclick=async()=>{await navigator.clipboard.writeText($('#resourceDisplay').innerText);toast(ui('Resource copied','Nakopya ang materyales'))};$('#printResource').onclick=()=>window.print();$('#editResource').onclick=()=>{$('#resourceEditHost').innerHTML=resourceEditor(o.kind,x);$('#resourceDisplay').style.display='none';$('#resourceEditor').scrollIntoView({behavior:'smooth',block:'start'});$('#cancelResourceEdit').onclick=()=>resource();$('#saveResourceEdit').onclick=()=>{let data=collectResourceEdit(o.kind);if(!data.title)return toast(ui('Please add a title','Maglagay ng pamagat'));saveResourceOverride(o.kind,o.index,data);toast(ui('Changes saved','Na-save ang pagbabago'));resource()}};$('#removeResource').onclick=()=>{if(confirm(ui('Remove this resource from your library on this device?','Alisin ang materyales na ito sa library sa device na ito?'))){hideResource(o.kind,o.index);back()}};if($('#resetResource'))$('#resetResource').onclick=()=>{if(confirm(ui('Restore the original built-in version?','Ibalik ang original na built-in version?'))){resetResourceOverride(o.kind,o.index);resource()}};
+ wireScriptureLinks();const back=()=>route({devotional:'devotionals',exhortation:'exhortations',study:'studies',kids:'kidslibrary',prayer:'prayerlibrary'}[o.kind]);$('#backLib').onclick=back;if($('#presentBuiltInResource'))$('#presentBuiltInResource').onclick=()=>{const localized=appLanguage==='tl'&&x.tl?{...x,...x.tl}:x;const pdata=presentationResourceText(o.kind,localized);startResourcePresentation({title:pdata.title||localized.title||'',passage:pdata.passage||localized.scripture||localized.story||localized.text||localized.main||'',body:pdata.body||'',image:o.kind==='kids'?(localized.image||x.image||''):'',originPage:({devotional:'devotionals',exhortation:'exhortations',study:'studies',kids:'kidslibrary'})[o.kind]||'resource',source:{type:'builtIn',kind:o.kind,index:Number(o.index)},variants:builtInPresentationVariants(o.kind,Number(o.index))})};$('#copyResource').onclick=async()=>{await navigator.clipboard.writeText($('#resourceDisplay').innerText);toast(ui('Resource copied','Nakopya ang materyales'))};$('#printResource').onclick=()=>window.print();$('#editResource').onclick=()=>{$('#resourceEditHost').innerHTML=resourceEditor(o.kind,x);$('#resourceDisplay').style.display='none';$('#resourceEditor').scrollIntoView({behavior:'smooth',block:'start'});$('#cancelResourceEdit').onclick=()=>resource();$('#saveResourceEdit').onclick=()=>{let data=collectResourceEdit(o.kind);if(!data.title)return toast(ui('Please add a title','Maglagay ng pamagat'));saveResourceOverride(o.kind,o.index,data);toast(ui('Changes saved','Na-save ang pagbabago'));resource()}};$('#removeResource').onclick=()=>{if(confirm(ui('Remove this resource from your library on this device?','Alisin ang materyales na ito sa library sa device na ito?'))){hideResource(o.kind,o.index);back()}};if($('#resetResource'))$('#resetResource').onclick=()=>{if(confirm(ui('Restore the original built-in version?','Ibalik ang original na built-in version?'))){resetResourceOverride(o.kind,o.index);resource()}};
  if(o.kind==='prayer'){const details=()=>({topic:$('#prayerAiTopic').value.trim(),person:$('#prayerAiPerson').value.trim(),scripture:$('#prayerAiScripture').value.trim(),tone:$('#prayerAiTone').value,extra:$('#prayerAiExtra').value.trim()});const showPrayerDraft=text=>{$('#prayerAiDraft').value=text;$('#prayerAiPanel').style.display='block';$('#prayerAiPanel').scrollIntoView({behavior:'smooth',block:'start'})};$('#improveLibraryPrayer').onclick=()=>{showPrayerDraft(improvedLibraryPrayer(x,details()));toast(ui('Improved prayer created','Nagawa ang mas kumpletong panalangin'))};$('#promptLibraryPrayer').onclick=async()=>{let prompt=libraryPrayerPrompt(x,details());showPrayerDraft(prompt);try{await navigator.clipboard.writeText(prompt)}catch{}toast(ui('AI prompt prepared and copied','Naihanda at nakopya ang AI prompt'))};$('#copyImprovedPrayer').onclick=async()=>{try{await navigator.clipboard.writeText($('#prayerAiDraft').value);toast(ui('Prayer copied','Nakopya ang panalangin'))}catch{toast(ui('Select and copy manually','Piliin at kopyahin nang manual'))}};$('#saveImprovedPrayer').onclick=()=>{let text=$('#prayerAiDraft').value.trim();if(!text)return toast(ui('Create or write a prayer first','Gumawa o sumulat muna ng panalangin'));saveResourceOverride('prayer',o.index,{...x,text});toast(ui('Custom prayer saved','Na-save ang custom prayer'));resource()}}
  if(o.kind==='kids'){const kd={title:x.title,passage:x.story,story:x.story,verse:x.memory,memory:x.memory,age:x.age,goal:x.lesson,lesson:x.lesson,notes:x.activity+' '+x.craft};const show=text=>{$('#libraryKidsBody').value=text;$('#libraryKidsPanel').style.display='block';$('#libraryKidsPanel').scrollIntoView({behavior:'smooth',block:'start'})};$('#libraryKidsPpt').onclick=()=>show(kidsPresentationOutline(kd));$('#libraryKidsPack').onclick=()=>show(kidsResourcePack(kd));$('#libraryKidsCopy').onclick=async()=>{try{await navigator.clipboard.writeText($('#libraryKidsBody').value);toast(ui('Resource copied','Nakopya ang resource'))}catch{toast(ui('Select and copy manually','Piliin at kopyahin nang manual'))}}}
 }

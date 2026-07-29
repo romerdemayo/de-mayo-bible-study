@@ -1,5 +1,5 @@
-/* De Mayo Bible Ministry | Version 82 Presentation Return Fix */
-const CACHE = 'de-mayo-bible-v85-durable-presentation-return';
+/* De Mayo Bible Ministry | Version 86 Bilingual Responsive Presentations */
+const CACHE = 'de-mayo-bible-v95-generated-content-translation';
 const OFFLINE_URL = './index.html';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./bible-data.js',
