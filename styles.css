@@ -449,7 +449,7 @@ body.resource-presentation-active{overflow:hidden!important}
     width:100%;
     max-width:none;
     padding:22px 16px;
-    font-size:max(var(--reader-font,19px),21px);
+    font-size:var(--reader-font,21px);
   }
   .scripture h2{font-size:1.65em;margin:.2em 0 .7em}
   .verse{
@@ -461,7 +461,39 @@ body.resource-presentation-active{overflow:hidden!important}
   .verse-actions{right:2px;top:7px}
 }
 @media(max-width:390px){
-  .scripture{padding:20px 13px;font-size:max(var(--reader-font,19px),20px)}
+  .scripture{padding:20px 13px;font-size:var(--reader-font,20px)}
   .reader-tools .back-to-presentation,
   .reader-tools .exit-presentation-reader{font-size:14px}
+}
+
+/* Version 105: keep presentation return controls reachable while reading on phones */
+@media(max-width:640px){
+  .reader-tools .back-to-presentation,
+  .reader-tools .exit-presentation-reader{
+    position:fixed;
+    z-index:90;
+    bottom:calc(68px + env(safe-area-inset-bottom));
+    width:calc(50vw - 12px);
+    min-height:52px;
+    margin:0;
+    border-radius:14px;
+    box-shadow:0 8px 24px rgba(0,0,0,.22);
+  }
+  .reader-tools .back-to-presentation{left:8px}
+  .reader-tools .exit-presentation-reader{right:8px}
+  .reader-tools:has(.back-to-presentation) + .reader-content,
+  .reader:has(.back-to-presentation) .scripture{
+    padding-bottom:150px;
+  }
+}
+@media(max-width:390px){
+  .reader-tools .back-to-presentation,
+  .reader-tools .exit-presentation-reader{
+    width:calc(50vw - 10px);
+    bottom:calc(66px + env(safe-area-inset-bottom));
+    font-size:13px;
+    padding:8px 5px;
+  }
+  .reader-tools .back-to-presentation{left:6px}
+  .reader-tools .exit-presentation-reader{right:6px}
 }

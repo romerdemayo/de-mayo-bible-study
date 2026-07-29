@@ -481,8 +481,10 @@ async function read(){
  document.querySelectorAll('[data-fav]').forEach(b=>b.onclick=e=>{e.stopPropagation();toggleFav(vv[+b.dataset.fav])});
  document.querySelectorAll('[data-verse]').forEach(el=>el.onclick=()=>openVerseSheet(vv[+el.dataset.verse],el));
  $('#prev').onclick=()=>move(-1);$('#next').onclick=()=>move(1);
- $('#smaller').onclick=()=>{state.font=Math.max(15,state.font-1);store.set('fontSize',state.font);read()};
- $('#larger').onclick=()=>{state.font=Math.min(28,state.font+1);store.set('fontSize',state.font);read()};
+ const phoneReader=window.matchMedia&&window.matchMedia('(max-width:640px)').matches;
+ const fontStep=phoneReader?2:1,minimumFont=phoneReader?17:15,maximumFont=phoneReader?33:28;
+ $('#smaller').onclick=()=>{state.font=Math.max(minimumFont,state.font-fontStep);store.set('fontSize',state.font);read();toast(ui(`Text size: ${state.font}px`,`Laki ng teksto: ${state.font}px`))};
+ $('#larger').onclick=()=>{state.font=Math.min(maximumFont,state.font+fontStep);store.set('fontSize',state.font);read();toast(ui(`Text size: ${state.font}px`,`Laki ng teksto: ${state.font}px`))};
 }
 function verseNoteDraft(v){const r=ref(v);return appLanguage==='tl'?`TALATA: ${r}
 
