@@ -1,5 +1,5 @@
 /* De Mayo Bible Ministry | Version 86 Bilingual Responsive Presentations */
-const CACHE='de-mayo-bible-v108-auto-reading-plans';
+const CACHE='de-mayo-bible-v110-data-protection';
 const OFFLINE_URL = './index.html';
 const ASSETS = [
   './','./index.html','./styles.css','./app.js','./bible-data.js','./analytics-config.js','./analytics-loader.js',
