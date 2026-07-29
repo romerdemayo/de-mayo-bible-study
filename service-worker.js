@@ -1,8 +1,8 @@
 /* De Mayo Bible Ministry | Version 86 Bilingual Responsive Presentations */
-const CACHE='de-mayo-bible-v105-sticky-presentation-controls';
+const CACHE='de-mayo-bible-v106-private-cloudflare-analytics';
 const OFFLINE_URL = './index.html';
 const ASSETS = [
-  './','./index.html','./styles.css','./app.js','./bible-data.js',
+  './','./index.html','./styles.css','./app.js','./bible-data.js','./analytics-config.js','./analytics-loader.js',
   './manifest.webmanifest','./icon-192.png','./icon-512.png',
   './icon-maskable-192.png','./icon-maskable-512.png','./apple-touch-icon.png','./social-preview.png',
   './data/tagalog-bible-loader.js','./data/devotionals.js','./data/exhortations.js','./data/bible-studies.js',
